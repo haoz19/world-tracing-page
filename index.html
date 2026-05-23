@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Tracing &mdash; Generative Pixel-Aligned Geometry Beyond the Visible</title>
+  <meta name="description" content="Generative Pixel-Aligned Geometry Beyond the Visible">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- model-viewer needs to know where to fetch the meshopt decoder *before*
+     it tries to load any GLB that uses EXT_meshopt_compression. -->
+<script>
+  self.ModelViewerElement = self.ModelViewerElement || {};
+  self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.21.0/meshopt_decoder.js';
+</script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+  <link rel="stylesheet" href="style.css">
+<script src="data.js"></script>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <h1>
+    <img class="birdmark" src="assets/worldlabs_birdmark.png" alt="">
+    <span>World Tracing</span>
+  </h1>
+  <p class="subtitle">Generative Pixel-Aligned Geometry Beyond the Visible</p>
+  <p class="authors"><a href="https://haoz19.github.io/" target="_blank" rel="noopener">Hao Zhang</a><sup>1,2</sup> &middot; <a href="https://mbanani.github.io/" target="_blank" rel="noopener">Mohamed El Banani</a><sup>1</sup> &middot; <a href="https://jen-haocheng.com/#/" target="_blank" rel="noopener">Jen-Hao Cheng</a><sup>1</sup> &middot; <a href="https://people.csail.mit.edu/pzpzpzp1/" target="_blank" rel="noopener">Paul Zhang</a><sup>1</sup><br><a href="https://hawaiii.github.io/" target="_blank" rel="noopener">Yi Hua</a><sup>1</sup> &middot; <a href="https://bmild.github.io/" target="_blank" rel="noopener">Ben Mildenhall</a><sup>1</sup> &middot; <a href="https://christophlassner.de/" target="_blank" rel="noopener">Christoph Lassner</a><sup>1</sup> &middot; <a href="https://vision.ai.illinois.edu/narendra-ahuja/" target="_blank" rel="noopener">Narendra Ahuja</a><sup>2</sup> &middot; <a href="https://gengshan-y.github.io/" target="_blank" rel="noopener">Gengshan Yang</a><sup>1</sup></p>
+  <p class="affil"><sup>1</sup>World Labs &nbsp;&nbsp; <sup>2</sup>University of Illinois Urbana-Champaign</p>
+  <div class="links"><a href="#" class="primary" >arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="https://github.com/haoz19/wt-multilayer-depth-demo" class="" target=_blank rel=noopener>Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#" class="" >Model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#bibtex" class="" >BibTeX <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>
+</section>
+
+<!-- Hero summary demo video. Autoplays muted+looped, with native controls
+     so the viewer can scrub the timeline and pause when something
+     interesting flies by. Source mp4 lives on S3, URL is presigned at
+     deploy time (see `_upload_curated_page_s3.sh`). -->
+<section class="hero-video">
+  <div class="hero-video-wrap">
+    <video id="hero-demo-video"
+           autoplay muted loop playsinline preload="metadata"
+           controls controlslist="nodownload noplaybackrate"
+           disablepictureinpicture disableremoteplayback
+           poster="">
+      <source src="" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<main>
+
+<!-- =========== "What World Tracing can do" highlights band =========== -->
+<section class="section centered" id="highlights">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">01</span><span class="section-eyebrow">What World Tracing can do</span></span>
+    <h2 class="highlights-title">
+      <span class="lede">A single image becomes a layered 3D world.</span>
+      <em>Across objects, scenes, and dynamic content.</em>
+    </h2>
+    <span class="section-rule"></span>
+  </div>
+
+  <!-- Row 1 — Pixel-aligned multilayer geometry across object / scene / dynamic. -->
+  <div class="h-row">
+    <div class="h-row-head">
+      <span class="h-row-eyebrow">Pixel-aligned multilayer geometry</span>
+      <span class="h-row-label">An ordered stack of 3D points per pixel &mdash; visible surfaces and the geometry hidden behind them.</span>
+    </div>
+    <div class="highlights-grid">
+      <a class="h-card" href="#results" data-cat="object" data-preview="step1-object">
+        <div class="h-media">
+          <span class="h-icon" data-icon="layers"></span>
+          <span class="h-num">01</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">Object</h3>
+          <p class="h-blurb">From a single object photo, we predict every layer of geometry the object occupies in front of and behind the visible surface.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+      <a class="h-card" href="#results" data-cat="scene" data-preview="step1-scene">
+        <div class="h-media">
+          <span class="h-icon" data-icon="grid"></span>
+          <span class="h-num">02</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">Scene</h3>
+          <p class="h-blurb">The same predictor scales to full indoor and outdoor scenes &mdash; multi-room interiors, facades, and gardens get a layered point cloud per pixel.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+      <a class="h-card" href="#results" data-cat="dynamic" data-preview="step1-dynamic">
+        <div class="h-media">
+          <span class="h-icon" data-icon="play"></span>
+          <span class="h-num">03</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">Dynamic</h3>
+          <p class="h-blurb">For short video clips we predict per-frame layered point clouds that stay 3D-consistent as the subject moves.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Row 2 — Downstream applications enabled by the layered geometry. -->
+  <div class="h-row">
+    <div class="h-row-head">
+      <span class="h-row-eyebrow">Applications enabled by World Tracing</span>
+      <span class="h-row-label">The layered geometry plugs into existing 3D and video models &mdash; no retraining needed.</span>
+    </div>
+    <div class="highlights-grid">
+      <a class="h-card" href="#results" data-cat="object" data-preview="textured-mesh">
+        <div class="h-media">
+          <span class="h-icon" data-icon="box"></span>
+          <span class="h-num">04</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">Training-free textured mesh</h3>
+          <p class="h-blurb">Lift our layered point cloud into a textured mesh by plugging it into off-the-shelf mesh generators &mdash; no fine-tuning needed.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+      <a class="h-card" href="#demo-3d-editing" data-preview="scene-editing">
+        <div class="h-media">
+          <span class="h-icon" data-icon="wand"></span>
+          <span class="h-num">05</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">3D scene editing</h3>
+          <p class="h-blurb">Add, replace or remove objects in a scene &mdash; the layered geometry keeps every edit consistent across novel views.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+      <a class="h-card" href="#demo-novel-view-video" data-preview="novel-view">
+        <div class="h-media">
+          <span class="h-icon" data-icon="film"></span>
+          <span class="h-num">06</span>
+          <video class="h-preview" muted loop playsinline preload="metadata" disableremoteplayback></video>
+        </div>
+        <div class="h-body">
+          <h3 class="h-title">Geometry-guided video</h3>
+          <p class="h-blurb">Pair our predicted geometry with a video diffusion model to render temporally-consistent fly-throughs that obey 3D structure.</p>
+          <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section centered washed" id="abstract">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">02</span><span class="section-eyebrow">The paper in one paragraph</span></span>
+    <h2>Abstract</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead">
+Single-view to 3D methods often trade off faithfulness and completeness:
+depth estimators are anchored to input pixels but stop at the visible
+surface, while image-to-3D models generate complete shapes that are often
+misaligned to the input. We introduce <em>World Tracing</em>, a generative
+pixel-aligned geometry representation that produces 3D points faithfully
+reproducing the input image, while containing complete geometry beyond
+the visible surface. For each input pixel, World Tracing predicts an
+ordered stack of camera-space 3D points, where the first layer represents
+the visible surface and subsequent layers represent front-to-back
+intersections with occluded surfaces. We instantiate this representation
+as a world-tracing diffusion transformer (WT-DiT) that treats multiple
+geometry layers as separate denoising tokens coupled through factorized
+and global attention. WT-DiT is trained with pixel-space flow matching
+using a mixed noise schedule to balance reconstruction vs. generation
+capability. As a result, World Tracing demonstrates strong performance
+on both visible-surface reconstruction and complete geometry generation
+across object, scene, and dynamic benchmarks, outperforming both depth
+predictors and image-to-3D generators. Furthermore, because it preserves
+2D-to-3D correspondence, it directly enables text-driven 3D scene
+editing, geometry-conditioned novel-view video synthesis, and training-free
+integration with textured-mesh generators.
+</p>
+</section>
+
+<!-- =========== Interactive examples =========== -->
+<section class="section" id="results">
+  <div class="section-head section-head--centered">
+    <span class="section-meta"><span class="section-num">03</span><span class="section-eyebrow">Explore the results</span></span>
+    <h2>Interactive examples</h2>
+    <span class="section-rule"></span>
+  </div>
+
+  <div class="cat-tabs-wrap">
+    <div class="cat-tabs">
+      <button data-cat="object" class="active">Objects</button>
+      <button data-cat="scene">Scenes</button>
+      <button data-cat="dynamic">Dynamic</button>
+    </div>
+  </div>
+
+  <div class="stage-header" id="stage-header"></div>
+  <div class="demo-stage three" id="demo-stage"></div>
+
+  <div class="thumb-strip-wrap">
+    <button class="strip-btn prev" aria-label="scroll left">&larr;</button>
+    <div class="thumb-strip" id="thumb-strip"></div>
+    <button class="strip-btn next" aria-label="scroll right">&rarr;</button>
+  </div>
+
+  <p class="lead" style="text-align:center;align-self:center;margin-top:8px;">
+    World Tracing produces <em>pixel-aligned layered geometry</em> from a single
+    image or a monocular video. For each object we additionally lift our point
+    cloud into a training-free textured mesh. Click any thumbnail to load a
+    different example; click the <em>Rerun</em> button below each viewer to
+    open the full layered recording.
+  </p>
+</section>
+
+<section class="section centered washed" id="demo-textured-mesh">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">04</span><span class="section-eyebrow">Applications</span></span>
+    <h2>Training-free textured-mesh generation</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead" style="max-width:760px;margin:0 auto 20px;">
+    For each example we lift our layered point cloud into a textured mesh
+    without any fine-tuning. The video below walks through the full pipeline:
+    <em>input image &rarr; first depth layer &rarr; all layers &rarr; textured mesh</em>.
+    Click any thumbnail to swap the object.
+  </p>
+  <div class="demo-video-stage hover-play" id="mesh-demo-stage" data-hover-target="mesh-demo-video">
+    <video id="mesh-demo-video" loop muted playsinline preload="none" data-play-on-hover></video>
+    <div class="hover-play-overlay" aria-hidden="true">
+      <span class="hover-play-icon"></span>
+      <span class="hover-play-label">Hover to play</span>
+    </div>
+    <div class="demo-video-label" id="mesh-demo-label"></div>
+  </div>
+  <div class="thumb-strip-wrap demo-thumb-strip-wrap">
+    <button class="strip-btn prev" id="mesh-demo-prev" aria-label="scroll left">&larr;</button>
+    <div class="thumb-strip" id="mesh-demo-strip"></div>
+    <button class="strip-btn next" id="mesh-demo-next" aria-label="scroll right">&rarr;</button>
+  </div>
+</section>
+
+<section class="section centered" id="demo-3d-editing">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">05</span><span class="section-eyebrow">Applications</span></span>
+    <h2>3D scene editing</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead" style="max-width:760px;margin:0 auto 20px;">
+    Our layered geometry treats every object as a fully-realised 3D
+    asset. We can insert, replace, or remove objects in a scene point
+    cloud and the edit propagates consistently through novel views.
+  </p>
+  <div class="demo-video hover-play" data-hover-target="demo-3d-editing-video">
+    <video id="demo-3d-editing-video" loop muted playsinline preload="none" data-play-on-hover></video>
+    <div class="hover-play-overlay" aria-hidden="true">
+      <span class="hover-play-icon"></span>
+      <span class="hover-play-label">Hover to play</span>
+    </div>
+  </div>
+</section>
+
+<section class="section centered washed" id="demo-novel-view-video">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">06</span><span class="section-eyebrow">Applications</span></span>
+    <h2>Geometry-guided novel-view video</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead" style="max-width:760px;margin:0 auto 20px;">
+    Pair our predicted geometry with a video diffusion model
+    (Wan2.2 VACE) and produce temporally-consistent novel-view
+    flythrough videos that obey the underlying 3D structure.
+  </p>
+  <div class="demo-video hover-play" data-hover-target="demo-novel-view-video-video">
+    <video id="demo-novel-view-video-video" loop muted playsinline preload="none" data-play-on-hover></video>
+    <div class="hover-play-overlay" aria-hidden="true">
+      <span class="hover-play-icon"></span>
+      <span class="hover-play-label">Hover to play</span>
+    </div>
+  </div>
+</section>
+
+<section class="section compact centered" id="bibtex">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">07</span><span class="section-eyebrow">Cite this work</span></span>
+    <h2>BibTeX</h2>
+    <span class="section-rule"></span>
+  </div>
+  <div class="cite-wrap">
+    <button type="button" class="cite-copy" data-target="cite-bibtex" aria-label="Copy BibTeX to clipboard">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V6a2 2 0 0 1 2-2h9"></path></svg>
+      <span class="cite-copy-label">copy</span>
+    </button>
+    <pre class="cite" id="cite-bibtex">@inproceedings{zhang2026worldtracing,
+  title     = {World Tracing: Generative Pixel-Aligned Geometry Beyond the Visible},
+  author    = {Hao Zhang and Mohamed El Banani and Jen-Hao Cheng and Paul Zhang
+               and Yi Hua and Ben Mildenhall and Christoph Lassner
+               and Narendra Ahuja and Gengshan Yang},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}
+</pre>
+  </div>
+</section>
+
+<section class="section centered" id="ack">
+  <div class="section-head">
+    <span class="section-meta"><span class="section-num">08</span><span class="section-eyebrow">Thanks</span></span>
+    <h2>Acknowledgements</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead">
+We thank
+<a href="https://profiles.stanford.edu/fei-fei-li" target="_blank" rel="noopener">Fei-Fei Li</a>,
+<a href="https://web.eecs.umich.edu/~justincj/" target="_blank" rel="noopener">Justin Johnson</a>,
+<a href="https://www.bart-ai.com/" target="_blank" rel="noopener">Bardienus Duisterhof</a>,
+<a href="https://scholar.google.com/citations?user=zel3jUcAAAAJ&amp;hl=en" target="_blank" rel="noopener">Justin Cui</a>,
+and <a href="https://zixuanh.com/" target="_blank" rel="noopener">Zixuan Huang</a>
+for valuable discussions and feedback throughout this project.
+The interactive 3D viewer is powered by
+<a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a>
+and <a href="https://modelviewer.dev" target="_blank" rel="noopener">&lt;model-viewer&gt;</a>;
+exported sessions open in <a href="https://rerun.io" target="_blank" rel="noopener">Rerun</a>.
+Page layout inspired by
+<a href="https://www.worldlabs.ai" target="_blank" rel="noopener">World Labs</a>.
+</p>
+</section>
+
+</main>
+
+<footer>
+  &copy; 2026 World Labs &middot;
+  Powered by <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a>,
+  <a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer</a>,
+  and <a href="https://rerun.io" target="_blank" rel="noopener">Rerun 0.22.0</a>
+</footer>
+
+</body>
+</html>
