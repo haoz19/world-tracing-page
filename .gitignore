@@ -1,0 +1,22 @@
+# Page build artefacts (regenerated on every deploy; only the gh-pages
+# branch should ever contain them).
+docs_curated/
+
+# Large local mirrors of GH Release content
+_demo_rrd_*_local/
+_highlight_cycles_local/
+_demo_videos_*_local/
+_picker_v2_runs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Misc
+*.log
+*.tmp

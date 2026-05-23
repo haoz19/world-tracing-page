@@ -1,0 +1,201 @@
+{
+  "exported_at": "2026-05-23T09:30:00.000Z",
+  "num_seeds_per_category": {
+    "object": 8,
+    "scene": 8,
+    "dynamic": 4
+  },
+  "selection_count": 38,
+  "samples": [
+    {
+      "stem": "obj014_leather_briefcase",
+      "category": "object",
+      "seed": 3
+    },
+    {
+      "stem": "obj015_wooden_train",
+      "category": "object",
+      "seed": 5
+    },
+    {
+      "stem": "obj063_trex_dinosaur",
+      "category": "object",
+      "seed": 5
+    },
+    {
+      "stem": "obj072_power_armor",
+      "category": "object",
+      "seed": 7
+    },
+    {
+      "stem": "obj083_chibi_swordsman",
+      "category": "object",
+      "seed": 2
+    },
+    {
+      "stem": "obj123_jade_dragon_curio",
+      "category": "object",
+      "seed": 2
+    },
+    {
+      "stem": "obj071_griffin",
+      "category": "object",
+      "seed": 2
+    },
+    {
+      "stem": "obj110_aqua_diving_mech",
+      "category": "object",
+      "seed": 7
+    },
+    {
+      "stem": "obj122_bronze_athletic_discobolus",
+      "category": "object",
+      "seed": 1
+    },
+    {
+      "stem": "obj125_bronze_lion_guardian",
+      "category": "object",
+      "seed": 1
+    },
+    {
+      "stem": "scene_outdoor_14_brooklyn_apartment__seed61",
+      "category": "scene",
+      "seed": 5
+    },
+    {
+      "stem": "scene_indoor_01_modern_living_room__seed42",
+      "category": "scene",
+      "seed": 0
+    },
+    {
+      "stem": "scene_indoor_15_art_studio__seed49",
+      "category": "scene",
+      "seed": 1
+    },
+    {
+      "stem": "scene_indoor_04_dining_room__seed43",
+      "category": "scene",
+      "seed": 4
+    },
+    {
+      "stem": "scene_outdoor_10_gothic_cathedral__seed59",
+      "category": "scene",
+      "seed": 0
+    },
+    {
+      "stem": "scene_indoor_06_luxury_bathroom__seed44",
+      "category": "scene",
+      "seed": 0
+    },
+    {
+      "stem": "scene_indoor_03_modern_kitchen__seed43",
+      "category": "scene",
+      "seed": 1
+    },
+    {
+      "stem": "scene_indoor_25_rustic_cabin__seed54",
+      "category": "scene",
+      "seed": 2
+    },
+    {
+      "stem": "consistent4d_in_the_wild__dancing_robot",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "consistent4d_in_the_wild__dancing_spiderman",
+      "category": "dynamic",
+      "seed": 0
+    },
+    {
+      "stem": "consistent4d_in_the_wild__looking_around_jack_russell",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "human__0032_02_view01",
+      "category": "dynamic",
+      "seed": 0
+    },
+    {
+      "stem": "human__0643_02_view25",
+      "category": "dynamic",
+      "seed": 10
+    },
+    {
+      "stem": "human__0657_06_view22",
+      "category": "dynamic",
+      "seed": 0
+    },
+    {
+      "stem": "consistent4d_synthetic__walking_siamese_cat",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "human__0306_06_view25",
+      "category": "dynamic",
+      "seed": 10
+    },
+    {
+      "stem": "davis__bear",
+      "category": "dynamic",
+      "seed": 0
+    },
+    {
+      "stem": "davis__breakdance",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "davis__cows",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "davis__dance-twirl_seg00",
+      "category": "dynamic",
+      "seed": 2
+    },
+    {
+      "stem": "davis__dance-twirl_seg01",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "davis__flamingo",
+      "category": "dynamic",
+      "seed": 2
+    },
+    {
+      "stem": "consistent4d_in_the_wild__looking_up_kitten",
+      "category": "dynamic",
+      "seed": 2
+    },
+    {
+      "stem": "davis__lucia",
+      "category": "dynamic",
+      "seed": 3
+    },
+    {
+      "stem": "consistent4d_synthetic__swimming_guppie",
+      "category": "dynamic",
+      "seed": 3
+    },
+    {
+      "stem": "consistent4d_synthetic__swimming_yellow_tang",
+      "category": "dynamic",
+      "seed": 0
+    },
+    {
+      "stem": "davis__tennis_seg00",
+      "category": "dynamic",
+      "seed": 1
+    },
+    {
+      "stem": "davis__tennis_seg01",
+      "category": "dynamic",
+      "seed": 1
+    }
+  ]
+}
