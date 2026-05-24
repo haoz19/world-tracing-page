@@ -2,16 +2,16 @@
   <defs>
     <linearGradient id="wlTrail" gradientUnits="userSpaceOnUse"
                     x1="0" y1="240" x2="250" y2="0">
-      <stop offset="0%"   stop-color="#a855f7"/>
-      <stop offset="55%"  stop-color="#8b8df5"/>
-      <stop offset="100%" stop-color="#7dd3fc"/>
+      <stop offset="0%"   stop-color="#7c3aed"/>
+      <stop offset="55%"  stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#0891b2"/>
     </linearGradient>
   </defs>
 
   <g transform="translate(55 35)">
     <!-- three echo trails: pinned at the W's upper-left and upper-right tips,
          the middle (bottom V's) fans outward to the lower-left -->
-    <g fill="none" stroke="url(#wlTrail)" stroke-width="3"
+    <g fill="none" stroke="url(#wlTrail)" stroke-width="4"
        stroke-linejoin="round" stroke-linecap="round">
       <path opacity="0.95"
             d="M.25 8.98 L28.55 188.98 c1.5 7.5 9.9 9.1 15 3.4 L58.75 176.98 c13.8 -14 34.2 -12.6 46.7 2.5 L153.55 228.68 c3.5 3.7 10.2 2.3 12.6 -2.2 L248.35 86.48"/>
