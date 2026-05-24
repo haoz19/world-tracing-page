@@ -2666,24 +2666,6 @@ function initHighlightsBand() {
         onActivate();
       }
     });
-
-    if (!IS_MOBILE && IS_TOUCH_COARSE) {
-      const media = card.querySelector('.h-media');
-      const v = card.querySelector('video.h-preview');
-      if (!media || !v) return;
-      media.classList.add('tap-to-play');
-      media.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (v.paused) {
-          playVideoFromGesture(v, v.dataset.previewSrc);
-          media.classList.add('is-playing');
-        } else {
-          v.pause();
-          media.classList.remove('is-playing');
-        }
-      });
-    }
   });
 
   // Desktop: all 6 tile videos auto-play in parallel as soon as the page
