@@ -14,6 +14,88 @@
   self.ModelViewerElement = self.ModelViewerElement || {};
   self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.21.0/meshopt_decoder.js';
 </script>
+<!-- Hero "Model" dropdown: click-to-toggle, outside-click + Escape to close,
+     arrow keys to move between rows.  Hover-open is handled in CSS. -->
+<script>
+(function () {
+  function init() {
+    var menus = document.querySelectorAll('.link-menu[data-menu]');
+    if (!menus.length) return;
+
+    function closeAll(except) {
+      menus.forEach(function (m) {
+        if (m === except) return;
+        var t = m.querySelector('.link-menu-trigger');
+        var p = m.querySelector('.link-menu-panel');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        if (p) p.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    menus.forEach(function (menu) {
+      var trigger = menu.querySelector('.link-menu-trigger');
+      var panel   = menu.querySelector('.link-menu-panel');
+      if (!trigger || !panel) return;
+
+      trigger.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var open = trigger.getAttribute('aria-expanded') === 'true';
+        closeAll(menu);
+        trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+        panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        if (!open) {
+          var first = panel.querySelector('.lm-row');
+          if (first) first.focus({ preventScroll: true });
+        }
+      });
+
+      trigger.addEventListener('keydown', function (ev) {
+        if (ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          var first = panel.querySelector('.lm-row');
+          if (first) first.focus({ preventScroll: true });
+        }
+      });
+
+      panel.addEventListener('keydown', function (ev) {
+        var rows = Array.prototype.slice.call(panel.querySelectorAll('.lm-row'));
+        var idx  = rows.indexOf(document.activeElement);
+        if (ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          var n = rows[(idx + 1 + rows.length) % rows.length];
+          if (n) n.focus({ preventScroll: true });
+        } else if (ev.key === 'ArrowUp') {
+          ev.preventDefault();
+          var p = rows[(idx - 1 + rows.length) % rows.length];
+          if (p) p.focus({ preventScroll: true });
+        } else if (ev.key === 'Escape') {
+          ev.preventDefault();
+          trigger.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('aria-hidden', 'true');
+          trigger.focus({ preventScroll: true });
+        }
+      });
+    });
+
+    document.addEventListener('click', function (ev) {
+      var inside = ev.target.closest && ev.target.closest('.link-menu[data-menu]');
+      if (!inside) closeAll(null);
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeAll(null);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
 <script type="importmap">
@@ -134,6 +216,128 @@ hr { display: none; }
 .hero .links a.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .hero .links a.primary:hover { background: var(--grey-300); border-color: var(--grey-300); }
 .hero .links a svg { width: 14px; height: 14px; }
+
+/* ----- Model dropdown menu ----- *
+ * The "Model" pill in the hero link bar opens a small panel listing the
+ * three HF model repos (object / scene / dynamic).  The trigger reuses the
+ * existing pill chrome from `.hero .links a` so it visually sits inline
+ * with arXiv / Code / BibTeX, but is rendered as a <button> with an
+ * aria-controlled panel below it.  Hover and focus open the panel
+ * (CSS-only); a tiny JS handler also toggles it on click/Enter/Space and
+ * closes it on outside-click or Escape (see HEAD_SCRIPTS). */
+.hero .links .link-menu { position: relative; display: inline-flex; }
+.hero .links .link-menu-trigger {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--fg);
+  font: inherit; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.hero .links .link-menu-trigger:hover {
+  background: #f7f6f3; border-color: var(--border-strong);
+}
+.hero .links .link-menu-trigger:active { transform: scale(0.98); }
+.hero .links .link-menu-trigger svg.caret {
+  width: 12px; height: 12px;
+  transition: transform .18s ease;
+}
+.hero .links .link-menu-trigger[aria-expanded="true"] svg.caret { transform: rotate(180deg); }
+.hero .links .link-menu-trigger[aria-expanded="true"] {
+  background: #f7f6f3; border-color: var(--border-strong);
+}
+
+.hero .links .link-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  min-width: 280px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 32px -12px rgba(15, 15, 15, 0.18),
+    0 4px 10px -4px rgba(15, 15, 15, 0.08);
+  display: flex; flex-direction: column; gap: 2px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+  z-index: 30;
+  text-align: left;
+}
+.hero .links .link-menu:hover .link-menu-panel,
+.hero .links .link-menu:focus-within .link-menu-panel,
+.hero .links .link-menu-trigger[aria-expanded="true"] + .link-menu-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.hero .links .link-menu-panel[aria-hidden="true"] {
+  /* Hidden state when JS explicitly closes the menu (click-outside,
+   * Escape).  CSS hover/focus rules above can still re-open it. */
+}
+
+.hero .links .link-menu-panel .lm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;          /* keeps height stable on hover */
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background .12s ease, border-color .12s ease;
+}
+.hero .links .link-menu-panel .lm-row:hover,
+.hero .links .link-menu-panel .lm-row:focus-visible {
+  background: #f5f4f0;
+  border-color: var(--border);
+  outline: none;
+}
+.hero .links .link-menu-panel .lm-row .lm-text {
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 0; flex: 1;
+}
+.hero .links .link-menu-panel .lm-row .lm-label {
+  font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--fg);
+}
+.hero .links .link-menu-panel .lm-row .lm-sub {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, monospace);
+  font-size: 12px; line-height: 1.3;
+  color: var(--grey-100);
+  word-break: break-all;
+}
+.hero .links .link-menu-panel .lm-row .lm-meta {
+  font-size: 11.5px; line-height: 1.3;
+  color: var(--grey-dim);
+  letter-spacing: 0.01em;
+}
+.hero .links .link-menu-panel .lm-row svg.ext {
+  width: 14px; height: 14px;
+  color: var(--grey-100);
+  flex: none;
+}
+.hero .links .link-menu-panel .lm-row:hover svg.ext { color: var(--fg); }
+
+@media (max-width: 540px) {
+  /* On narrow screens, anchor the panel to the trigger's left edge so
+   * it doesn't slide off-screen on the right when "Model" is the last
+   * row of the wrapped link bar. */
+  .hero .links .link-menu-panel {
+    left: 0; right: auto;
+    transform: translate(0, -4px);
+    min-width: min(86vw, 320px);
+  }
+  .hero .links .link-menu:hover .link-menu-panel,
+  .hero .links .link-menu:focus-within .link-menu-panel,
+  .hero .links .link-menu-trigger[aria-expanded="true"] + .link-menu-panel {
+    transform: translate(0, 0);
+  }
+}
 
 /* ===== Hero summary demo video =====
  * The 2.5-min summary video that opens the page. Sits between the
@@ -1314,106 +1518,74 @@ window.DEMO_VIDEOS = [
   {
     "stem": "obj014_leather_briefcase",
     "label": "Leather Briefcase",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj014_leather_briefcase.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090440Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=4dc6295eab6f0b0dcd05a4ae64fb3c7068692bff8f4c2f75c7915efc6bbbe75f",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj014_leather_briefcase_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090440Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8a67d0b3808515cc5f75f78859088d75d26174abfcde6a01d987bb02b1d34c41"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj014_leather_briefcase.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065615Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=76ed299f24bb4c7f0b7b7eb9cb4c06c429aade982487ce60059526c216e5e6da",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj014_leather_briefcase_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065615Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8dff11280cb60d3a30149c75083e0372eb94a519a80736c7804cfad6b397e0a7"
   },
   {
     "stem": "obj015_wooden_train",
     "label": "Wooden Train",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj015_wooden_train.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090440Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=fe45d7da8da19fc5f6940898aa5227e4332f7a324a739f75fd2c5417ad5c162f",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj015_wooden_train_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090440Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=4cb41037a7a87ab15c996f0c09a9cdcd605a90c28933eae8c5df09708d55757c"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj015_wooden_train.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065615Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=6c4772c20a01d3364cbcec1995eff0fd1dca5143a0f2f2e36e44cd7b5bb794b3",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj015_wooden_train_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065615Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=17c38c6eb46b26348c41d9d720ab7c18d8509d04fd25dcdc2e29538e31247530"
   },
   {
     "stem": "obj063_trex_dinosaur",
     "label": "T-Rex Dinosaur",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj063_trex_dinosaur.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090441Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=7480a1c8911b5104d386c4eb7cb74e2d09234ca9d707bc7991838ab453ba21df",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj063_trex_dinosaur_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090441Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=07be658f837ef33710ed2b0bc79cb2342dab6358c498902a4a72f3393793ad29"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj063_trex_dinosaur.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065615Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=9eeafea352d793b67be8cab5d407fa77cc2c38354c07a759c6aec5cd3935770b",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj063_trex_dinosaur_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=2e8266027541303429f53d8a3d923e14031e829ee550d9ffea36829220d2bfbe"
   },
   {
     "stem": "obj072_power_armor",
     "label": "Power Armor",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj072_power_armor.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090443Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8e580bb11623291c78efd78ab6774af0bf2c8b6d3ca586af689becf8a1800ae7",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj072_power_armor_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090443Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=354cd8475bb0f37fe65229c58e85926de2814f97c92403146c7ea92f65ea7f8f"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj072_power_armor.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=61f96751cbf6a7c8087a92693350154e12113e857b582d52b17f42e9c6e90829",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj072_power_armor_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=0d642fcb4c4d40f73da6c99ee827d61ba345edec978d5ff5e1c376932b28fcaf"
   },
   {
     "stem": "obj083_chibi_swordsman",
     "label": "Chibi Swordsman",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj083_chibi_swordsman.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090444Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=7f3cec053777d662c59e35e4c359080024b1a6a2b1e33c7e9fc27b8e544bc45b",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj083_chibi_swordsman_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090444Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=3303da9e2960639cbfabde23ecb0e562fb3ddb6190fd0d86808059e111638382"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj083_chibi_swordsman.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5733f7086758dc97a750702c4f603109327f66336e11451dab624d6c13a04dfe",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj083_chibi_swordsman_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065617Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8259fb347651547e3995cbae4a43e3fa41fc8d126a4147f531abc279bec4d4fb"
   },
   {
     "stem": "obj123_jade_dragon_curio",
     "label": "Jade Dragon Curio",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj123_jade_dragon_curio.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090448Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=1c0ac1af8d78011282f0c53362ec9c4ff0d62caec2afe36b7af0c79906eaa435",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj123_jade_dragon_curio_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090448Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=02b82d8be83edee94218593c9d5fae147d87f82f3586ee0e9066876457711429"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj123_jade_dragon_curio.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065618Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=667bde5fd9ca88198c6baae19d00919c7065648aeade7459c2a57d531866e371",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj123_jade_dragon_curio_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065618Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ce2eb7f51e2e534e98fe323002abf87c529e8e4e160fc4b6db131587f0b47832"
   },
   {
     "stem": "obj071_griffin",
     "label": "Griffin",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj071_griffin.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090442Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=bbdef23e80b0341efb41036493a27875b5ebd042400de81e34c941c8e57110c3",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj071_griffin_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090442Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=58bd5691c8e8fb0c183f11fe352a8695ee623f721b04b446d0c00ec61a463d2d"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj071_griffin.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8a299103dc0069b930b2ef88818048d0ed94b2f448f90b9e6f38677b6c9115bf",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj071_griffin_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065616Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=a45caab66900693b8e85c95bbe328d9e4f81c51b76c7672f5cdaf4c918d07158"
   },
   {
     "stem": "obj110_aqua_diving_mech",
     "label": "Aqua Diving Mech",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj110_aqua_diving_mech.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090445Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=6caddceab83addacd49c59d1f5b5c35523d421f7ac96c83697b0822c38b4fee7",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj110_aqua_diving_mech_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090445Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=18d0624068e1885310a767e1ac089573ccfb10831a8d6239d5f0791c911520fc"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj110_aqua_diving_mech.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065617Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=35d0a91d4a0aff4c68283c5bc8421234066f5febfbfc8f523e250ca6c0152b28",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj110_aqua_diving_mech_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065617Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ba48547df7bc10bee37b69bf9cfd0ca365144a3b540c79d53fe630d83c130e98"
   },
   {
     "stem": "obj122_bronze_athletic_discobolus",
     "label": "Bronze Athletic Discobolus",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj122_bronze_athletic_discobolus.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090446Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=e8b760a86eb745ebf11a9472312142a4f82c384574eba56f2be29627f995848c",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj122_bronze_athletic_discobolus_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090446Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=3a5c95421f1016543885b97b45be0ceb85f76f400f019d48d104249610a6ae74"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj122_bronze_athletic_discobolus.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065617Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=4d0d8bd8c8f347764a2fdb5b53e43829785f979b881a65070a98f9ff5cd42ddf",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj122_bronze_athletic_discobolus_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065617Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8a8a059412d688e31247957882c1c2eb5f0a2867af82eac378615631fe00eef2"
   },
   {
     "stem": "obj125_bronze_lion_guardian",
     "label": "Bronze Lion Guardian",
-    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj125_bronze_lion_guardian.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090450Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=2bbaae0ef24e871e854d5b6077a5ce98741076ae9aad13aa59c720f18b121888",
-    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj125_bronze_lion_guardian_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260522%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260522T090450Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=268d98dae3a70390ba50263c8fdd7767d69b6f5b32f6f6d2349634d784921307"
+    "mp4": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj125_bronze_lion_guardian.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065618Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ecac837b48404d28a1eb7e0964d23e608041eb8638a63e23604b76e5e11aedb6",
+    "thumb": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/demo_videos/obj125_bronze_lion_guardian_thumb.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065618Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=21cd4201a0c107727029539e5eadc30cd10210e6c36a29e9aa90539639cc01db"
   }
 ];
 window.SECTION_VIDEOS = {
-  "hero-demo-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/hero_demo_v3_1440p.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180555Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=aea1d4937b1ff141875366bf31da18ac9dec8d666003e641f7df4d0fa232924e",
-  "demo-3d-editing-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/scene_editing.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180555Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=8bb0c4575f3fce49944a02eb711fc74dfc774e34faa17de754658ceac4431706",
-  "demo-novel-view-video-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/geometry_guided.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180555Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=5ef402fc3432b59c8fc5e25dac0a552d095728d39353b7e87b983760280cf8cd"
-};// __WT_S3_OVERRIDE_BEGIN__
-
-// runtime override -- URLs point to permanent GitHub Release assets
-window.__S3_URLS = {"obj014_leather_briefcase__seed3.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj014_leather_briefcase__seed3.rrd", "obj015_wooden_train__seed5.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj015_wooden_train__seed5.rrd", "obj063_trex_dinosaur__seed5.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj063_trex_dinosaur__seed5.rrd", "obj072_power_armor__seed7.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj072_power_armor__seed7.rrd", "obj083_chibi_swordsman__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj083_chibi_swordsman__seed2.rrd", "obj123_jade_dragon_curio__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj123_jade_dragon_curio__seed2.rrd", "obj071_griffin__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj071_griffin__seed2.rrd", "obj110_aqua_diving_mech__seed7.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj110_aqua_diving_mech__seed7.rrd", "obj122_bronze_athletic_discobolus__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj122_bronze_athletic_discobolus__seed1.rrd", "obj125_bronze_lion_guardian__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj125_bronze_lion_guardian__seed1.rrd", "scene_outdoor_14_brooklyn_apartment__seed61__seed5.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_outdoor_14_brooklyn_apartment__seed61__seed5.rrd", "scene_indoor_01_modern_living_room__seed42__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_01_modern_living_room__seed42__seed0.rrd", "scene_indoor_15_art_studio__seed49__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_15_art_studio__seed49__seed1.rrd", "scene_indoor_04_dining_room__seed43__seed4.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_04_dining_room__seed43__seed4.rrd", "scene_outdoor_10_gothic_cathedral__seed59__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_outdoor_10_gothic_cathedral__seed59__seed0.rrd", "scene_indoor_06_luxury_bathroom__seed44__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_06_luxury_bathroom__seed44__seed0.rrd", "scene_indoor_03_modern_kitchen__seed43__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_03_modern_kitchen__seed43__seed1.rrd", "scene_indoor_25_rustic_cabin__seed54__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_25_rustic_cabin__seed54__seed2.rrd", "consistent4d_in_the_wild__dancing_robot__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__dancing_robot__seed1.rrd", "consistent4d_in_the_wild__dancing_spiderman__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__dancing_spiderman__seed0.rrd", "consistent4d_in_the_wild__looking_around_jack_russell__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__looking_around_jack_russell__seed1.rrd", "human__0032_02_view01__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0032_02_view01__seed0.rrd", "human__0643_02_view25__seed10.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0643_02_view25__seed10.rrd", "human__0657_06_view22__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0657_06_view22__seed0.rrd", "consistent4d_synthetic__walking_siamese_cat__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__walking_siamese_cat__seed1.rrd", "human__0306_06_view25__seed10.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0306_06_view25__seed10.rrd", "davis__bear__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__bear__seed0.rrd", "davis__breakdance__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__breakdance__seed1.rrd", "davis__cows__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__cows__seed1.rrd", "davis__dance-twirl_seg00__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__dance-twirl_seg00__seed2.rrd", "davis__dance-twirl_seg01__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__dance-twirl_seg01__seed1.rrd", "davis__flamingo__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__flamingo__seed2.rrd", "consistent4d_in_the_wild__looking_up_kitten__seed2.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__looking_up_kitten__seed2.rrd", "davis__lucia__seed3.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__lucia__seed3.rrd", "consistent4d_synthetic__swimming_guppie__seed3.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__swimming_guppie__seed3.rrd", "consistent4d_synthetic__swimming_yellow_tang__seed0.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__swimming_yellow_tang__seed0.rrd", "davis__tennis_seg00__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__tennis_seg00__seed1.rrd", "davis__tennis_seg01__seed1.rrd": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__tennis_seg01__seed1.rrd"};
-window.__S3_THUMBS = {};
-window.__S3_ASSETS = {"assets/pc/dynamic/consistent4d_in_the_wild__dancing_robot.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_in_the_wild__dancing_robot.wtpc", "assets/pc/dynamic/consistent4d_in_the_wild__dancing_spiderman.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_in_the_wild__dancing_spiderman.wtpc", "assets/pc/dynamic/consistent4d_in_the_wild__looking_around_jack_russell.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_in_the_wild__looking_around_jack_russell.wtpc", "assets/pc/dynamic/consistent4d_in_the_wild__looking_up_kitten.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_in_the_wild__looking_up_kitten.wtpc", "assets/pc/dynamic/consistent4d_synthetic__swimming_guppie.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_synthetic__swimming_guppie.wtpc", "assets/pc/dynamic/consistent4d_synthetic__swimming_yellow_tang.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_synthetic__swimming_yellow_tang.wtpc", "assets/pc/dynamic/consistent4d_synthetic__walking_siamese_cat.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/consistent4d_synthetic__walking_siamese_cat.wtpc", "assets/pc/dynamic/davis__bear.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__bear.wtpc", "assets/pc/dynamic/davis__breakdance.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__breakdance.wtpc", "assets/pc/dynamic/davis__cows.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__cows.wtpc", "assets/pc/dynamic/davis__dance-twirl_seg00.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__dance-twirl_seg00.wtpc", "assets/pc/dynamic/davis__dance-twirl_seg01.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__dance-twirl_seg01.wtpc", "assets/pc/dynamic/davis__flamingo.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__flamingo.wtpc", "assets/pc/dynamic/davis__lucia.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__lucia.wtpc", "assets/pc/dynamic/davis__tennis_seg00.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__tennis_seg00.wtpc", "assets/pc/dynamic/davis__tennis_seg01.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/davis__tennis_seg01.wtpc", "assets/pc/dynamic/human__0032_02_view01.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/human__0032_02_view01.wtpc", "assets/pc/dynamic/human__0306_06_view25.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/human__0306_06_view25.wtpc", "assets/pc/dynamic/human__0643_02_view25.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/human__0643_02_view25.wtpc", "assets/pc/dynamic/human__0657_06_view22.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/dynamic/human__0657_06_view22.wtpc", "assets/pc/object/obj014_leather_briefcase.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj014_leather_briefcase.wtpc", "assets/pc/object/obj015_wooden_train.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj015_wooden_train.wtpc", "assets/pc/object/obj063_trex_dinosaur.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj063_trex_dinosaur.wtpc", "assets/pc/object/obj071_griffin.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj071_griffin.wtpc", "assets/pc/object/obj072_power_armor.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj072_power_armor.wtpc", "assets/pc/object/obj083_chibi_swordsman.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj083_chibi_swordsman.wtpc", "assets/pc/object/obj110_aqua_diving_mech.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj110_aqua_diving_mech.wtpc", "assets/pc/object/obj122_bronze_athletic_discobolus.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj122_bronze_athletic_discobolus.wtpc", "assets/pc/object/obj123_jade_dragon_curio.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj123_jade_dragon_curio.wtpc", "assets/pc/object/obj125_bronze_lion_guardian.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/object/obj125_bronze_lion_guardian.wtpc", "assets/pc/scene/scene_indoor_01_modern_living_room__seed42.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_01_modern_living_room__seed42.wtpc", "assets/pc/scene/scene_indoor_03_modern_kitchen__seed43.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_03_modern_kitchen__seed43.wtpc", "assets/pc/scene/scene_indoor_04_dining_room__seed43.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_04_dining_room__seed43.wtpc", "assets/pc/scene/scene_indoor_06_luxury_bathroom__seed44.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_06_luxury_bathroom__seed44.wtpc", "assets/pc/scene/scene_indoor_15_art_studio__seed49.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_15_art_studio__seed49.wtpc", "assets/pc/scene/scene_indoor_25_rustic_cabin__seed54.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_indoor_25_rustic_cabin__seed54.wtpc", "assets/pc/scene/scene_outdoor_10_gothic_cathedral__seed59.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_outdoor_10_gothic_cathedral__seed59.wtpc", "assets/pc/scene/scene_outdoor_14_brooklyn_apartment__seed61.wtpc": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/pc/scene/scene_outdoor_14_brooklyn_apartment__seed61.wtpc", "assets/glb/obj014_leather_briefcase.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj014_leather_briefcase.glb", "assets/glb/obj015_wooden_train.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj015_wooden_train.glb", "assets/glb/obj063_trex_dinosaur.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj063_trex_dinosaur.glb", "assets/glb/obj071_griffin.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj071_griffin.glb", "assets/glb/obj072_power_armor.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj072_power_armor.glb", "assets/glb/obj083_chibi_swordsman.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj083_chibi_swordsman.glb", "assets/glb/obj110_aqua_diving_mech.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj110_aqua_diving_mech.glb", "assets/glb/obj122_bronze_athletic_discobolus.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj122_bronze_athletic_discobolus.glb", "assets/glb/obj123_jade_dragon_curio.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj123_jade_dragon_curio.glb", "assets/glb/obj125_bronze_lion_guardian.glb": "https://cdn.jsdelivr.net/gh/haoz19/world-tracing-page@assets/glb/obj125_bronze_lion_guardian.glb", "assets/input/dynamic/consistent4d_in_the_wild__dancing_robot.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__dancing_robot.mp4", "assets/input/dynamic/consistent4d_in_the_wild__dancing_spiderman.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__dancing_spiderman.mp4", "assets/input/dynamic/consistent4d_in_the_wild__looking_around_jack_russell.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__looking_around_jack_russell.mp4", "assets/input/dynamic/consistent4d_in_the_wild__looking_up_kitten.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_in_the_wild__looking_up_kitten.mp4", "assets/input/dynamic/consistent4d_synthetic__swimming_guppie.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__swimming_guppie.mp4", "assets/input/dynamic/consistent4d_synthetic__swimming_yellow_tang.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__swimming_yellow_tang.mp4", "assets/input/dynamic/consistent4d_synthetic__walking_siamese_cat.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/consistent4d_synthetic__walking_siamese_cat.mp4", "assets/input/dynamic/davis__bear.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__bear.mp4", "assets/input/dynamic/davis__breakdance.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__breakdance.mp4", "assets/input/dynamic/davis__cows.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__cows.mp4", "assets/input/dynamic/davis__dance-twirl_seg00.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__dance-twirl_seg00.mp4", "assets/input/dynamic/davis__dance-twirl_seg01.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__dance-twirl_seg01.mp4", "assets/input/dynamic/davis__flamingo.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__flamingo.mp4", "assets/input/dynamic/davis__lucia.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__lucia.mp4", "assets/input/dynamic/davis__tennis_seg00.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__tennis_seg00.mp4", "assets/input/dynamic/davis__tennis_seg01.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/davis__tennis_seg01.mp4", "assets/input/dynamic/human__0032_02_view01.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0032_02_view01.mp4", "assets/input/dynamic/human__0306_06_view25.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0306_06_view25.mp4", "assets/input/dynamic/human__0643_02_view25.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0643_02_view25.mp4", "assets/input/dynamic/human__0657_06_view22.mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/human__0657_06_view22.mp4", "assets/input/object/obj014_leather_briefcase.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj014_leather_briefcase.jpg", "assets/input/object/obj015_wooden_train.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj015_wooden_train.jpg", "assets/input/object/obj063_trex_dinosaur.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj063_trex_dinosaur.jpg", "assets/input/object/obj071_griffin.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj071_griffin.jpg", "assets/input/object/obj072_power_armor.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj072_power_armor.jpg", "assets/input/object/obj083_chibi_swordsman.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj083_chibi_swordsman.jpg", "assets/input/object/obj110_aqua_diving_mech.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj110_aqua_diving_mech.jpg", "assets/input/object/obj122_bronze_athletic_discobolus.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj122_bronze_athletic_discobolus.jpg", "assets/input/object/obj123_jade_dragon_curio.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj123_jade_dragon_curio.jpg", "assets/input/object/obj125_bronze_lion_guardian.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj125_bronze_lion_guardian.jpg", "assets/input/scene/scene_indoor_01_modern_living_room__seed42.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_01_modern_living_room__seed42.jpg", "assets/input/scene/scene_indoor_03_modern_kitchen__seed43.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_03_modern_kitchen__seed43.jpg", "assets/input/scene/scene_indoor_04_dining_room__seed43.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_04_dining_room__seed43.jpg", "assets/input/scene/scene_indoor_06_luxury_bathroom__seed44.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_06_luxury_bathroom__seed44.jpg", "assets/input/scene/scene_indoor_15_art_studio__seed49.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_15_art_studio__seed49.jpg", "assets/input/scene/scene_indoor_25_rustic_cabin__seed54.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_25_rustic_cabin__seed54.jpg", "assets/input/scene/scene_outdoor_10_gothic_cathedral__seed59.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_outdoor_10_gothic_cathedral__seed59.jpg", "assets/input/scene/scene_outdoor_14_brooklyn_apartment__seed61.jpg": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_outdoor_14_brooklyn_apartment__seed61.jpg"};
-window.__S3_SECTION_VIDEOS = {"hero-demo-video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/hero_demo_v3_1440p.mp4", "demo-3d-editing-video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_editing.mp4", "demo-novel-view-video-video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/geometry_guided.mp4"};
-window.__S3_HIGHLIGHT_VIDEOS = {"step1-object": "https://github.com/haoz19/world-tracing-page/releases/download/v1/highlights_step1_object.mp4", "step1-scene": "https://github.com/haoz19/world-tracing-page/releases/download/v1/highlights_step1_scene.mp4", "step1-dynamic": "https://github.com/haoz19/world-tracing-page/releases/download/v1/highlights_step1_dynamic.mp4", "textured-mesh": "https://github.com/haoz19/world-tracing-page/releases/download/v1/highlights_mesh.mp4"};
-window.__S3_DEMO_VIDEOS = {"obj014_leather_briefcase": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj014_leather_briefcase.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj014_leather_briefcase_thumb.jpg"}, "obj015_wooden_train": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj015_wooden_train.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj015_wooden_train_thumb.jpg"}, "obj063_trex_dinosaur": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj063_trex_dinosaur.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj063_trex_dinosaur_thumb.jpg"}, "obj071_griffin": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj071_griffin.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj071_griffin_thumb.jpg"}, "obj072_power_armor": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj072_power_armor.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj072_power_armor_thumb.jpg"}, "obj083_chibi_swordsman": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj083_chibi_swordsman.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj083_chibi_swordsman_thumb.jpg"}, "obj110_aqua_diving_mech": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj110_aqua_diving_mech.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj110_aqua_diving_mech_thumb.jpg"}, "obj122_bronze_athletic_discobolus": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj122_bronze_athletic_discobolus.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj122_bronze_athletic_discobolus_thumb.jpg"}, "obj123_jade_dragon_curio": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj123_jade_dragon_curio.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj123_jade_dragon_curio_thumb.jpg"}, "obj125_bronze_lion_guardian": {"mp4": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj125_bronze_lion_guardian.mp4", "thumb": "https://github.com/haoz19/world-tracing-page/releases/download/v1/obj125_bronze_lion_guardian_thumb.jpg"}};
-if (Array.isArray(window.DEMO_VIDEOS)) {
-  window.DEMO_VIDEOS = window.DEMO_VIDEOS.map(function(d){
-    var k = d && (d.stem || d.id || d.asset_name);
-    var nu = k && window.__S3_DEMO_VIDEOS[k];
-    if (nu) {
-      if (nu.mp4) d.mp4 = nu.mp4;
-      if (nu.thumb) d.thumb = nu.thumb;
-    }
-    return d;
-  });
-}
-window.SAMPLES = (window.SAMPLES || []).map(function(s){
-  var u = window.__S3_URLS[s.asset_name];
-  if (u) { s.rrd_url = u; s.viewer_url = 'https://app.rerun.io/version/0.22.0?url=' + encodeURIComponent(u); }
-  var t = window.__S3_THUMBS[s.thumb_rel];
-  if (t) { s.thumb_rel = t; }
-  ['pc_rel','glb_rel','input_rel'].forEach(function(k){
-    var v = window.__S3_ASSETS[s[k]];
-    if (v) s[k] = v;
-  });
-  return s;
-});
-// __WT_S3_OVERRIDE_END__
-
+  "hero-demo-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/hero_demo_v3_1440p.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065613Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ff5e0d1fbc62bad35984589afb497ddd3180ce13c87aab6cea909cbaad839d4f",
+  "demo-3d-editing-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/scene_editing.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=6f752a5158e2caddf992818f97fc5174d75de7d79fc9373c9e7865a3154b773b",
+  "demo-novel-view-video-video": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/assets/demo_videos/geometry_guided.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=eb8a578492620612b7a5963eef10da7de7b2e06cd651224235aee9d737cefee1"
+};
 window.HIGHLIGHT_VIDEOS = {
-  "step1-object": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_object.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180555Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=c6537dac440fdfe74bca0f95f194c3d59f8f413e7bf78d3956ace929cc47be99",
-  "step1-scene": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_scene.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180556Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=95e55cdd2b11aef180eca1b9d4eab3e1372fb49d3300d19d46ae66d958899a69",
-  "step1-dynamic": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_dynamic.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180556Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=09b81e0d2e8e22027184e090de1cb361edc4201a6cab07967c71674d73001717",
-  "textured-mesh": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_mesh.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260523%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260523T180556Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=147ae312b266ee2aa4ab359a569901e44179f2399eb1f381ab24c139d6e61bcc"
+  "step1-object": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_object.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=13af28edad80973939e933b18f29bfdd8501d358eb8aaeeab0f455bdeb69fa13",
+  "step1-scene": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_scene.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=41e49c8567d27c414ee07ccaba30100da8a7b97f696d5ead279be603359a772c",
+  "step1-dynamic": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_step1_dynamic.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=ec811aa4863c416fbb8e7bf6b6aaea9026ef83e195d27569c259e07c92bfbf7a",
+  "textured-mesh": "https://storage.eu-north1.nebius.cloud:443/worldlabs/wlt-data-internal-us-west4/public/hao-dataset/multilayer_depth/rerun/wt_release_curated_v1/highlights/highlights_mesh.mp4?response-content-type=video%2Fmp4&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=NAKILK0FU4G0X294M4IY%2F20260524%2Feu-north1%2Fs3%2Faws4_request&X-Amz-Date=20260524T065614Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=1f6e1c065e284ec1c0a9492e1a143d0eac1199e809f2e1a0dae9d646741e6c1a"
 };
 </script>
 <script type='module'>
@@ -2698,7 +2870,7 @@ document.addEventListener('DOMContentLoaded', init);
   <p class="subtitle">Generative Pixel-Aligned Geometry Beyond the Visible</p>
   <p class="authors"><a href="https://haoz19.github.io/" target="_blank" rel="noopener">Hao Zhang</a><sup>1,2</sup> &middot; <a href="https://mbanani.github.io/" target="_blank" rel="noopener">Mohamed El Banani</a><sup>1</sup> &middot; <a href="https://jen-haocheng.com/#/" target="_blank" rel="noopener">Jen-Hao Cheng</a><sup>1</sup> &middot; <a href="https://people.csail.mit.edu/pzpzpzp1/" target="_blank" rel="noopener">Paul Zhang</a><sup>1</sup><br><a href="https://hawaiii.github.io/" target="_blank" rel="noopener">Yi Hua</a><sup>1</sup> &middot; <a href="https://bmild.github.io/" target="_blank" rel="noopener">Ben Mildenhall</a><sup>1</sup> &middot; <a href="https://christophlassner.de/" target="_blank" rel="noopener">Christoph Lassner</a><sup>1</sup> &middot; <a href="https://vision.ai.illinois.edu/narendra-ahuja/" target="_blank" rel="noopener">Narendra Ahuja</a><sup>2</sup> &middot; <a href="https://gengshan-y.github.io/" target="_blank" rel="noopener">Gengshan Yang</a><sup>1</sup></p>
   <p class="affil"><sup>1</sup>World Labs &nbsp;&nbsp; <sup>2</sup>University of Illinois Urbana-Champaign</p>
-  <div class="links"><a href="#" class="primary" >arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="https://github.com/haoz19/wt-multilayer-depth-demo" class="" target=_blank rel=noopener>Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#" class="" >Model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#bibtex" class="" >BibTeX <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>
+  <div class="links"><a href="#" class="primary" >arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="https://github.com/haoz19/wt-multilayer-depth-demo" class="" target=_blank rel=noopener>Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <div class="link-menu" data-menu><button type="button" class="link-menu-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="lm-model-panel">Model <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="link-menu-panel" id="lm-model-panel" role="menu" aria-hidden="true"><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/object-model-6layer" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Object</span><span class="lm-sub">haoz19/object-model-6layer</span><span class="lm-meta">1.7B params · 504×504</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/scene-model-6layer" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Scene</span><span class="lm-sub">haoz19/scene-model-6layer</span><span class="lm-meta">1.5B params · 504×504</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/dynamic-model-16frame" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Dynamic</span><span class="lm-sub">haoz19/dynamic-model-16frame</span><span class="lm-meta">2.1B params · 16-frame video</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a></div></div> <a href="#bibtex" class="" >BibTeX <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>
 </section>
 
 <!-- Hero summary demo video. Autoplays muted+looped, with native controls

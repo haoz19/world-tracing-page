@@ -108,6 +108,128 @@ hr { display: none; }
 .hero .links a.primary:hover { background: var(--grey-300); border-color: var(--grey-300); }
 .hero .links a svg { width: 14px; height: 14px; }
 
+/* ----- Model dropdown menu ----- *
+ * The "Model" pill in the hero link bar opens a small panel listing the
+ * three HF model repos (object / scene / dynamic).  The trigger reuses the
+ * existing pill chrome from `.hero .links a` so it visually sits inline
+ * with arXiv / Code / BibTeX, but is rendered as a <button> with an
+ * aria-controlled panel below it.  Hover and focus open the panel
+ * (CSS-only); a tiny JS handler also toggles it on click/Enter/Space and
+ * closes it on outside-click or Escape (see HEAD_SCRIPTS). */
+.hero .links .link-menu { position: relative; display: inline-flex; }
+.hero .links .link-menu-trigger {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--fg);
+  font: inherit; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.hero .links .link-menu-trigger:hover {
+  background: #f7f6f3; border-color: var(--border-strong);
+}
+.hero .links .link-menu-trigger:active { transform: scale(0.98); }
+.hero .links .link-menu-trigger svg.caret {
+  width: 12px; height: 12px;
+  transition: transform .18s ease;
+}
+.hero .links .link-menu-trigger[aria-expanded="true"] svg.caret { transform: rotate(180deg); }
+.hero .links .link-menu-trigger[aria-expanded="true"] {
+  background: #f7f6f3; border-color: var(--border-strong);
+}
+
+.hero .links .link-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  min-width: 280px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 32px -12px rgba(15, 15, 15, 0.18),
+    0 4px 10px -4px rgba(15, 15, 15, 0.08);
+  display: flex; flex-direction: column; gap: 2px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+  z-index: 30;
+  text-align: left;
+}
+.hero .links .link-menu:hover .link-menu-panel,
+.hero .links .link-menu:focus-within .link-menu-panel,
+.hero .links .link-menu-trigger[aria-expanded="true"] + .link-menu-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.hero .links .link-menu-panel[aria-hidden="true"] {
+  /* Hidden state when JS explicitly closes the menu (click-outside,
+   * Escape).  CSS hover/focus rules above can still re-open it. */
+}
+
+.hero .links .link-menu-panel .lm-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;          /* keeps height stable on hover */
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+  transition: background .12s ease, border-color .12s ease;
+}
+.hero .links .link-menu-panel .lm-row:hover,
+.hero .links .link-menu-panel .lm-row:focus-visible {
+  background: #f5f4f0;
+  border-color: var(--border);
+  outline: none;
+}
+.hero .links .link-menu-panel .lm-row .lm-text {
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 0; flex: 1;
+}
+.hero .links .link-menu-panel .lm-row .lm-label {
+  font-size: 14px; font-weight: 600; line-height: 1.2; color: var(--fg);
+}
+.hero .links .link-menu-panel .lm-row .lm-sub {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, monospace);
+  font-size: 12px; line-height: 1.3;
+  color: var(--grey-100);
+  word-break: break-all;
+}
+.hero .links .link-menu-panel .lm-row .lm-meta {
+  font-size: 11.5px; line-height: 1.3;
+  color: var(--grey-dim);
+  letter-spacing: 0.01em;
+}
+.hero .links .link-menu-panel .lm-row svg.ext {
+  width: 14px; height: 14px;
+  color: var(--grey-100);
+  flex: none;
+}
+.hero .links .link-menu-panel .lm-row:hover svg.ext { color: var(--fg); }
+
+@media (max-width: 540px) {
+  /* On narrow screens, anchor the panel to the trigger's left edge so
+   * it doesn't slide off-screen on the right when "Model" is the last
+   * row of the wrapped link bar. */
+  .hero .links .link-menu-panel {
+    left: 0; right: auto;
+    transform: translate(0, -4px);
+    min-width: min(86vw, 320px);
+  }
+  .hero .links .link-menu:hover .link-menu-panel,
+  .hero .links .link-menu:focus-within .link-menu-panel,
+  .hero .links .link-menu-trigger[aria-expanded="true"] + .link-menu-panel {
+    transform: translate(0, 0);
+  }
+}
+
 /* ===== Hero summary demo video =====
  * The 2.5-min summary video that opens the page. Sits between the
  * title/authors block and the first content section, full-width up to

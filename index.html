@@ -14,6 +14,88 @@
   self.ModelViewerElement = self.ModelViewerElement || {};
   self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.21.0/meshopt_decoder.js';
 </script>
+<!-- Hero "Model" dropdown: click-to-toggle, outside-click + Escape to close,
+     arrow keys to move between rows.  Hover-open is handled in CSS. -->
+<script>
+(function () {
+  function init() {
+    var menus = document.querySelectorAll('.link-menu[data-menu]');
+    if (!menus.length) return;
+
+    function closeAll(except) {
+      menus.forEach(function (m) {
+        if (m === except) return;
+        var t = m.querySelector('.link-menu-trigger');
+        var p = m.querySelector('.link-menu-panel');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        if (p) p.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    menus.forEach(function (menu) {
+      var trigger = menu.querySelector('.link-menu-trigger');
+      var panel   = menu.querySelector('.link-menu-panel');
+      if (!trigger || !panel) return;
+
+      trigger.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var open = trigger.getAttribute('aria-expanded') === 'true';
+        closeAll(menu);
+        trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+        panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        if (!open) {
+          var first = panel.querySelector('.lm-row');
+          if (first) first.focus({ preventScroll: true });
+        }
+      });
+
+      trigger.addEventListener('keydown', function (ev) {
+        if (ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          var first = panel.querySelector('.lm-row');
+          if (first) first.focus({ preventScroll: true });
+        }
+      });
+
+      panel.addEventListener('keydown', function (ev) {
+        var rows = Array.prototype.slice.call(panel.querySelectorAll('.lm-row'));
+        var idx  = rows.indexOf(document.activeElement);
+        if (ev.key === 'ArrowDown') {
+          ev.preventDefault();
+          var n = rows[(idx + 1 + rows.length) % rows.length];
+          if (n) n.focus({ preventScroll: true });
+        } else if (ev.key === 'ArrowUp') {
+          ev.preventDefault();
+          var p = rows[(idx - 1 + rows.length) % rows.length];
+          if (p) p.focus({ preventScroll: true });
+        } else if (ev.key === 'Escape') {
+          ev.preventDefault();
+          trigger.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('aria-hidden', 'true');
+          trigger.focus({ preventScroll: true });
+        }
+      });
+    });
+
+    document.addEventListener('click', function (ev) {
+      var inside = ev.target.closest && ev.target.closest('.link-menu[data-menu]');
+      if (!inside) closeAll(null);
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeAll(null);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
 <script type="importmap">
@@ -26,9 +108,9 @@
 </script>
 
   <link rel="stylesheet" href="style.css">
-<script src="data.js?v=1779604629"></script>
-<script src="_s3_override.js?v=1779604629"></script>
-<script type="module" src="app.js?v=1779604629"></script>
+<script src="data.js?v=1779605880"></script>
+<script src="_s3_override.js?v=1779605880"></script>
+<script type="module" src="app.js?v=1779605880"></script>
 </head>
 <body>
 
@@ -40,7 +122,7 @@
   <p class="subtitle">Generative Pixel-Aligned Geometry Beyond the Visible</p>
   <p class="authors"><a href="https://haoz19.github.io/" target="_blank" rel="noopener">Hao Zhang</a><sup>1,2</sup> &middot; <a href="https://mbanani.github.io/" target="_blank" rel="noopener">Mohamed El Banani</a><sup>1</sup> &middot; <a href="https://jen-haocheng.com/#/" target="_blank" rel="noopener">Jen-Hao Cheng</a><sup>1</sup> &middot; <a href="https://people.csail.mit.edu/pzpzpzp1/" target="_blank" rel="noopener">Paul Zhang</a><sup>1</sup><br><a href="https://hawaiii.github.io/" target="_blank" rel="noopener">Yi Hua</a><sup>1</sup> &middot; <a href="https://bmild.github.io/" target="_blank" rel="noopener">Ben Mildenhall</a><sup>1</sup> &middot; <a href="https://christophlassner.de/" target="_blank" rel="noopener">Christoph Lassner</a><sup>1</sup> &middot; <a href="https://vision.ai.illinois.edu/narendra-ahuja/" target="_blank" rel="noopener">Narendra Ahuja</a><sup>2</sup> &middot; <a href="https://gengshan-y.github.io/" target="_blank" rel="noopener">Gengshan Yang</a><sup>1</sup></p>
   <p class="affil"><sup>1</sup>World Labs &nbsp;&nbsp; <sup>2</sup>University of Illinois Urbana-Champaign</p>
-  <div class="links"><a href="#" class="primary" >arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="https://github.com/haoz19/wt-multilayer-depth-demo" class="" target=_blank rel=noopener>Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#" class="" >Model <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="#bibtex" class="" >BibTeX <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>
+  <div class="links"><a href="#" class="primary" >arXiv <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <a href="https://github.com/haoz19/wt-multilayer-depth-demo" class="" target=_blank rel=noopener>Code <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a> <div class="link-menu" data-menu><button type="button" class="link-menu-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="lm-model-panel">Model <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div class="link-menu-panel" id="lm-model-panel" role="menu" aria-hidden="true"><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/object-model-6layer" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Object</span><span class="lm-sub">haoz19/object-model-6layer</span><span class="lm-meta">1.7B params · 504×504</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/scene-model-6layer" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Scene</span><span class="lm-sub">haoz19/scene-model-6layer</span><span class="lm-meta">1.5B params · 504×504</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a><a class="lm-row" role="menuitem" href="https://huggingface.co/haoz19/dynamic-model-16frame" target="_blank" rel="noopener"><span class="lm-text"><span class="lm-label">Dynamic</span><span class="lm-sub">haoz19/dynamic-model-16frame</span><span class="lm-meta">2.1B params · 16-frame video</span></span><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"></path><line x1="11" y1="13" x2="19" y2="5"></line><path d="M19 14v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"></path></svg></a></div></div> <a href="#bibtex" class="" >BibTeX <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a></div>
 </section>
 
 <!-- Hero summary demo video. Autoplays muted+looped, with native controls
