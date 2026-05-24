@@ -1058,30 +1058,17 @@ function initHighlightsBand() {
     }
   });
 
-  // Desktop: auto-play tile videos when they scroll into view. Mobile uses
-  // native controls (see initMobileVideos).
-  if (!IS_MOBILE && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        const v = e.target;
-        if (e.isIntersecting) {
-          v.dataset.inView = '1';
-          playVideo(v);
-        } else {
-          v.dataset.inView = '0';
-          v.pause();
-        }
-      });
-    }, { threshold: 0.35 });
+  // Desktop: all 6 tile videos auto-play in parallel as soon as the page
+  // loads (no IntersectionObserver — the row is short enough that users
+  // expect the whole strip to be playing immediately, like a magazine
+  // contact-sheet). `exclusive:false` keeps every tile playing instead of
+  // pausing the others. Mobile uses native controls (see initMobileVideos).
+  if (!IS_MOBILE) {
     document.querySelectorAll('.h-card video.h-preview').forEach(v => {
-      io.observe(v);
+      playVideo(v, { exclusive: false });
       v.addEventListener('loadeddata', () => {
-        if (v.dataset.inView === '1' && v.paused) playVideo(v);
+        if (v.paused) playVideo(v, { exclusive: false });
       });
-    });
-  } else if (!IS_MOBILE) {
-    document.querySelectorAll('.h-card video.h-preview').forEach(v => {
-      playVideo(v);
     });
   }
 }
