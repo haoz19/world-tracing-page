@@ -451,11 +451,49 @@ function setVideoSrc(v, url) {
   try { v.load(); } catch (e) {}
 }
 
-function playVideo(v) {
-  if (!v) return Promise.resolve(false);
+function prepVideo(v) {
+  if (!v) return;
   v.muted = true;
-  if (!v.hasAttribute('playsinline')) v.setAttribute('playsinline', '');
+  v.setAttribute('playsinline', '');
+  v.setAttribute('webkit-playsinline', '');
+  if (IS_TOUCH_COARSE) v.setAttribute('controls', '');
+}
+
+function pauseOtherVideos(except) {
+  document.querySelectorAll('video').forEach(el => {
+    if (el !== except && !el.paused) {
+      try { el.pause(); } catch (e) {}
+    }
+  });
+}
+
+function playVideo(v, opts) {
+  const exclusive = !opts || opts.exclusive !== false;
+  if (!v) return Promise.resolve(false);
+  prepVideo(v);
+  if (exclusive) pauseOtherVideos(v);
   return v.play().then(() => true).catch(() => false);
+}
+
+function playVideoFromGesture(v, url) {
+  if (!v) return;
+  if (url && !v.getAttribute('src') && !v.querySelector('source[src]')) {
+    setVideoSrc(v, url);
+  }
+  playVideo(v, { exclusive: true });
+}
+
+function initHeroMobilePolicy() {
+  if (!IS_TOUCH_COARSE) return;
+  const hero = document.getElementById('hero-demo-video');
+  if (!hero || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) {
+        try { hero.pause(); } catch (err) {}
+      }
+    });
+  }, { threshold: 0.12 }).observe(hero);
 }
 
 function escapeHtml(s) {
@@ -921,7 +959,11 @@ function initHighlightsBand() {
       return;
     }
     if (got.poster) v.setAttribute('poster', got.poster);
-    setVideoSrc(v, got.mp4);
+    if (IS_TOUCH_COARSE) {
+      v.dataset.previewSrc = got.mp4;
+    } else {
+      setVideoSrc(v, got.mp4);
+    }
   });
 
   // Highlight cards: div wrappers (not <a>) so preview videos can autoplay
@@ -936,19 +978,40 @@ function initHighlightsBand() {
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
     }
-    card.addEventListener('click', onActivate);
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.h-media')) return;
+      onActivate();
+    });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         onActivate();
       }
     });
+
+    if (IS_TOUCH_COARSE) {
+      const media = card.querySelector('.h-media');
+      const v = card.querySelector('video.h-preview');
+      if (!media || !v) return;
+      media.classList.add('tap-to-play');
+      media.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (v.paused) {
+          playVideoFromGesture(v, v.dataset.previewSrc);
+          media.classList.add('is-playing');
+        } else {
+          v.pause();
+          media.classList.remove('is-playing');
+        }
+      });
+    }
   });
 
-  // Auto-play tile videos when they scroll into view to keep the band
-  // feeling alive without paying the bandwidth cost up-front. Pause
-  // out-of-view tiles to avoid 4 mp4s decoding in parallel.
-  if ('IntersectionObserver' in window) {
+  // Desktop: auto-play tile videos when they scroll into view. Mobile relies
+  // on tap-to-play above — iOS blocks programmatic play without a gesture and
+  // only decodes one video at a time while the hero clip is running.
+  if (!IS_TOUCH_COARSE && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const v = e.target;
@@ -967,7 +1030,7 @@ function initHighlightsBand() {
         if (v.dataset.inView === '1' && v.paused) playVideo(v);
       });
     });
-  } else {
+  } else if (!IS_TOUCH_COARSE) {
     document.querySelectorAll('.h-card video.h-preview').forEach(v => {
       playVideo(v);
     });
@@ -983,9 +1046,7 @@ function initSectionVideos() {
   // We only stash the URL on a `data-src` attribute here; the actual
   // `src=` swap + `load()` happens lazily on first hover (see
   // `initHoverPlay`) so the videos never preload until the user
-  // explicitly engages with them — except on touch devices where we
-  // eagerly attach `src` with `preload="metadata"` so the first tap can
-  // call `play()` synchronously inside the gesture handler.
+  // explicitly engages with them.
   const map = Object.assign({}, window.SECTION_VIDEOS || {}, window.__S3_SECTION_VIDEOS || {});
   Object.entries(map).forEach(([id, url]) => {
     if (!url) return;
@@ -994,20 +1055,12 @@ function initSectionVideos() {
     v.dataset.src = url;
     if (!v.hasAttribute('data-play-on-hover')) {
       setVideoSrc(v, url);
-      const kick = () => { playVideo(v); };
+      const kick = () => { playVideo(v, { exclusive: false }); };
       kick();
       v.addEventListener('loadeddata', kick, { once: true });
       v.addEventListener('canplay', kick, { once: true });
     }
   });
-  if (IS_TOUCH_COARSE) {
-    document.querySelectorAll('video[data-play-on-hover]').forEach(v => {
-      const url = v.dataset.src || v.dataset.lazySrc;
-      if (url && !v.getAttribute('src') && !v.querySelector('source[src]')) {
-        setVideoSrc(v, url);
-      }
-    });
-  }
 }
 
 // Big demo videos: instead of autoplaying, the user has to engage once.
@@ -1030,17 +1083,40 @@ function initHoverPlay() {
       ? document.getElementById(targetId)
       : stage.querySelector('video[data-play-on-hover]');
     if (!v) return;
+    prepVideo(v);
+
+    function videoUrl() {
+      return v.dataset.src || v.dataset.lazySrc || '';
+    }
+
+    function startFromGesture() {
+      playVideoFromGesture(v, videoUrl());
+      stage.classList.add('is-playing');
+    }
+
+    if (IS_TOUCH_COARSE) {
+      stage.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        e.preventDefault();
+        if (v.paused) startFromGesture();
+        else {
+          stage.classList.remove('is-playing');
+          try { v.pause(); } catch (err) {}
+        }
+      });
+      return;
+    }
 
     let touchHandled = false;
 
     function ensureSrc() {
       if (v.getAttribute('src') || v.querySelector('source[src]')) return;
-      const url = v.dataset.src || v.dataset.lazySrc;
+      const url = videoUrl();
       if (!url) return;
       setVideoSrc(v, url);
     }
 
-    function start() {
+    function startDesktop() {
       ensureSrc();
       stage.classList.add('is-playing');
       playVideo(v).then((ok) => {
@@ -1056,25 +1132,22 @@ function initHoverPlay() {
       });
     }
 
-    // Mouse + keyboard users: first hover or focus latches the video on.
-    stage.addEventListener('mouseenter', start, { once: false });
-    stage.addEventListener('focusin', start, { once: false });
+    stage.addEventListener('mouseenter', startDesktop, { once: false });
+    stage.addEventListener('focusin', startDesktop, { once: false });
 
-    // Touch devices: tap to toggle (no hover state).
     stage.addEventListener('touchstart', () => {
       touchHandled = true;
       setTimeout(() => { touchHandled = false; }, 450);
-      if (v.paused) start();
+      if (v.paused) startDesktop();
       else {
         stage.classList.remove('is-playing');
         try { v.pause(); } catch (e) {}
       }
     }, { passive: true });
 
-    // Click for mouse-only users; skip the ghost click after touchstart.
     stage.addEventListener('click', () => {
       if (touchHandled) return;
-      if (v.paused) start();
+      if (v.paused) startDesktop();
     });
   });
 }
@@ -1129,6 +1202,7 @@ function init() {
   initMeshDemoStrip();
   initSectionVideos();
   initHoverPlay();
+  initHeroMobilePolicy();
   setupBibtexCopy();
   // Initial tab from ?cat=scene|object|dynamic, default object.
   const params = new URLSearchParams(window.location.search);
