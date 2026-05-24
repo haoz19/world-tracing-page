@@ -440,23 +440,41 @@ function getOrCreateViewer(canvas) {
    Page wiring
 ================================================================ */
 
-const IS_TOUCH_COARSE = typeof window !== 'undefined'
-  && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+const IS_MOBILE = typeof window !== 'undefined' && (
+  window.matchMedia('(hover: none) and (pointer: coarse)').matches
+  || 'ontouchstart' in window
+  || (navigator.maxTouchPoints > 0)
+);
+// Back-compat alias used throughout the page wiring code.
+const IS_TOUCH_COARSE = IS_MOBILE;
 
 function setVideoSrc(v, url) {
   if (!v || !url) return;
   const source = v.querySelector('source');
-  if (source) source.setAttribute('src', url);
-  else v.setAttribute('src', url);
+  if (source) {
+    source.setAttribute('src', url);
+    source.setAttribute('type', 'video/mp4');
+  } else {
+    v.setAttribute('src', url);
+  }
   try { v.load(); } catch (e) {}
+}
+
+function videoPendingUrl(v) {
+  if (!v) return '';
+  return v.dataset.previewSrc || v.dataset.src || v.dataset.lazySrc || '';
 }
 
 function prepVideo(v) {
   if (!v) return;
   v.muted = true;
+  v.defaultMuted = true;
   v.setAttribute('playsinline', '');
   v.setAttribute('webkit-playsinline', '');
-  if (IS_TOUCH_COARSE) v.setAttribute('controls', '');
+  if (IS_MOBILE) {
+    v.setAttribute('controls', '');
+    v.setAttribute('preload', 'metadata');
+  }
 }
 
 function pauseOtherVideos(except) {
@@ -477,10 +495,34 @@ function playVideo(v, opts) {
 
 function playVideoFromGesture(v, url) {
   if (!v) return;
-  if (url && !v.getAttribute('src') && !v.querySelector('source[src]')) {
-    setVideoSrc(v, url);
-  }
+  const pending = url || videoPendingUrl(v);
+  if (pending && !v.currentSrc) setVideoSrc(v, pending);
   playVideo(v, { exclusive: true });
+}
+
+function initMobileVideos() {
+  if (!IS_MOBILE) return;
+
+  const hero = document.getElementById('hero-demo-video');
+  if (hero) {
+    hero.removeAttribute('autoplay');
+    try { hero.pause(); } catch (e) {}
+    prepVideo(hero);
+  }
+
+  document.querySelectorAll('video').forEach(v => {
+    const url = videoPendingUrl(v);
+    prepVideo(v);
+    if (url && !v.currentSrc) setVideoSrc(v, url);
+  });
+
+  document.querySelectorAll('.hover-play-overlay').forEach(el => {
+    el.setAttribute('aria-hidden', 'true');
+    el.style.display = 'none';
+  });
+  document.querySelectorAll('.hover-play').forEach(el => {
+    el.classList.add('is-playing');
+  });
 }
 
 function initHeroMobilePolicy() {
@@ -959,8 +1001,10 @@ function initHighlightsBand() {
       return;
     }
     if (got.poster) v.setAttribute('poster', got.poster);
-    if (IS_TOUCH_COARSE) {
-      v.dataset.previewSrc = got.mp4;
+    v.dataset.previewSrc = got.mp4;
+    if (IS_MOBILE) {
+      setVideoSrc(v, got.mp4);
+      prepVideo(v);
     } else {
       setVideoSrc(v, got.mp4);
     }
@@ -989,7 +1033,7 @@ function initHighlightsBand() {
       }
     });
 
-    if (IS_TOUCH_COARSE) {
+    if (!IS_MOBILE && IS_TOUCH_COARSE) {
       const media = card.querySelector('.h-media');
       const v = card.querySelector('video.h-preview');
       if (!media || !v) return;
@@ -1008,10 +1052,9 @@ function initHighlightsBand() {
     }
   });
 
-  // Desktop: auto-play tile videos when they scroll into view. Mobile relies
-  // on tap-to-play above — iOS blocks programmatic play without a gesture and
-  // only decodes one video at a time while the hero clip is running.
-  if (!IS_TOUCH_COARSE && 'IntersectionObserver' in window) {
+  // Desktop: auto-play tile videos when they scroll into view. Mobile uses
+  // native controls (see initMobileVideos).
+  if (!IS_MOBILE && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         const v = e.target;
@@ -1030,7 +1073,7 @@ function initHighlightsBand() {
         if (v.dataset.inView === '1' && v.paused) playVideo(v);
       });
     });
-  } else if (!IS_TOUCH_COARSE) {
+  } else if (!IS_MOBILE) {
     document.querySelectorAll('.h-card video.h-preview').forEach(v => {
       playVideo(v);
     });
@@ -1055,10 +1098,14 @@ function initSectionVideos() {
     v.dataset.src = url;
     if (!v.hasAttribute('data-play-on-hover')) {
       setVideoSrc(v, url);
-      const kick = () => { playVideo(v, { exclusive: false }); };
-      kick();
-      v.addEventListener('loadeddata', kick, { once: true });
-      v.addEventListener('canplay', kick, { once: true });
+      if (!IS_MOBILE) {
+        const kick = () => { playVideo(v, { exclusive: false }); };
+        kick();
+        v.addEventListener('loadeddata', kick, { once: true });
+        v.addEventListener('canplay', kick, { once: true });
+      } else {
+        prepVideo(v);
+      }
     }
   });
 }
@@ -1071,6 +1118,8 @@ function initSectionVideos() {
 // pause the video. Tap on touch devices toggles play / pause as a manual
 // control.
 function initHoverPlay() {
+  if (IS_MOBILE) return;
+
   if (IS_TOUCH_COARSE) {
     document.querySelectorAll('.hover-play-label').forEach(el => {
       el.textContent = 'Tap to play';
@@ -1202,6 +1251,7 @@ function init() {
   initMeshDemoStrip();
   initSectionVideos();
   initHoverPlay();
+  initMobileVideos();
   initHeroMobilePolicy();
   setupBibtexCopy();
   // Initial tab from ?cat=scene|object|dynamic, default object.

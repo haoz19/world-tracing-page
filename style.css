@@ -253,36 +253,16 @@ hr { display: none; }
   pointer-events: none;
 }
 @media (hover: none) and (pointer: coarse) {
-  .h-media.tap-to-play::before {
-    content: '';
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid var(--border-strong);
-    box-shadow: 0 6px 18px rgba(20, 24, 32, 0.12);
-    z-index: 3;
-    pointer-events: none;
-    transition: opacity 180ms ease;
-  }
-  .h-media.tap-to-play::after {
-    content: '';
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-42%, -50%);
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 9px 0 9px 15px;
-    border-color: transparent transparent transparent var(--fg);
-    z-index: 4;
-    pointer-events: none;
-    transition: opacity 180ms ease;
-  }
-  .h-media.tap-to-play.is-playing::before,
-  .h-media.tap-to-play.is-playing::after {
-    opacity: 0;
+  .hover-play-overlay { display: none !important; }
+  .h-media.tap-to-play::before,
+  .h-media.tap-to-play::after { display: none !important; }
+  .hover-play video,
+  .demo-video video,
+  .demo-video-stage video,
+  .h-card .h-media video,
+  .hero-video-wrap video {
+    z-index: 5;
+    pointer-events: auto;
   }
 }
 .h-card .h-icon {
