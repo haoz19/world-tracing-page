@@ -26,9 +26,9 @@
 </script>
 
   <link rel="stylesheet" href="style.css">
-<script src="data.js?v=1779575058"></script>
-<script src="_s3_override.js?v=1779575058"></script>
-<script type="module" src="app.js?v=1779575058"></script>
+<script src="data.js?v=1779603034"></script>
+<script src="_s3_override.js?v=1779603034"></script>
+<script type="module" src="app.js?v=1779603034"></script>
 </head>
 <body>
 
@@ -79,7 +79,7 @@
       <span class="h-row-label">An ordered stack of 3D points per pixel &mdash; visible surfaces and the geometry hidden behind them.</span>
     </div>
     <div class="highlights-grid">
-      <a class="h-card" href="#results" data-cat="object" data-preview="step1-object">
+      <div class="h-card" data-href="#results" data-cat="object" data-preview="step1-object" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="layers"></span>
           <span class="h-num">01</span>
@@ -90,8 +90,8 @@
           <p class="h-blurb">From a single object photo, we predict every layer of geometry the object occupies in front of and behind the visible surface.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
-      <a class="h-card" href="#results" data-cat="scene" data-preview="step1-scene">
+      </div>
+      <div class="h-card" data-href="#results" data-cat="scene" data-preview="step1-scene" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="grid"></span>
           <span class="h-num">02</span>
@@ -102,8 +102,8 @@
           <p class="h-blurb">The same predictor scales to full indoor and outdoor scenes &mdash; multi-room interiors, facades, and gardens get a layered point cloud per pixel.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
-      <a class="h-card" href="#results" data-cat="dynamic" data-preview="step1-dynamic">
+      </div>
+      <div class="h-card" data-href="#results" data-cat="dynamic" data-preview="step1-dynamic" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="play"></span>
           <span class="h-num">03</span>
@@ -114,7 +114,7 @@
           <p class="h-blurb">For short video clips we predict per-frame layered point clouds that stay 3D-consistent as the subject moves.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 
@@ -125,7 +125,7 @@
       <span class="h-row-label">The layered geometry plugs into existing 3D and video models &mdash; no retraining needed.</span>
     </div>
     <div class="highlights-grid">
-      <a class="h-card" href="#results" data-cat="object" data-preview="textured-mesh">
+      <div class="h-card" data-href="#results" data-cat="object" data-preview="textured-mesh" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="box"></span>
           <span class="h-num">04</span>
@@ -136,8 +136,8 @@
           <p class="h-blurb">Lift our layered point cloud into a textured mesh by plugging it into off-the-shelf mesh generators &mdash; no fine-tuning needed.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
-      <a class="h-card" href="#demo-3d-editing" data-preview="scene-editing">
+      </div>
+      <div class="h-card" data-href="#demo-3d-editing" data-preview="scene-editing" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="wand"></span>
           <span class="h-num">05</span>
@@ -148,8 +148,8 @@
           <p class="h-blurb">Add, replace or remove objects in a scene &mdash; the layered geometry keeps every edit consistent across novel views.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
-      <a class="h-card" href="#demo-novel-view-video" data-preview="novel-view">
+      </div>
+      <div class="h-card" data-href="#demo-novel-view-video" data-preview="novel-view" role="link" tabindex="0">
         <div class="h-media">
           <span class="h-icon" data-icon="film"></span>
           <span class="h-num">06</span>
@@ -160,7 +160,7 @@
           <p class="h-blurb">Pair our predicted geometry with a video diffusion model to render temporally-consistent fly-throughs that obey 3D structure.</p>
           <span class="h-cta">See examples <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
