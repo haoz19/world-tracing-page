@@ -2068,11 +2068,13 @@ function getOrCreateViewer(canvas) {
    Page wiring
 ================================================================ */
 
-const IS_MOBILE = typeof window !== 'undefined' && (
-  window.matchMedia('(hover: none) and (pointer: coarse)').matches
-  || 'ontouchstart' in window
-  || (navigator.maxTouchPoints > 0)
-);
+// Real-touch detection. We deliberately avoid `'ontouchstart' in window` and
+// `navigator.maxTouchPoints > 0` because both fire false positives on modern
+// desktop Chrome / Firefox and on hybrid devices (Surface, MacBook with Touch
+// ID, ...), which would otherwise force the page into a no-autoplay,
+// tap-to-play mobile branch.
+const IS_MOBILE = typeof window !== 'undefined'
+  && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 // Back-compat alias used throughout the page wiring code.
 const IS_TOUCH_COARSE = IS_MOBILE;
 
@@ -2651,7 +2653,11 @@ function initHighlightsBand() {
       }
     }
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.h-media')) return;
+      // On touch devices we want to keep tap-to-play behaviour for the
+      // video area (handled in the IS_TOUCH_COARSE branch below); on a
+      // regular desktop browser, clicks anywhere on the card — including
+      // the video thumbnail — should navigate to the linked section.
+      if (IS_TOUCH_COARSE && e.target.closest('.h-media')) return;
       onActivate();
     });
     card.addEventListener('keydown', (e) => {
