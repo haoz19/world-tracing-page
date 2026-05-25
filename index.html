@@ -114,9 +114,9 @@
 </script>
 
   <link rel="stylesheet" href="style.css">
-<script src="data.js?v=1779615660"></script>
-<script src="_s3_override.js?v=1779615660"></script>
-<script type="module" src="app.js?v=1779615660"></script>
+<script src="data.js?v=1779691969"></script>
+<script src="_s3_override.js?v=1779691969"></script>
+<script type="module" src="app.js?v=1779691969"></script>
 </head>
 <body>
 
@@ -318,9 +318,34 @@ integration with textured-mesh generators.
   </p>
 </section>
 
+<section class="section centered washed" id="demo-multilayer-depth">
+  <div class="section-head section-head--centered">
+    <span class="section-meta"><span class="section-num">04</span><span class="section-eyebrow">Layered output</span></span>
+    <h2>Multilayer depth predictions</h2>
+    <span class="section-rule"></span>
+  </div>
+  <p class="lead" style="max-width:760px;margin:0 auto 12px;">
+    World Tracing predicts an ordered stack of <em>six</em>
+    camera-space depth layers per pixel. The animation cycles through
+    the layers in turbo colormap: Layer&nbsp;0 is the visible surface,
+    and deeper layers progressively populate occluded geometry behind
+    near objects. Each card pairs the input image (left) with the
+    full multilayer depth animation (right).
+  </p>
+  <div class="mld-grid" id="mld-grid"><div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">Held-out 3D-FRONT</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">Held-out 3D-FRONT</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_01_modern_living_room__seed42.png" alt="Input: Modern living room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_01_modern_living_room__seed42.gif" alt="Multilayer depth: Modern living room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern living room</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_02_master_bedroom__seed42.png" alt="Input: Master bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_02_master_bedroom__seed42.gif" alt="Multilayer depth: Master bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Master bedroom</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_03_modern_kitchen__seed43.png" alt="Input: Modern kitchen" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_03_modern_kitchen__seed43.gif" alt="Multilayer depth: Modern kitchen" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern kitchen</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_04_dining_room__seed43.png" alt="Input: Dining room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_04_dining_room__seed43.gif" alt="Multilayer depth: Dining room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Dining room</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_06_luxury_bathroom__seed44.png" alt="Input: Luxury bathroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_06_luxury_bathroom__seed44.gif" alt="Multilayer depth: Luxury bathroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Luxury bathroom</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_15_art_studio__seed49.png" alt="Input: Art studio" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_15_art_studio__seed49.gif" alt="Multilayer depth: Art studio" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Art studio</span><span class="mld-source">Generated scene</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_25_rustic_cabin__seed54.png" alt="Input: Rustic cabin" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_25_rustic_cabin__seed54.gif" alt="Multilayer depth: Rustic cabin" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Rustic cabin</span><span class="mld-source">Generated scene</span></div></div></div>
+</section>
+
 <section class="section centered washed" id="demo-textured-mesh">
   <div class="section-head">
-    <span class="section-meta"><span class="section-num">04</span><span class="section-eyebrow">Applications</span></span>
+    <span class="section-meta"><span class="section-num">05</span><span class="section-eyebrow">Applications</span></span>
     <h2>Training-free textured-mesh generation</h2>
     <span class="section-rule"></span>
   </div>
@@ -347,7 +372,7 @@ integration with textured-mesh generators.
 
 <section class="section centered" id="demo-3d-editing">
   <div class="section-head">
-    <span class="section-meta"><span class="section-num">05</span><span class="section-eyebrow">Applications</span></span>
+    <span class="section-meta"><span class="section-num">06</span><span class="section-eyebrow">Applications</span></span>
     <h2>3D scene editing</h2>
     <span class="section-rule"></span>
   </div>
@@ -367,7 +392,7 @@ integration with textured-mesh generators.
 
 <section class="section centered washed" id="demo-novel-view-video">
   <div class="section-head">
-    <span class="section-meta"><span class="section-num">06</span><span class="section-eyebrow">Applications</span></span>
+    <span class="section-meta"><span class="section-num">07</span><span class="section-eyebrow">Applications</span></span>
     <h2>Geometry-guided novel-view video</h2>
     <span class="section-rule"></span>
   </div>
@@ -387,7 +412,7 @@ integration with textured-mesh generators.
 
 <section class="section compact centered" id="bibtex">
   <div class="section-head">
-    <span class="section-meta"><span class="section-num">07</span><span class="section-eyebrow">Cite this work</span></span>
+    <span class="section-meta"><span class="section-num">08</span><span class="section-eyebrow">Cite this work</span></span>
     <h2>BibTeX</h2>
     <span class="section-rule"></span>
   </div>
@@ -412,7 +437,7 @@ integration with textured-mesh generators.
 
 <section class="section centered" id="ack">
   <div class="section-head">
-    <span class="section-meta"><span class="section-num">08</span><span class="section-eyebrow">Thanks</span></span>
+    <span class="section-meta"><span class="section-num">09</span><span class="section-eyebrow">Thanks</span></span>
     <h2>Acknowledgements</h2>
     <span class="section-rule"></span>
   </div>
@@ -436,6 +461,7 @@ Page layout inspired by
 </main>
 
 <footer>
+  
   &copy; 2026 World Labs &middot;
   Powered by <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a>,
   <a href="https://modelviewer.dev" target="_blank" rel="noopener">model-viewer</a>,
