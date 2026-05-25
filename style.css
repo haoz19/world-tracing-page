@@ -108,6 +108,23 @@ hr { display: none; }
 .hero .links a.primary:hover { background: var(--grey-300); border-color: var(--grey-300); }
 .hero .links a svg { width: 14px; height: 14px; }
 
+/* Brand icons (GitHub / HF / arXiv / BibTeX) sit at the start of each
+ * pill, sized a touch larger than the trailing arrow so the mark reads
+ * cleanly at 14px and the arrow stays subordinate. */
+.hero .links a svg.brand,
+.hero .links .link-menu-trigger svg.brand {
+  width: 15px; height: 15px;
+  flex-shrink: 0;
+}
+/* HF brand color: the smiley is unreadable in plain monochrome (it
+ * collapses to a featureless silhouette), so we paint the path in the
+ * official Hugging Face yellow on white pills.  When the icon ends up
+ * on the dark "primary" button (`arXiv`) we keep currentColor so it
+ * stays legible on black. */
+.hero .links a svg.brand-hf,
+.hero .links .link-menu-trigger svg.brand-hf { color: #FFD21E; }
+.hero .links a.primary svg.brand-hf { color: currentColor; }
+
 /* ----- Model dropdown menu ----- *
  * The "Model" pill in the hero link bar opens a small panel listing the
  * three HF model repos (object / scene / dynamic).  The trigger reuses the
