@@ -882,22 +882,28 @@ hr { display: none; }
   border-radius: 8px;
 }
 
-/* ===== Multilayer depth gallery ===== */
+/* ===== Multilayer depth gallery =====
+   3-per-row grid of cards.  Each card shows an Input | Multilayer-depth
+   pair, so 3 cards = 6 image cells across the row (the requested
+   "3 rows × 6 columns" cell layout for the 9 picks). */
 .mld-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
-  max-width: var(--max-content);
+  max-width: 1180px;
   margin: 0 auto;
 }
-@media (max-width: 720px) {
-  .mld-grid { grid-template-columns: 1fr; gap: 16px; }
+@media (max-width: 980px) {
+  .mld-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 620px) {
+  .mld-grid { grid-template-columns: 1fr; gap: 12px; }
 }
 .mld-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 1px 2px rgba(0,0,0,0.025);
   transition: border-color .2s ease, transform .25s ease, box-shadow .25s ease;
@@ -930,33 +936,39 @@ hr { display: none; }
 }
 .mld-tag {
   position: absolute;
-  top: 8px; left: 8px;
+  top: 6px; left: 6px;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px);
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
   pointer-events: none;
   z-index: 2;
 }
 .mld-meta {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 10px 14px;
+  gap: 10px; padding: 8px 12px;
   border-top: 1px solid var(--border);
+  min-height: 36px;
 }
 .mld-meta .mld-name {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: 15px; line-height: 1.25; color: var(--fg);
+  font-size: 14px; line-height: 1.2; color: var(--fg);
   letter-spacing: -0.004em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mld-meta .mld-source {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--grey-100);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* ===== Citation ===== */
@@ -3174,15 +3186,15 @@ integration with textured-mesh generators.
     near objects. Each card pairs the input image (left) with the
     full multilayer depth animation (right).
   </p>
-  <div class="mld-grid" id="mld-grid"><div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">Held-out 3D-FRONT</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">Held-out 3D-FRONT</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_01_modern_living_room__seed42.png" alt="Input: Modern living room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_01_modern_living_room__seed42.gif" alt="Multilayer depth: Modern living room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern living room</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_02_master_bedroom__seed42.png" alt="Input: Master bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_02_master_bedroom__seed42.gif" alt="Multilayer depth: Master bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Master bedroom</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_03_modern_kitchen__seed43.png" alt="Input: Modern kitchen" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_03_modern_kitchen__seed43.gif" alt="Multilayer depth: Modern kitchen" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern kitchen</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_04_dining_room__seed43.png" alt="Input: Dining room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_04_dining_room__seed43.gif" alt="Multilayer depth: Dining room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Dining room</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_06_luxury_bathroom__seed44.png" alt="Input: Luxury bathroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_06_luxury_bathroom__seed44.gif" alt="Multilayer depth: Luxury bathroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Luxury bathroom</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_15_art_studio__seed49.png" alt="Input: Art studio" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_15_art_studio__seed49.gif" alt="Multilayer depth: Art studio" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Art studio</span><span class="mld-source">Generated scene</span></div></div>
-<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_25_rustic_cabin__seed54.png" alt="Input: Rustic cabin" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_25_rustic_cabin__seed54.gif" alt="Multilayer depth: Rustic cabin" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Rustic cabin</span><span class="mld-source">Generated scene</span></div></div></div>
+  <div class="mld-grid" id="mld-grid"><div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__21a0379d-e657-4b7b-80f1-2aa4554d7d80__MasterBedroom-142318__f0000.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">3D-FRONT</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.png" alt="Input: 3D-FRONT bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/test__3dfront__e5c7cabf-6a21-4575-b2bf-e9fe187eb6f9__MasterBedroom-16132__f0010.gif" alt="Multilayer depth: 3D-FRONT bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">3D-FRONT bedroom</span><span class="mld-source">3D-FRONT</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_01_modern_living_room__seed42.png" alt="Input: Modern living room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_01_modern_living_room__seed42.gif" alt="Multilayer depth: Modern living room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern living room</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_02_master_bedroom__seed42.png" alt="Input: Master bedroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_02_master_bedroom__seed42.gif" alt="Multilayer depth: Master bedroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Master bedroom</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_03_modern_kitchen__seed43.png" alt="Input: Modern kitchen" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_03_modern_kitchen__seed43.gif" alt="Multilayer depth: Modern kitchen" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Modern kitchen</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_04_dining_room__seed43.png" alt="Input: Dining room" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_04_dining_room__seed43.gif" alt="Multilayer depth: Dining room" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Dining room</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_06_luxury_bathroom__seed44.png" alt="Input: Luxury bathroom" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_06_luxury_bathroom__seed44.gif" alt="Multilayer depth: Luxury bathroom" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Luxury bathroom</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_15_art_studio__seed49.png" alt="Input: Art studio" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_15_art_studio__seed49.gif" alt="Multilayer depth: Art studio" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Art studio</span><span class="mld-source">Generated</span></div></div>
+<div class="mld-card"><div class="mld-pair"><div class="mld-cell"><span class="mld-tag">Input</span><img src="assets/multilayer_depth/rgb/scene_indoor_25_rustic_cabin__seed54.png" alt="Input: Rustic cabin" loading="lazy" decoding="async"></div><div class="mld-cell"><span class="mld-tag">Multilayer depth</span><img src="assets/multilayer_depth/gif/scene_indoor_25_rustic_cabin__seed54.gif" alt="Multilayer depth: Rustic cabin" loading="lazy" decoding="async"></div></div><div class="mld-meta"><span class="mld-name">Rustic cabin</span><span class="mld-source">Generated</span></div></div></div>
 </section>
 
 <section class="section centered washed" id="demo-textured-mesh">

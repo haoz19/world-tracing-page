@@ -767,22 +767,28 @@ hr { display: none; }
   border-radius: 8px;
 }
 
-/* ===== Multilayer depth gallery ===== */
+/* ===== Multilayer depth gallery =====
+   3-per-row grid of cards.  Each card shows an Input | Multilayer-depth
+   pair, so 3 cards = 6 image cells across the row (the requested
+   "3 rows × 6 columns" cell layout for the 9 picks). */
 .mld-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   width: 100%;
-  max-width: var(--max-content);
+  max-width: 1180px;
   margin: 0 auto;
 }
-@media (max-width: 720px) {
-  .mld-grid { grid-template-columns: 1fr; gap: 16px; }
+@media (max-width: 980px) {
+  .mld-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+}
+@media (max-width: 620px) {
+  .mld-grid { grid-template-columns: 1fr; gap: 12px; }
 }
 .mld-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 1px 2px rgba(0,0,0,0.025);
   transition: border-color .2s ease, transform .25s ease, box-shadow .25s ease;
@@ -815,33 +821,39 @@ hr { display: none; }
 }
 .mld-tag {
   position: absolute;
-  top: 8px; left: 8px;
+  top: 6px; left: 6px;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #fff;
   background: rgba(0,0,0,0.55);
   backdrop-filter: blur(4px);
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
   pointer-events: none;
   z-index: 2;
 }
 .mld-meta {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 10px 14px;
+  gap: 10px; padding: 8px 12px;
   border-top: 1px solid var(--border);
+  min-height: 36px;
 }
 .mld-meta .mld-name {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: 15px; line-height: 1.25; color: var(--fg);
+  font-size: 14px; line-height: 1.2; color: var(--fg);
   letter-spacing: -0.004em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mld-meta .mld-source {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--grey-100);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* ===== Citation ===== */
