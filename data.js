@@ -317,7 +317,7 @@ window.SAMPLES = [
   },
   {
     "stem": "human__0032_02_view01",
-    "label": "Human 0032 \u00b7 view 1",
+    "label": "DNA-Rendering \u00b7 0032 view 1",
     "category": "dynamic",
     "seed": 0,
     "thumb_rel": "thumbnails/dynamic/human__0032_02_view01.jpg",
@@ -332,7 +332,7 @@ window.SAMPLES = [
   },
   {
     "stem": "human__0643_02_view25",
-    "label": "Human 0643 \u00b7 view 25",
+    "label": "DNA-Rendering \u00b7 0643 view 25",
     "category": "dynamic",
     "seed": 10,
     "thumb_rel": "thumbnails/dynamic/human__0643_02_view25.jpg",
@@ -347,7 +347,7 @@ window.SAMPLES = [
   },
   {
     "stem": "human__0657_06_view22",
-    "label": "Human 0657 \u00b7 view 22",
+    "label": "DNA-Rendering \u00b7 0657 view 22",
     "category": "dynamic",
     "seed": 0,
     "thumb_rel": "thumbnails/dynamic/human__0657_06_view22.jpg",
@@ -377,7 +377,7 @@ window.SAMPLES = [
   },
   {
     "stem": "human__0306_06_view25",
-    "label": "Human 0306 \u00b7 view 25",
+    "label": "DNA-Rendering \u00b7 0306 view 25",
     "category": "dynamic",
     "seed": 10,
     "thumb_rel": "thumbnails/dynamic/human__0306_06_view25.jpg",
