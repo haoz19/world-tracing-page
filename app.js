@@ -540,6 +540,53 @@ function initHeroMobilePolicy() {
   }, { threshold: 0.12 }).observe(hero);
 }
 
+// The hero video carries background music. Most browsers block autoplay
+// with sound for first-time visitors (Chrome autoplay policy / MEI), so
+// the markup ships as `autoplay muted` to guarantee playback. This pair
+// of behaviours tries to bring sound on as fast as possible:
+//
+//   1. On load, try `muted = false; play()` straight away. Returning
+//      visitors / users whose engagement index permits autoplay-with-
+//      sound get audio from frame one.
+//   2. If (1) is rejected (blocked first visit), the catch handler
+//      restores muted autoplay AND attaches one-shot listeners. The
+//      first real user gesture anywhere on the page (click / tap /
+//      keydown) flips the mute off, so the viewer hears sound the
+//      moment they interact with the page.
+//
+// Mobile is left to its own devices: `initMobileVideos()` already
+// strips `autoplay`, and a user-initiated tap on the native play
+// button will (per iOS / Android policy) play with audio.
+function initHeroAutoUnmute() {
+  const hero = document.getElementById('hero-demo-video');
+  if (!hero) return;
+  if (IS_TOUCH_COARSE) return;
+
+  const attachGestureUnmute = () => {
+    const onGesture = () => {
+      try { hero.muted = false; } catch (e) {}
+      window.removeEventListener('pointerdown', onGesture, true);
+      window.removeEventListener('keydown',     onGesture, true);
+      window.removeEventListener('touchstart',  onGesture, true);
+    };
+    const opts = { capture: true, passive: true };
+    window.addEventListener('pointerdown', onGesture, opts);
+    window.addEventListener('keydown',     onGesture, opts);
+    window.addEventListener('touchstart',  onGesture, opts);
+  };
+
+  try { hero.muted = false; } catch (e) {}
+  const p = hero.play();
+  if (p && typeof p.then === 'function') {
+    p.catch(() => {
+      try { hero.muted = true; hero.play().catch(() => {}); } catch (e) {}
+      attachGestureUnmute();
+    });
+  } else {
+    attachGestureUnmute();
+  }
+}
+
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -1228,6 +1275,7 @@ function init() {
   initHoverPlay();
   initMobileVideos();
   initHeroMobilePolicy();
+  initHeroAutoUnmute();
   setupBibtexCopy();
   // Initial tab from ?cat=scene|object|dynamic, default object.
   const params = new URLSearchParams(window.location.search);
