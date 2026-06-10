@@ -14,11 +14,79 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- model-viewer needs to know where to fetch the meshopt decoder *before*
+  <!-- Motion bootstrap: tag <html> with `js-motion` *synchronously* so the
+     scroll-reveal CSS rules apply before first paint (avoids a FOUC
+     where elements pop in at full opacity, then snap to opacity:0,
+     then fade back in). When JS is disabled the class is never set
+     and the page renders immediately at its final state. -->
+<script>document.documentElement.classList.add('js-motion');</script>
+<!-- model-viewer needs to know where to fetch the meshopt decoder *before*
      it tries to load any GLB that uses EXT_meshopt_compression. -->
 <script>
   self.ModelViewerElement = self.ModelViewerElement || {};
   self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.21.0/meshopt_decoder.js';
+</script>
+<!-- Scroll reveal: lazily fade + lift each `.section-head`, `.h-card`,
+     etc. as it enters the viewport. Cards inside a grid get a stair-
+     stepped `transition-delay` so they cascade rather than appearing
+     all at once. Hooks straight into the CSS rules under `html.js-motion`
+     in style.css. -->
+<script>
+(function () {
+  if (matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.remove('js-motion');
+    return;
+  }
+  function init() {
+    var groups = document.querySelectorAll('.highlights-grid, .demo-stage');
+    groups.forEach(function (group) {
+      var children = group.children;
+      for (var i = 0; i < children.length; i++) {
+        children[i].style.transitionDelay = Math.min(i * 80, 320) + 'ms';
+      }
+    });
+    var sel = [
+      '.section-head',
+      '.h-row',
+      '.h-card',
+      '.mld-card',
+      '.panel',
+      '.demo-stage',
+      '.cite-wrap',
+      '.teaser-img-wrap',
+      '.highlights-title',
+      '.h-row-head'
+    ].join(',');
+    var nodes = document.querySelectorAll(sel);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+    nodes.forEach(function (n) { io.observe(n); });
+    requestAnimationFrame(function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      nodes.forEach(function (n) {
+        var rect = n.getBoundingClientRect();
+        if (rect.top < vh * 0.92) {
+          n.classList.add('is-revealed');
+          io.unobserve(n);
+        }
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
 </script>
 <!-- Hero "Model" dropdown: click-to-toggle, outside-click + Escape to close,
      arrow keys to move between rows.  Hover-open is handled in CSS. -->
@@ -114,9 +182,9 @@
 </script>
 
   <link rel="stylesheet" href="style.css">
-<script src="data.js?v=1781069884"></script>
-<script src="_s3_override.js?v=1781069884"></script>
-<script type="module" src="app.js?v=1781069884"></script>
+<script src="data.js?v=1781071129"></script>
+<script src="_s3_override.js?v=1781071129"></script>
+<script type="module" src="app.js?v=1781071129"></script>
 </head>
 <body>
 

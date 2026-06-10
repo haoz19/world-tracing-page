@@ -14,11 +14,79 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- model-viewer needs to know where to fetch the meshopt decoder *before*
+  <!-- Motion bootstrap: tag <html> with `js-motion` *synchronously* so the
+     scroll-reveal CSS rules apply before first paint (avoids a FOUC
+     where elements pop in at full opacity, then snap to opacity:0,
+     then fade back in). When JS is disabled the class is never set
+     and the page renders immediately at its final state. -->
+<script>document.documentElement.classList.add('js-motion');</script>
+<!-- model-viewer needs to know where to fetch the meshopt decoder *before*
      it tries to load any GLB that uses EXT_meshopt_compression. -->
 <script>
   self.ModelViewerElement = self.ModelViewerElement || {};
   self.ModelViewerElement.meshoptDecoderLocation = 'https://cdn.jsdelivr.net/npm/meshoptimizer@0.21.0/meshopt_decoder.js';
+</script>
+<!-- Scroll reveal: lazily fade + lift each `.section-head`, `.h-card`,
+     etc. as it enters the viewport. Cards inside a grid get a stair-
+     stepped `transition-delay` so they cascade rather than appearing
+     all at once. Hooks straight into the CSS rules under `html.js-motion`
+     in style.css. -->
+<script>
+(function () {
+  if (matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+  if (!('IntersectionObserver' in window)) {
+    document.documentElement.classList.remove('js-motion');
+    return;
+  }
+  function init() {
+    var groups = document.querySelectorAll('.highlights-grid, .demo-stage');
+    groups.forEach(function (group) {
+      var children = group.children;
+      for (var i = 0; i < children.length; i++) {
+        children[i].style.transitionDelay = Math.min(i * 80, 320) + 'ms';
+      }
+    });
+    var sel = [
+      '.section-head',
+      '.h-row',
+      '.h-card',
+      '.mld-card',
+      '.panel',
+      '.demo-stage',
+      '.cite-wrap',
+      '.teaser-img-wrap',
+      '.highlights-title',
+      '.h-row-head'
+    ].join(',');
+    var nodes = document.querySelectorAll(sel);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+    nodes.forEach(function (n) { io.observe(n); });
+    requestAnimationFrame(function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      nodes.forEach(function (n) {
+        var rect = n.getBoundingClientRect();
+        if (rect.top < vh * 0.92) {
+          n.classList.add('is-revealed');
+          io.unobserve(n);
+        }
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
 </script>
 <!-- Hero "Model" dropdown: click-to-toggle, outside-click + Escape to close,
      arrow keys to move between rows.  Hover-open is handled in CSS. -->
@@ -120,17 +188,15 @@
 
 :root {
   color-scheme: light;
-  /* `--bg` stays pure white because dozens of card / panel / button
-   * backgrounds inherit it semantically as "card white". The actual
-   * page (body) uses `--bg-page`, a subtle warm cream that gives the
-   * site a paper feel and lets every white card *lift* visually
-   * (added 2026-06-09 alongside hero re-balance). `--bg-warm` is the
-   * deeper alternating section wash and was bumped a step warmer so
-   * it still reads distinctly from the new page background. */
+  /* Page is pure white for a clean editorial paper feel. `--bg` is
+   * the same white but stays semantic — used by cards/panels/buttons
+   * so a future palette swap can be done in one place. `--bg-warm`
+   * is the alternating section wash, kept gentle so it reads as a
+   * quiet tonal shift rather than a banner. */
   --bg: #ffffff;
-  --bg-page: #fbf8f1;
+  --bg-page: #ffffff;
   --bg-section: #ffffff;
-  --bg-warm: #f3edda;
+  --bg-warm: #f7f2e3;
   --bg-card: #ffffff;
   --bg-card-2: #f7f6f3;
   --fg: #111111;
@@ -138,17 +204,20 @@
   --grey-200: #3d3d3d;
   --grey-300: #1f1f1f;
   --grey-dim: #9a9a9a;
-  --border: rgba(40,30,15,0.10);
-  --border-strong: rgba(40,30,15,0.18);
+  --border: rgba(20, 15, 5, 0.075);
+  --border-strong: rgba(20, 15, 5, 0.16);
   --accent: #111111;
   --radius: 14px;
   --radius-pill: 9999px;
   --max-w: 1320px;
   --max-content: 880px;
+  --ease-out-quint: cubic-bezier(0.22, 0.8, 0.18, 1);
 }
 
 * { box-sizing: border-box; }
 html, body { background: var(--bg-page); color: var(--fg); margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   font-family: 'Roobert', 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px; line-height: 1.55; font-weight: 400;
@@ -250,27 +319,91 @@ hr { display: none; }
   padding: 11px 20px;
   background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-pill);
   color: var(--fg); font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  transition:
+    background .25s var(--ease-out-quint),
+    border-color .25s var(--ease-out-quint),
+    transform .25s var(--ease-out-quint),
+    box-shadow .25s var(--ease-out-quint);
   line-height: 1;
-  box-shadow: 0 1px 2px rgba(40, 30, 15, 0.04);
 }
 .hero .links a:hover {
   background: #ffffff;
   border-color: var(--border-strong);
-  box-shadow: 0 2px 10px -2px rgba(40, 30, 15, 0.10);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.16);
   transform: translateY(-1px);
   opacity: 1;
 }
-.hero .links a:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(40, 30, 15, 0.05); }
+.hero .links a:active { transform: translateY(0); box-shadow: none; }
 .hero .links a.primary {
   background: var(--fg); color: #ffffff; border-color: var(--fg);
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.18);
 }
 .hero .links a.primary:hover {
   background: var(--grey-300); border-color: var(--grey-300);
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.32);
 }
 .hero .links a svg { width: 14px; height: 14px; }
+
+/* ===== Hero entrance animation =====
+ * Quiet, paper-like rise for each hero element. The whole sequence
+ * lasts ~1s and uses an editorial easing (ease-out-quint) so the
+ * type settles rather than springs. Wrapped in `prefers-reduced-motion:
+ * no-preference` so reduced-motion users see everything immediately
+ * with no transform / opacity tween.
+ *
+ * The birdmark gets its own dedicated keyframe (slight rotate + lift)
+ * because it sits inside the h1 flexbox and we want a subtle
+ * choreographed reveal, then a slow drift-loop to add a touch of
+ * life without becoming a distraction. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1,
+  .hero .subtitle,
+  .hero .authors,
+  .hero .affil,
+  .hero .links {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroRise 0.85s var(--ease-out-quint) both;
+  }
+  .hero h1       { animation-delay: 0.05s; }
+  .hero .subtitle{ animation-delay: 0.20s; }
+  .hero .authors { animation-delay: 0.34s; }
+  .hero .affil   { animation-delay: 0.46s; }
+  .hero .links   { animation-delay: 0.60s; }
+
+  .hero h1 .birdmark {
+    transform-origin: 50% 65%;
+    animation:
+      birdRise 0.95s var(--ease-out-quint) 0s both,
+      birdDrift 7s ease-in-out 1.4s infinite alternate;
+  }
+}
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes birdRise {
+  from { opacity: 0; transform: translateY(10px) rotate(-12deg) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)    rotate(0deg)   scale(1);    }
+}
+@keyframes birdDrift {
+  0%   { transform: translateY(0)   rotate(0deg);  }
+  100% { transform: translateY(-2px) rotate(-3deg); }
+}
+
+/* The hero summary video gets a quieter, slightly delayed reveal so
+ * it follows the type rather than competing with it. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-video-wrap {
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+    animation: videoReveal 1.0s var(--ease-out-quint) 0.78s both;
+  }
+}
+@keyframes videoReveal {
+  from { opacity: 0; transform: translateY(20px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);     }
+}
 
 /* Brand icons (GitHub / HF / arXiv / BibTeX) sit at the start of each
  * pill, sized a touch larger than the trailing arrow so the mark reads
@@ -313,15 +446,18 @@ hr { display: none; }
   font: inherit; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 1px 2px rgba(40, 30, 15, 0.04);
-  transition: background .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  transition:
+    background .25s var(--ease-out-quint),
+    border-color .25s var(--ease-out-quint),
+    transform .25s var(--ease-out-quint),
+    box-shadow .25s var(--ease-out-quint);
 }
 .hero .links .link-menu-trigger:hover {
   background: #ffffff; border-color: var(--border-strong);
-  box-shadow: 0 2px 10px -2px rgba(40, 30, 15, 0.10);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.16);
   transform: translateY(-1px);
 }
-.hero .links .link-menu-trigger:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(40, 30, 15, 0.05); }
+.hero .links .link-menu-trigger:active { transform: translateY(0); box-shadow: none; }
 .hero .links .link-menu-trigger svg.caret {
   width: 12px; height: 12px;
   transition: transform .18s ease;
@@ -441,9 +577,7 @@ hr { display: none; }
   overflow: hidden;
   background: #ffffff;
   border: 1px solid var(--border);
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.025),
-    0 18px 48px -18px rgba(60, 50, 38, 0.18);
+  box-shadow: 0 24px 56px -28px rgba(0, 0, 0, 0.22);
 }
 .hero-video-wrap video {
   display: block;
@@ -535,10 +669,10 @@ hr { display: none; }
   text-decoration: none; color: var(--fg);
   overflow: hidden;
   isolation: isolate;
-  box-shadow:
-    0 1px 2px rgba(40, 30, 15, 0.04),
-    0 4px 14px -8px rgba(40, 30, 15, 0.10);
-  transition: border-color .2s ease, transform .25s ease, box-shadow .25s ease;
+  transition:
+    border-color .35s var(--ease-out-quint),
+    transform .45s var(--ease-out-quint),
+    box-shadow .45s var(--ease-out-quint);
   cursor: pointer;
 }
 .h-card:focus-visible {
@@ -547,11 +681,9 @@ hr { display: none; }
 }
 .h-card:hover {
   border-color: var(--border-strong);
-  transform: translateY(-3px);
-  box-shadow:
-    0 1px 2px rgba(40, 30, 15, 0.04),
-    0 16px 40px -16px rgba(40, 30, 15, 0.18),
-    0 4px 12px -6px rgba(40, 30, 15, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.16),
+              0 6px 14px -10px rgba(0, 0, 0, 0.10);
   opacity: 1;
 }
 .h-card .h-media {
@@ -1143,6 +1275,42 @@ pre.cite {
   width: 12px; height: 12px;
   stroke: currentColor; stroke-width: 1.6;
   fill: none; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ===== Scroll-driven reveal =====
+ * `html.js-motion` is added by an inline boot script in `HEAD_SCRIPTS`
+ * the moment the document head is parsed, so the elements are already
+ * in their hidden state before paint -- no flash of unstyled content.
+ * If JS is disabled, the class never lands and everything is fully
+ * visible. If the user prefers reduced motion, the rules below are
+ * skipped and elements stay at their default (visible) state.
+ *
+ * Each observed element fades + lifts ~14px when it scrolls into view.
+ * A small JS handler (HEAD_SCRIPTS, "scroll reveal" block) sets a
+ * staggered `transition-delay` on cards within a grid so they cascade
+ * left-to-right rather than appearing simultaneously. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js-motion .section-head,
+  html.js-motion .h-row,
+  html.js-motion .h-card,
+  html.js-motion .mld-card,
+  html.js-motion .panel,
+  html.js-motion .demo-stage,
+  html.js-motion .cite-wrap,
+  html.js-motion .teaser-img-wrap,
+  html.js-motion .highlights-title,
+  html.js-motion .h-row-head {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.85s var(--ease-out-quint),
+      transform 0.85s var(--ease-out-quint);
+    will-change: opacity, transform;
+  }
+  html.js-motion .is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ===== Footer ===== */
