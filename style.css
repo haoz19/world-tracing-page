@@ -85,7 +85,14 @@ hr { display: none; }
  * column above the (now ≤1080px) demo video below.
  */
 .hero {
-  position: relative; padding: 64px 24px 32px;
+  position: relative;
+  /* Sit above the hero summary video below: that section's
+   * `.hero-video-wrap` runs an entrance animation with a CSS
+   * `transform`, which creates its own stacking context, so without
+   * an explicit z-index on `.hero` the dropdown panel from the
+   * `Model` pill could be painted over by the video card. */
+  z-index: 5;
+  padding: 64px 24px 32px;
   text-align: center; max-width: 1040px; margin: 0 auto;
 }
 @media (min-width: 1024px) { .hero { padding: 88px 40px 40px; } }
@@ -300,7 +307,9 @@ hr { display: none; }
   display: flex; flex-direction: column; gap: 2px;
   opacity: 0; pointer-events: none;
   transition: opacity .15s ease, transform .15s ease;
-  z-index: 30;
+  /* Defensive z-index: paired with `.hero { z-index: 5 }` above, this
+   * keeps the panel above the hero summary video below the hero. */
+  z-index: 80;
   text-align: left;
 }
 .hero .links .link-menu:hover .link-menu-panel,
@@ -417,21 +426,32 @@ hr { display: none; }
   display: flex; flex-direction: column; gap: 24px;
   align-items: center;
 }
+/* The highlights title is a *deck* under the section's chapter mark,
+ * not a section H2 -- so it should read as a quiet pull-quote, not as
+ * a primary headline. Two-line format:
+ *   line 1: lede sentence (regular Gilda Display, normal weight)
+ *   line 2: italic clause (smaller, dimmer, dropped to a softer voice)
+ * No em-dash separator -- the line break + italic shift carries the
+ * voice change cleanly on its own.
+ */
 .section h2.highlights-title {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: clamp(1.75rem, 2.6vw, 2.35rem); font-weight: 400;
-  letter-spacing: -0.014em; line-height: 1.18; color: var(--fg);
-  text-align: center; margin: 0 0 18px; max-width: 760px;
+  font-size: clamp(1.25rem, 1.85vw, 1.65rem); font-weight: 400;
+  letter-spacing: -0.012em; line-height: 1.28; color: var(--fg);
+  text-align: center; margin: 0 0 14px; max-width: 640px;
   text-wrap: balance;
 }
 .highlights-title .lede { display: block; }
 .highlights-title em {
-  font-style: italic; color: var(--grey-200);
-  display: block; margin-top: 4px; font-size: 0.92em;
+  font-style: italic;
+  color: var(--grey-100);
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82em;
+  letter-spacing: 0;
 }
-.highlights-title em::before { content: '\2014\00a0'; color: var(--grey-100); font-style: normal; }
 @media (max-width: 720px) {
-  .section h2.highlights-title { font-size: clamp(1.25rem, 5vw, 1.55rem); max-width: 92%; }
+  .section h2.highlights-title { font-size: clamp(1.1rem, 4.4vw, 1.35rem); max-width: 92%; }
 }
 
 /* Two horizontally-banded rows, each with its own eyebrow + 3-col grid. */
@@ -506,7 +526,9 @@ hr { display: none; }
 .h-card .h-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  /* 16/9 makes the media area shorter than the previous 16/10 so the
+   * card has less vertical bulk overall. */
+  aspect-ratio: 16 / 9;
   background: linear-gradient(160deg, #f7f6f3 0%, #efeee9 100%);
   overflow: hidden;
   border-bottom: 1px solid var(--border);
@@ -565,24 +587,24 @@ hr { display: none; }
   backdrop-filter: blur(4px);
 }
 .h-card .h-body {
-  display: flex; flex-direction: column; gap: 8px;
-  padding: 16px 18px 18px;
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 12px 16px 14px;
   flex: 1;
 }
 .h-card .h-title {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: clamp(16px, 1.18vw, 19px);
-  font-weight: 400; line-height: 1.22; letter-spacing: -0.008em;
+  font-size: clamp(15.5px, 1.12vw, 18px);
+  font-weight: 400; line-height: 1.18; letter-spacing: -0.008em;
   color: var(--fg);
 }
 .h-card .h-blurb {
-  font-size: 12.5px; line-height: 1.55;
+  font-size: 12.5px; line-height: 1.5;
   color: var(--grey-100);
   margin: 0;
 }
 .h-card .h-cta {
   display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 12px; font-weight: 500; letter-spacing: 0.005em;
   color: var(--grey-200);
   transition: color .15s ease, transform .15s ease;
