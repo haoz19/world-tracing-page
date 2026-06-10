@@ -41,7 +41,11 @@
     return;
   }
   function init() {
-    var groups = document.querySelectorAll('.highlights-grid, .demo-stage');
+    // Stagger only static grids -- the interactive `.demo-stage` is
+    // populated dynamically by JS after this script runs, so it's
+    // intentionally excluded from both the stagger pass and the
+    // observer below.
+    var groups = document.querySelectorAll('.highlights-grid');
     groups.forEach(function (group) {
       var children = group.children;
       for (var i = 0; i < children.length; i++) {
@@ -53,8 +57,6 @@
       '.h-row',
       '.h-card',
       '.mld-card',
-      '.panel',
-      '.demo-stage',
       '.cite-wrap',
       '.teaser-img-wrap',
       '.highlights-title',
@@ -182,9 +184,9 @@
 </script>
 
   <link rel="stylesheet" href="style.css">
-<script src="data.js?v=1781071129"></script>
-<script src="_s3_override.js?v=1781071129"></script>
-<script type="module" src="app.js?v=1781071129"></script>
+<script src="data.js?v=1781072666"></script>
+<script src="_s3_override.js?v=1781072666"></script>
+<script type="module" src="app.js?v=1781072666"></script>
 </head>
 <body>
 

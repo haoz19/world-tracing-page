@@ -41,7 +41,11 @@
     return;
   }
   function init() {
-    var groups = document.querySelectorAll('.highlights-grid, .demo-stage');
+    // Stagger only static grids -- the interactive `.demo-stage` is
+    // populated dynamically by JS after this script runs, so it's
+    // intentionally excluded from both the stagger pass and the
+    // observer below.
+    var groups = document.querySelectorAll('.highlights-grid');
     groups.forEach(function (group) {
       var children = group.children;
       for (var i = 0; i < children.length; i++) {
@@ -53,8 +57,6 @@
       '.h-row',
       '.h-card',
       '.mld-card',
-      '.panel',
-      '.demo-stage',
       '.cite-wrap',
       '.teaser-img-wrap',
       '.highlights-title',
@@ -850,27 +852,16 @@ hr { display: none; }
   background: var(--accent); opacity: 0.5; margin-top: 6px;
 }
 
-/* ----- Tonal alternation (warm wash for every other section) -----
-   The wash extends edge-to-edge of the viewport while the inner
-   content stays inside the .section's normal max-width. We use the
-   `100vw - 100%` margin trick so it works without changing the
-   document outline or breaking horizontal scrolling. */
+/* ----- Tonal alternation (intentionally no-op as of 2026-06-09) -----
+   The page is now uniformly white -- the previous warm cream wash
+   was visually noisy. The `.washed` class is left in the HTML for
+   backwards compatibility with the page builder, but renders as a
+   transparent pass-through; all section rhythm now comes from the
+   centered hairline ornament + serif chapter-mark + generous
+   `main { gap }` spacing. */
 .section.washed {
-  background: var(--bg-warm);
-  margin-left: calc((100% - 100vw) / 2);
-  margin-right: calc((100% - 100vw) / 2);
-  padding-left: max(24px, calc((100vw - 100%) / 2 + 24px));
-  padding-right: max(24px, calc((100vw - 100%) / 2 + 24px));
-  padding-top: 80px;
-  padding-bottom: 80px;
+  background: transparent;
 }
-@media (min-width: 1024px) {
-  .section.washed { padding-top: 96px; padding-bottom: 96px; }
-}
-/* When two adjacent sections are both washed, drop the gap so the
-   wash reads as one continuous band. (Currently we never schedule
-   two adjacent washes, but this keeps the rule resilient if reorder.) */
-.section.washed + .section.washed { margin-top: calc(-1 * var(--main-gap, 88px)); }
 
 /* ===== Category tabs ===== */
 .cat-tabs-wrap { display: flex; justify-content: center; margin-bottom: 4px; }
@@ -1285,17 +1276,19 @@ pre.cite {
  * visible. If the user prefers reduced motion, the rules below are
  * skipped and elements stay at their default (visible) state.
  *
- * Each observed element fades + lifts ~14px when it scrolls into view.
- * A small JS handler (HEAD_SCRIPTS, "scroll reveal" block) sets a
- * staggered `transition-delay` on cards within a grid so they cascade
- * left-to-right rather than appearing simultaneously. */
+ * NOTE: the interactive demo viewer (.demo-stage and its child .panel
+ * elements) is intentionally *excluded* from the reveal list because
+ * those `.panel` elements are inserted by JS in `ensureStageScaffold`
+ * AFTER DOMContentLoaded -- so the IntersectionObserver wired up at
+ * boot time never sees them, they would stay hidden permanently and
+ * the whole "Interactive examples" stage would render blank.  Same
+ * goes for any element whose visibility is gated on a tab switch;
+ * keep them off this list. */
 @media (prefers-reduced-motion: no-preference) {
   html.js-motion .section-head,
   html.js-motion .h-row,
   html.js-motion .h-card,
   html.js-motion .mld-card,
-  html.js-motion .panel,
-  html.js-motion .demo-stage,
   html.js-motion .cite-wrap,
   html.js-motion .teaser-img-wrap,
   html.js-motion .highlights-title,
