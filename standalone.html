@@ -120,9 +120,17 @@
 
 :root {
   color-scheme: light;
+  /* `--bg` stays pure white because dozens of card / panel / button
+   * backgrounds inherit it semantically as "card white". The actual
+   * page (body) uses `--bg-page`, a subtle warm cream that gives the
+   * site a paper feel and lets every white card *lift* visually
+   * (added 2026-06-09 alongside hero re-balance). `--bg-warm` is the
+   * deeper alternating section wash and was bumped a step warmer so
+   * it still reads distinctly from the new page background. */
   --bg: #ffffff;
+  --bg-page: #fbf8f1;
   --bg-section: #ffffff;
-  --bg-warm: #fbf9f4;
+  --bg-warm: #f3edda;
   --bg-card: #ffffff;
   --bg-card-2: #f7f6f3;
   --fg: #111111;
@@ -130,8 +138,8 @@
   --grey-200: #3d3d3d;
   --grey-300: #1f1f1f;
   --grey-dim: #9a9a9a;
-  --border: rgba(0,0,0,0.08);
-  --border-strong: rgba(0,0,0,0.16);
+  --border: rgba(40,30,15,0.10);
+  --border-strong: rgba(40,30,15,0.18);
   --accent: #111111;
   --radius: 14px;
   --radius-pill: 9999px;
@@ -140,7 +148,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { background: var(--bg); color: var(--fg); margin: 0; padding: 0; }
+html, body { background: var(--bg-page); color: var(--fg); margin: 0; padding: 0; }
 body {
   font-family: 'Roobert', 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px; line-height: 1.55; font-weight: 400;
@@ -239,16 +247,29 @@ hr { display: none; }
 .hero .links { display: inline-flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .hero .links a {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
+  padding: 11px 20px;
   background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-pill);
   color: var(--fg); font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease;
   line-height: 1;
+  box-shadow: 0 1px 2px rgba(40, 30, 15, 0.04);
 }
-.hero .links a:hover { background: #f7f6f3; border-color: var(--border-strong); opacity: 1; }
-.hero .links a:active { transform: scale(0.98); }
-.hero .links a.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.hero .links a.primary:hover { background: var(--grey-300); border-color: var(--grey-300); }
+.hero .links a:hover {
+  background: #ffffff;
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 10px -2px rgba(40, 30, 15, 0.10);
+  transform: translateY(-1px);
+  opacity: 1;
+}
+.hero .links a:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(40, 30, 15, 0.05); }
+.hero .links a.primary {
+  background: var(--fg); color: #ffffff; border-color: var(--fg);
+  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.18);
+}
+.hero .links a.primary:hover {
+  background: var(--grey-300); border-color: var(--grey-300);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.24);
+}
 .hero .links a svg { width: 14px; height: 14px; }
 
 /* Brand icons (GitHub / HF / arXiv / BibTeX) sit at the start of each
@@ -284,7 +305,7 @@ hr { display: none; }
 .hero .links .link-menu { position: relative; display: inline-flex; }
 .hero .links .link-menu-trigger {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
+  padding: 11px 20px;
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
@@ -292,12 +313,15 @@ hr { display: none; }
   font: inherit; font-weight: 500; font-size: 14px; letter-spacing: -0.005em;
   line-height: 1;
   cursor: pointer;
-  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  box-shadow: 0 1px 2px rgba(40, 30, 15, 0.04);
+  transition: background .15s ease, border-color .15s ease, transform .15s ease, box-shadow .15s ease;
 }
 .hero .links .link-menu-trigger:hover {
-  background: #f7f6f3; border-color: var(--border-strong);
+  background: #ffffff; border-color: var(--border-strong);
+  box-shadow: 0 2px 10px -2px rgba(40, 30, 15, 0.10);
+  transform: translateY(-1px);
 }
-.hero .links .link-menu-trigger:active { transform: scale(0.98); }
+.hero .links .link-menu-trigger:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(40, 30, 15, 0.05); }
 .hero .links .link-menu-trigger svg.caret {
   width: 12px; height: 12px;
   transition: transform .18s ease;
@@ -444,9 +468,9 @@ hr { display: none; }
 }
 .section h2.highlights-title {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: clamp(1.55rem, 2.2vw, 1.95rem); font-weight: 400;
-  letter-spacing: -0.008em; line-height: 1.22; color: var(--fg);
-  text-align: center; margin: 0 0 16px; max-width: 720px;
+  font-size: clamp(1.75rem, 2.6vw, 2.35rem); font-weight: 400;
+  letter-spacing: -0.014em; line-height: 1.18; color: var(--fg);
+  text-align: center; margin: 0 0 18px; max-width: 760px;
   text-wrap: balance;
 }
 .highlights-title .lede { display: block; }
@@ -465,23 +489,24 @@ hr { display: none; }
   display: flex; flex-direction: column; gap: 10px;
   margin-top: 4px;
 }
-.h-row + .h-row { margin-top: 14px; }
+.h-row + .h-row { margin-top: 18px; }
 .h-row-head {
-  display: flex; align-items: baseline; gap: 14px;
+  display: flex; align-items: baseline; gap: 16px;
   width: 100%;
-  padding-bottom: 6px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
 }
 .h-row-eyebrow {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--grey-100); font-weight: 500; flex-shrink: 0;
 }
 .h-row-label {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: clamp(15px, 1.2vw, 17px);
-  font-weight: 400; line-height: 1.25; letter-spacing: -0.004em;
-  color: var(--fg);
+  font-style: italic;
+  font-size: clamp(15px, 1.22vw, 18px);
+  font-weight: 400; line-height: 1.3; letter-spacing: -0.004em;
+  color: var(--grey-200);
 }
 /* On narrow viewports the eyebrow + descriptive label can't share a
    single row -- the eyebrow grabs all the width and the descriptive
@@ -506,11 +531,13 @@ hr { display: none; }
   position: relative; display: flex; flex-direction: column;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   text-decoration: none; color: var(--fg);
   overflow: hidden;
   isolation: isolate;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.025);
+  box-shadow:
+    0 1px 2px rgba(40, 30, 15, 0.04),
+    0 4px 14px -8px rgba(40, 30, 15, 0.10);
   transition: border-color .2s ease, transform .25s ease, box-shadow .25s ease;
   cursor: pointer;
 }
@@ -521,7 +548,10 @@ hr { display: none; }
 .h-card:hover {
   border-color: var(--border-strong);
   transform: translateY(-3px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+  box-shadow:
+    0 1px 2px rgba(40, 30, 15, 0.04),
+    0 16px 40px -16px rgba(40, 30, 15, 0.18),
+    0 4px 12px -6px rgba(40, 30, 15, 0.08);
   opacity: 1;
 }
 .h-card .h-media {
@@ -586,24 +616,24 @@ hr { display: none; }
   backdrop-filter: blur(4px);
 }
 .h-card .h-body {
-  display: flex; flex-direction: column; gap: 6px;
-  padding: 12px 14px 14px;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 16px 18px 18px;
   flex: 1;
 }
 .h-card .h-title {
   font-family: 'Gilda Display', Georgia, serif;
-  font-size: clamp(14px, 1.05vw, 16px);
-  font-weight: 400; line-height: 1.25; letter-spacing: -0.004em;
+  font-size: clamp(16px, 1.18vw, 19px);
+  font-weight: 400; line-height: 1.22; letter-spacing: -0.008em;
   color: var(--fg);
 }
 .h-card .h-blurb {
-  font-size: 12px; line-height: 1.5;
+  font-size: 12.5px; line-height: 1.55;
   color: var(--grey-100);
   margin: 0;
 }
 .h-card .h-cta {
   display: inline-flex; align-items: center; gap: 6px;
-  margin-top: auto;
+  margin-top: 6px;
   font-size: 12px; font-weight: 500; letter-spacing: 0.005em;
   color: var(--grey-200);
   transition: color .15s ease, transform .15s ease;
@@ -613,48 +643,79 @@ hr { display: none; }
 .h-card:hover .h-cta svg { transform: translateX(2px); }
 
 /* ===== Section ===== */
-.section { display: flex; flex-direction: column; gap: 22px; position: relative; }
+.section { display: flex; flex-direction: column; gap: 26px; position: relative; }
 .section.centered { text-align: center; align-items: center; }
 .section.centered .lead { margin-left: auto; margin-right: auto; }
-.section h2 { font-family: 'Gilda Display', Georgia, serif; font-size: clamp(1.8rem, 3.0vw, 2.4rem); font-weight: 400; margin: 0; letter-spacing: -0.012em; line-height: 1.15; color: var(--fg); }
+.section h2 {
+  font-family: 'Gilda Display', Georgia, serif;
+  font-size: clamp(2.0rem, 3.4vw, 2.95rem);
+  font-weight: 400; margin: 0;
+  letter-spacing: -0.018em; line-height: 1.12; color: var(--fg);
+  text-wrap: balance;
+}
 .section.centered h2 { margin: 0 auto; }
-.section .lead { font-size: clamp(1rem, 1.1vw, 1.08rem); color: var(--grey-200); max-width: var(--max-content); line-height: 1.65; }
+.section .lead {
+  font-size: clamp(1.02rem, 1.15vw, 1.12rem);
+  color: var(--grey-200);
+  max-width: var(--max-content); line-height: 1.65;
+}
 .section .lead em { color: var(--fg); font-style: normal; font-weight: 500; }
 
 /* ----- Section header chrome (eyebrow + title + accent rule) -----
    Each major section opens with this stack:
      <div class="section-head">
-       <span class="section-num">04</span>
-       <span class="section-eyebrow">Applications</span>
+       <span class="section-meta">
+         <span class="section-num">04</span>
+         <span class="section-eyebrow">Applications</span>
+       </span>
        <h2>...</h2>
        <span class="section-rule"></span>
      </div>
-   Numbered eyebrow gives each chapter a quiet identifier without
-   shouting; the 1-px hairline rule under the title anchors it. */
+   The chapter number is rendered in serif italic for an editorial
+   feel (was uniform mono); the eyebrow stays in mono so the
+   typographic pairing reads like a magazine deck. */
 .section-head {
   display: flex; flex-direction: column;
   align-items: inherit; /* inherits from .section.centered (= center) */
-  gap: 12px; margin: 0;
+  gap: 14px; margin: 0;
 }
 .section.centered .section-head,
 .section .section-head--centered { align-items: center; text-align: center; align-self: center; }
-.section-num,
+.section-meta {
+  display: inline-flex; align-items: baseline; gap: 10px;
+  margin-bottom: 4px;
+}
+.section.centered .section-meta {
+  position: relative;
+  padding-top: 18px;
+}
+.section.centered .section-meta::before {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  width: 28px; height: 1px;
+  background: var(--accent); opacity: 0.45;
+  transform: translateX(-50%);
+}
+.section-num {
+  font-family: 'Gilda Display', Georgia, serif;
+  font-style: italic;
+  font-size: 15px; letter-spacing: 0;
+  color: var(--grey-200);
+  font-weight: 400; line-height: 1;
+}
 .section-eyebrow {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--grey-100); font-weight: 500; line-height: 1;
 }
-.section-num { color: var(--grey-dim); }
 .section-num + .section-eyebrow::before {
-  content: '\00b7'; margin: 0 8px; color: var(--grey-dim);
+  content: '\00b7'; margin-right: 8px;
+  color: var(--grey-dim); font-family: inherit;
 }
-.section-num,
-.section-eyebrow { display: inline; }
-.section-head .section-meta { display: block; margin-bottom: 2px; }
 .section-head h2 { margin: 0; }
 .section-rule {
-  display: inline-block; width: 32px; height: 1px;
-  background: var(--accent); opacity: 0.55; margin-top: 4px;
+  display: inline-block; width: 38px; height: 1px;
+  background: var(--accent); opacity: 0.5; margin-top: 6px;
 }
 
 /* ----- Tonal alternation (warm wash for every other section) -----
@@ -1085,8 +1146,25 @@ pre.cite {
 }
 
 /* ===== Footer ===== */
-footer { margin: 0; padding: 32px 24px 48px; max-width: var(--max-w); margin: 0 auto; color: var(--grey-100); text-align: center; font-size: 13px; letter-spacing: 0.01em; border-top: 1px solid var(--border); }
-@media (min-width: 1024px) { footer { padding: 36px 40px 56px; } }
+footer {
+  margin: 0; padding: 40px 24px 56px;
+  max-width: var(--max-w); margin: 0 auto;
+  color: var(--grey-100); text-align: center;
+  font-size: 13px; letter-spacing: 0.01em;
+  position: relative;
+}
+/* Decorative hairline ornament centered above the footer copy: a thin
+ * horizontal rule with a tiny serif glyph at the centre — a quiet
+ * paper-style ornament that replaces the harsh full-width border that
+ * used to hard-cap the page. */
+footer::before {
+  content: '';
+  display: block;
+  width: 64px; height: 1px;
+  background: var(--accent); opacity: 0.35;
+  margin: 0 auto 28px;
+}
+@media (min-width: 1024px) { footer { padding: 48px 40px 64px; } }
 footer a { color: var(--grey-200); }
 footer a:hover { color: var(--fg); opacity: 1; }
 
