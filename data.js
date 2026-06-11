@@ -192,7 +192,7 @@ window.SAMPLES = [
     "viewer_url": "https://app.rerun.io/version/0.22.0?url=https%3A%2F%2Fgithub.com%2Fhaoz19%2Fworld-tracing-page%2Freleases%2Fdownload%2Fv1%2Fscene_indoor_15_art_studio__seed49__seed1.rrd",
     "rrd_url": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_15_art_studio__seed49__seed1.rrd",
     "asset_name": "scene_indoor_15_art_studio__seed49__seed1.rrd",
-    "fov_v_deg": 65.015,
+    "fov_v_deg": 54.225,
     "mesh_radius_scale": 1.0
   },
   {
@@ -252,7 +252,7 @@ window.SAMPLES = [
     "viewer_url": "https://app.rerun.io/version/0.22.0?url=https%3A%2F%2Fgithub.com%2Fhaoz19%2Fworld-tracing-page%2Freleases%2Fdownload%2Fv1%2Fscene_indoor_03_modern_kitchen__seed43__seed1.rrd",
     "rrd_url": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_03_modern_kitchen__seed43__seed1.rrd",
     "asset_name": "scene_indoor_03_modern_kitchen__seed43__seed1.rrd",
-    "fov_v_deg": 74.354,
+    "fov_v_deg": 54.225,
     "mesh_radius_scale": 1.0
   },
   {
@@ -267,7 +267,7 @@ window.SAMPLES = [
     "viewer_url": "https://app.rerun.io/version/0.22.0?url=https%3A%2F%2Fgithub.com%2Fhaoz19%2Fworld-tracing-page%2Freleases%2Fdownload%2Fv1%2Fscene_indoor_25_rustic_cabin__seed54__seed2.rrd",
     "rrd_url": "https://github.com/haoz19/world-tracing-page/releases/download/v1/scene_indoor_25_rustic_cabin__seed54__seed2.rrd",
     "asset_name": "scene_indoor_25_rustic_cabin__seed54__seed2.rrd",
-    "fov_v_deg": 59.957,
+    "fov_v_deg": 54.225,
     "mesh_radius_scale": 1.0
   },
   {
