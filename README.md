@@ -1,7 +1,7 @@
 # World Tracing — Project Page
 
 Source for the interactive demo page at
-<https://haoz19.github.io/world-tracing-page/>.
+<https://haoz19.github.io/world-tracing/>.
 
 The page shows ~38 image-to-3D point cloud examples produced by our
 multilayer-depth diffusion model.  Each card has:
