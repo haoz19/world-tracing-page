@@ -107,12 +107,23 @@ hr { display: none; }
 .hero h1 .birdmark { height: 0.82em; width: auto; display: inline-block; vertical-align: -0.12em; flex-shrink: 0; }
 .hero h1 .accent { color: var(--grey-200); }
 .hero .subtitle {
-  margin: 0 auto 34px;
+  margin: 0 auto 14px;
   font-size: clamp(1.18rem, 1.55vw, 1.4rem);
   color: var(--grey-200);
   max-width: 760px; line-height: 1.45; font-weight: 400;
   letter-spacing: -0.005em;
 }
+.hero .conf {
+  margin: 0 auto 28px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.hero .conf .conf-sep { color: var(--grey-100); margin: 0 0.45em; letter-spacing: 0; }
+.hero .conf .conf-spot { color: #9a3412; }
 .hero .authors {
   font-size: 16.5px;
   color: var(--grey-200);
@@ -181,6 +192,7 @@ hr { display: none; }
 @media (prefers-reduced-motion: no-preference) {
   .hero h1,
   .hero .subtitle,
+  .hero .conf,
   .hero .authors,
   .hero .affil,
   .hero .links {
@@ -190,9 +202,10 @@ hr { display: none; }
   }
   .hero h1       { animation-delay: 0.05s; }
   .hero .subtitle{ animation-delay: 0.20s; }
-  .hero .authors { animation-delay: 0.34s; }
-  .hero .affil   { animation-delay: 0.46s; }
-  .hero .links   { animation-delay: 0.60s; }
+  .hero .conf    { animation-delay: 0.30s; }
+  .hero .authors { animation-delay: 0.40s; }
+  .hero .affil   { animation-delay: 0.50s; }
+  .hero .links   { animation-delay: 0.62s; }
 
   .hero h1 .birdmark {
     transform-origin: 50% 65%;
@@ -1177,7 +1190,8 @@ footer a:hover { color: var(--fg); opacity: 1; }
 @media (max-width: 720px) {
   .hero { padding: 44px 16px 20px; }
   .hero h1 { font-size: 2.4rem; margin-bottom: 18px; }
-  .hero .subtitle { font-size: 1.08rem; margin-bottom: 26px; }
+  .hero .subtitle { font-size: 1.08rem; margin-bottom: 10px; }
+  .hero .conf { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 22px; }
   .hero .authors { font-size: 15.5px; }
   .hero .affil { font-size: 13.5px; margin-bottom: 24px; }
   .hero-video { padding: 8px 16px 28px; }
