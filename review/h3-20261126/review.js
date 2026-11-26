@@ -6,7 +6,13 @@
   const PAGE_SIZE = 3, NOTE_LIMIT = 1200, SHARE_LIMIT = 16000, FILE_LIMIT = 256 * 1024;
   const STATUS = { unreviewed: "未评", good: "值得保留", bad: "需要改进" };
   const REASONS = { identity: "人物身份", motion: "动作", camera: "相机", geometry: "几何", background: "背景", temporal: "时间连贯", other: "其他" };
-  const TRAJECTORIES = { arc_right120: "右侧 120°", orbit360: "完整 360°" };
+  const TRAJECTORIES = { arc_right120: "右侧 120°", orbit360: "完整 360°",
+    truck_follow_landing: "侧向跟随 · 落步",
+    low_slide_pedestal_reveal: "低机位横移 · 抬升",
+    dolly_medium_parallax: "全身推到中景 · 侧移",
+    truck_push_threequarter: "斜侧跟随 · 推近" };
+  const ROUNDS = { round3: "新一轮：镜头与人脸对照", geometry3: "新一轮：几何清理对照",
+    round2: "上一轮：逐帧可见 RGB", identity: "早期：首帧 RGB＋深度", depth_only: "早期：仅深度" };
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const state = { results: [], byId: new Map(), reviews: new Map(), page: 1, active: null, storageAvailable: true, pending: null, ready: false, defaultRound: "identity" };
 
@@ -297,10 +303,10 @@
     const mediaState = el("span", "media-state", "未加载"), panelsNode = el("div", "panels");
     const runtime = { card, title: row.title, panels: [], panelsNode, sync, speed, mediaState, master: null, suppressed: new WeakMap(), released: false, operation: 0, syncing: false, syncAbort: null };
     controls.append(play, load, pause, unload, syncLabel, speedLabel, mediaState); card.append(controls, panelsNode);
-    createPanel(runtime, "source", "原动作 · 参考", row.source, row.source_poster);
-    createPanel(runtime, "depth", "实际深度条件", row.depth, row.depth_poster);
+    createPanel(runtime, "source", row.source_label || "原动作 · 参考", row.source, row.source_poster);
+    createPanel(runtime, "depth", row.depth_label || "实际深度条件", row.depth, row.depth_poster);
     if (row.baseline) createPanel(runtime, "baseline", row.baseline_label || "仅深度对照", row.baseline, row.baseline_poster);
-    createPanel(runtime, "generated", row.round === "identity" ? "首帧 RGB＋深度结果" : "H3 生成结果", row.video, row.poster);
+    createPanel(runtime, "generated", row.output_label || (row.round === "identity" ? "首帧 RGB＋深度结果" : "H3 生成结果"), row.video, row.poster);
     panelsNode.style.setProperty("--panel-count", String(runtime.panels.length));
     play.addEventListener("click", () => playRuntime(runtime)); load.addEventListener("click", () => { cancelSync(runtime); loadAll(runtime); pauseRuntime(runtime); runtime.mediaState.textContent = `${loadedVideos(runtime).length} 路已加载 · 暂停`; });
     pause.addEventListener("click", () => {
@@ -310,7 +316,7 @@
     });
     unload.addEventListener("click", () => releaseRuntime(runtime));
     sync.addEventListener("change", () => {
-      play.textContent = sync.checked ? "▶ 播放对比" : "▶ 播放生成结果";
+      play.textContent = sync.checked ? "▶ 播放对比" : "▶ 播放结果";
       if (state.active !== runtime) return;
       if (sync.checked) { const master = runtime.master || runtime.panels.at(-1).video; synchronize(runtime, master, !master.paused); }
       else { cancelSync(runtime); runtime.mediaState.textContent = `${loadedVideos(runtime).length} 路已加载 · 单独播放`; }
@@ -341,6 +347,10 @@
     const footer = el("div", "card-footer"), sourceLink = safeUrl(row.source_url);
     if (row.appearance_condition) footer.append(link("查看逐帧 RGB 条件 ↗", safeUrl(row.appearance_condition)));
     if (row.mask_preview) footer.append(link("查看重绘区域 ↗", safeUrl(row.mask_preview)));
+    if (row.reference_image) footer.append(link("查看真实人物参考图 ↗", safeUrl(row.reference_image)));
+    if (row.camera_path) footer.append(link("查看相机路径 ↗", safeUrl(row.camera_path)));
+    if (row.depth_comparison) footer.append(link("查看原始／过滤／表面渲染深度对照 ↗", safeUrl(row.depth_comparison)));
+    if (row.legacy_geometry_comparison) footer.append(link((row.legacy_geometry_comparison_label || "查看原大角度镜头的几何对照") + " ↗", safeUrl(row.legacy_geometry_comparison)));
     footer.append(el("span", "result-id", row.id)); if (sourceLink) footer.append(link("素材来源 ↗", sourceLink)); card.append(footer);
     return card;
   }
@@ -427,7 +437,7 @@
     const payload = encodeCompact({ v: 1, d: DATASET, r: feedback.map(row => [row.id, row.status, row.reasons, row.note]) });
     if (payload.length > SHARE_LIMIT) { notify("反馈内容较长，无法生成便于分享的链接。请点击「导出反馈清单」保存并发送完整清单。", "warning"); $("#export-feedback").focus(); return; }
     const url = new URL(location.href); url.search = "";
-    if (state.results.some(row => row.round === "round2")) url.searchParams.set("v", "round2");
+    url.searchParams.set("v", state.results.some(row => ["round3", "geometry3"].includes(row.round)) ? "round3" : "round2");
     url.hash = `feedback=${payload}`; const text = url.href;
     try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(text); notify(`已复制包含 ${feedback.length} 条反馈的链接。发送链接即可转交；备注包含在链接中。`); return; }
     catch { /* Fall back to a selectable link when clipboard access is unavailable. */ }
@@ -469,20 +479,22 @@
       if (data.schema_version !== 1 || data.dataset_id !== DATASET || !Array.isArray(data.results)) throw new Error("清单版本不匹配");
       for (const row of data.results) {
         if (!row || typeof row.id !== "string" || !/^[A-Za-z0-9_.:-]{1,180}$/.test(row.id) || state.byId.has(row.id)) throw new Error("结果 ID 无效或重复");
-        if (!["identity", "depth_only", "round2"].includes(row.round) || !Number.isFinite(row.frames) || !Number.isFinite(row.fps) || row.frames < 1 || row.fps <= 0) throw new Error("结果参数无效");
+        if (!Object.hasOwn(ROUNDS, row.round) || !Number.isFinite(row.frames) || !Number.isFinite(row.fps) || row.frames < 1 || row.fps <= 0) throw new Error("结果参数无效");
         if (["title", "case", "category", "trajectory", "variant", "variant_label"].some(key => typeof row[key] !== "string")) throw new Error("结果字段缺失");
         if (![row.video, row.source, row.depth].every(safeUrl)) throw new Error("媒体地址无效");
-        if ([row.appearance_condition, row.mask_preview].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
+        if ([row.appearance_condition, row.mask_preview, row.reference_image, row.camera_path, row.depth_comparison, row.legacy_geometry_comparison].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
         if (row.note !== undefined && typeof row.note !== "string") throw new Error("观察记录格式无效");
-        if (row.baseline_label !== undefined && typeof row.baseline_label !== "string") throw new Error("对照标题格式无效");
+        if (["baseline_label", "output_label", "depth_label", "source_label", "legacy_geometry_comparison_label"].some(key => row[key] !== undefined && typeof row[key] !== "string")) throw new Error("对照标题格式无效");
         state.byId.set(row.id, row); state.results.push(row);
       }
-      if (state.results.some(row => row.round === "round2")) {
-        const select = $("#round-filter"), option = el("option", "", "最新：反馈后优化对照");
-        option.value = "round2"; select.prepend(option);
-        select.querySelector('option[value="identity"]').textContent = "上一轮：首帧 RGB＋深度";
-        state.defaultRound = "round2"; select.value = state.defaultRound;
+      const select = $("#round-filter"); select.replaceChildren();
+      for (const [name, label] of Object.entries(ROUNDS)) if (state.results.some(row => row.round === name)) {
+        const option = el("option", "", label); option.value = name; select.append(option);
       }
+      state.defaultRound = select.options[0].value;
+      const all = el("option", "", "全部轮次"); all.value = "all"; select.append(all);
+      const requested = new URL(location.href).searchParams.get("round");
+      select.value = Object.hasOwn(ROUNDS, requested) && state.results.some(row => row.round === requested) ? requested : state.defaultRound;
       state.ready = true; populateFilters(); loadLocal(); render(); inspectFragment();
     } catch (error) { $("#review-summary").textContent = "结果清单尚未加载"; notify(`无法读取结果清单：${error.message}。请通过网站地址打开页面；稍后刷新重试。`, "error"); }
   }
