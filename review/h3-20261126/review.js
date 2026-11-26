@@ -8,7 +8,7 @@
   const REASONS = { identity: "人物身份", motion: "动作", camera: "相机", geometry: "几何", background: "背景", temporal: "时间连贯", other: "其他" };
   const TRAJECTORIES = { arc_right120: "右侧 120°", orbit360: "完整 360°" };
   const $ = (selector, parent = document) => parent.querySelector(selector);
-  const state = { results: [], byId: new Map(), reviews: new Map(), page: 1, active: null, storageAvailable: true, pending: null, ready: false };
+  const state = { results: [], byId: new Map(), reviews: new Map(), page: 1, active: null, storageAvailable: true, pending: null, ready: false, defaultRound: "identity" };
 
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -299,7 +299,7 @@
     controls.append(play, load, pause, unload, syncLabel, speedLabel, mediaState); card.append(controls, panelsNode);
     createPanel(runtime, "source", "原动作 · 参考", row.source, row.source_poster);
     createPanel(runtime, "depth", "实际深度条件", row.depth, row.depth_poster);
-    if (row.baseline) createPanel(runtime, "baseline", "仅深度对照", row.baseline, row.baseline_poster);
+    if (row.baseline) createPanel(runtime, "baseline", row.baseline_label || "仅深度对照", row.baseline, row.baseline_poster);
     createPanel(runtime, "generated", row.round === "identity" ? "首帧 RGB＋深度结果" : "H3 生成结果", row.video, row.poster);
     panelsNode.style.setProperty("--panel-count", String(runtime.panels.length));
     play.addEventListener("click", () => playRuntime(runtime)); load.addEventListener("click", () => { cancelSync(runtime); loadAll(runtime); pauseRuntime(runtime); runtime.mediaState.textContent = `${loadedVideos(runtime).length} 路已加载 · 暂停`; });
@@ -339,6 +339,8 @@
     note.addEventListener("input", () => { count.textContent = `${note.value.length} / ${NOTE_LIMIT}`; writeReview(row.id, { note: note.value }, card); });
     noteLabel.append(note); notes.append(noteLabel, noteFooter); reviewArea.append(choice, notes); card.append(reviewArea);
     const footer = el("div", "card-footer"), sourceLink = safeUrl(row.source_url);
+    if (row.appearance_condition) footer.append(link("查看逐帧 RGB 条件 ↗", safeUrl(row.appearance_condition)));
+    if (row.mask_preview) footer.append(link("查看重绘区域 ↗", safeUrl(row.mask_preview)));
     footer.append(el("span", "result-id", row.id)); if (sourceLink) footer.append(link("素材来源 ↗", sourceLink)); card.append(footer);
     return card;
   }
@@ -424,7 +426,9 @@
     if (!feedback.length) { notify("先为至少一条结果添加标记、原因或备注，再复制反馈链接。", "warning"); return; }
     const payload = encodeCompact({ v: 1, d: DATASET, r: feedback.map(row => [row.id, row.status, row.reasons, row.note]) });
     if (payload.length > SHARE_LIMIT) { notify("反馈内容较长，无法生成便于分享的链接。请点击「导出反馈清单」保存并发送完整清单。", "warning"); $("#export-feedback").focus(); return; }
-    const url = new URL(location.href); url.search = ""; url.hash = `feedback=${payload}`; const text = url.href;
+    const url = new URL(location.href); url.search = "";
+    if (state.results.some(row => row.round === "round2")) url.searchParams.set("v", "round2");
+    url.hash = `feedback=${payload}`; const text = url.href;
     try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(text); notify(`已复制包含 ${feedback.length} 条反馈的链接。发送链接即可转交；备注包含在链接中。`); return; }
     catch { /* Fall back to a selectable link when clipboard access is unavailable. */ }
     const temporary = document.createElement("textarea"); temporary.value = text; temporary.setAttribute("readonly", "");
@@ -443,7 +447,7 @@
     let searchTimer;
     $("#search").addEventListener("input", () => { releaseActive(); clearTimeout(searchTimer); searchTimer = setTimeout(() => { if (state.ready) { state.page = 1; render(); } }, 150); });
     document.querySelectorAll("[data-page]").forEach(node => node.addEventListener("click", () => { state.page += node.dataset.page === "next" ? 1 : -1; render(); $(".results-toolbar").scrollIntoView({ behavior: "auto", block: "start" }); }));
-    $("#reset-filters").addEventListener("click", () => { $("#round-filter").value = "identity"; for (const id of ["case-filter", "trajectory-filter", "review-filter"]) $("#" + id).value = "all"; $("#search").value = ""; state.page = 1; render(); });
+    $("#reset-filters").addEventListener("click", () => { $("#round-filter").value = state.defaultRound; for (const id of ["case-filter", "trajectory-filter", "review-filter"]) $("#" + id).value = "all"; $("#search").value = ""; state.page = 1; render(); });
     $("#export-feedback").addEventListener("click", exportFeedback); $("#share-feedback").addEventListener("click", shareFeedback);
     $("#import-feedback").addEventListener("click", () => { if (state.ready) $("#feedback-file").click(); });
     $("#feedback-file").addEventListener("change", async event => {
@@ -465,11 +469,19 @@
       if (data.schema_version !== 1 || data.dataset_id !== DATASET || !Array.isArray(data.results)) throw new Error("清单版本不匹配");
       for (const row of data.results) {
         if (!row || typeof row.id !== "string" || !/^[A-Za-z0-9_.:-]{1,180}$/.test(row.id) || state.byId.has(row.id)) throw new Error("结果 ID 无效或重复");
-        if (!["identity", "depth_only"].includes(row.round) || !Number.isFinite(row.frames) || !Number.isFinite(row.fps) || row.frames < 1 || row.fps <= 0) throw new Error("结果参数无效");
+        if (!["identity", "depth_only", "round2"].includes(row.round) || !Number.isFinite(row.frames) || !Number.isFinite(row.fps) || row.frames < 1 || row.fps <= 0) throw new Error("结果参数无效");
         if (["title", "case", "category", "trajectory", "variant", "variant_label"].some(key => typeof row[key] !== "string")) throw new Error("结果字段缺失");
         if (![row.video, row.source, row.depth].every(safeUrl)) throw new Error("媒体地址无效");
+        if ([row.appearance_condition, row.mask_preview].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
         if (row.note !== undefined && typeof row.note !== "string") throw new Error("观察记录格式无效");
+        if (row.baseline_label !== undefined && typeof row.baseline_label !== "string") throw new Error("对照标题格式无效");
         state.byId.set(row.id, row); state.results.push(row);
+      }
+      if (state.results.some(row => row.round === "round2")) {
+        const select = $("#round-filter"), option = el("option", "", "最新：反馈后优化对照");
+        option.value = "round2"; select.prepend(option);
+        select.querySelector('option[value="identity"]').textContent = "上一轮：首帧 RGB＋深度";
+        state.defaultRound = "round2"; select.value = state.defaultRound;
       }
       state.ready = true; populateFilters(); loadLocal(); render(); inspectFragment();
     } catch (error) { $("#review-summary").textContent = "结果清单尚未加载"; notify(`无法读取结果清单：${error.message}。请通过网站地址打开页面；稍后刷新重试。`, "error"); }
