@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>World Tracing · 视频评审</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="review.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#cards">跳到结果</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">W<span>•</span>T</span><span>WORLD TRACING<span class="brand-sub">VIDEO REVIEW</span></span></div>
+      <span class="local-label" id="storage-label">浏览器本地保存</span>
+    </div>
+  </header>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy"><p class="eyebrow">看效果，记录问题</p><h1 id="page-title">一起挑出更好的结果。</h1><p class="intro">对照原动作、深度和生成结果，标记值得保留的片段，也记下需要改进的地方。</p></div>
+      <div class="transfer-panel"><div class="transfer-actions"><button class="button primary" id="share-feedback" type="button">复制反馈链接</button><button class="button" id="export-feedback" type="button">导出反馈清单</button><button class="button quiet" id="import-feedback" type="button">导入反馈</button><input id="feedback-file" type="file" accept="application/json,.json" hidden></div><p class="save-explanation" id="save-explanation">标记自动保存在此浏览器；复制反馈链接发给我或导出清单。</p><p class="privacy-line">页面不会自动上传反馈。导入前可预览并选择如何处理冲突。</p></div>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <section class="filter-panel" aria-label="筛选结果">
+      <label class="search-label"><span>搜索</span><input id="search" type="search" placeholder="标题、案例、类别或备注" autocomplete="off"></label>
+      <label><span>结果轮次</span><select id="round-filter"><option value="identity">最新：首帧 RGB＋深度</option><option value="depth_only">对照：仅深度</option><option value="all">全部轮次</option></select></label>
+      <label><span>案例</span><select id="case-filter"><option value="all">全部案例</option></select></label>
+      <label><span>相机轨迹</span><select id="trajectory-filter"><option value="all">全部轨迹</option></select></label>
+      <label><span>我的标记</span><select id="review-filter"><option value="all">全部标记</option><option value="unreviewed">未评</option><option value="good">值得保留</option><option value="bad">需要改进</option></select></label>
+    </section>
+    <div class="results-toolbar"><div><h2>结果清单 <span id="result-count" class="count-pill">…</span></h2><p id="review-summary" class="muted">正在读取结果…</p></div><div class="pagination" aria-label="分页"><button class="button icon-button" id="page-prev" data-page="prev" type="button" disabled aria-label="上一页">←</button><span id="page-label">第 1 页</span><button class="button icon-button" id="page-next" data-page="next" type="button" disabled aria-label="下一页">→</button></div></div>
+    <p class="load-hint">每页 3 条。视频在点击后加载；切页、切换筛选或播放另一条时，上一组视频会释放。</p>
+    <section id="cards" class="cards" aria-label="视频结果" aria-live="polite"></section>
+    <div class="empty-state" id="empty-state" hidden><span class="empty-icon" aria-hidden="true">◌</span><h3>没有符合条件的结果</h3><p>试试减少筛选条件，或查看全部轮次。</p><button id="reset-filters" class="button" type="button">重置筛选</button></div>
+    <div class="pagination bottom-pagination" aria-label="底部分页"><button class="button" id="page-prev-bottom" data-page="prev" type="button" disabled>← 上一页</button><span id="page-label-bottom">第 1 页</span><button class="button" id="page-next-bottom" data-page="next" type="button" disabled>下一页 →</button></div>
+    <footer class="page-footer"><p>反馈对应每一个独立输出。原片下载不会降低分辨率。</p><p>人物、动作与相机的一致性需要分别判断；完整保留表现不佳的结果，便于后续优化。</p></footer>
+  </main>
+  <dialog id="import-dialog" aria-labelledby="import-title">
+    <div class="dialog-header"><p class="eyebrow">反馈合并</p><h2 id="import-title">先确认，再加入本地记录</h2><p id="import-description" class="muted"></p></div>
+    <div id="import-stats" class="import-stats"></div><div id="import-preview" class="import-preview"></div>
+    <label class="conflict-control" for="conflict-policy"><span>与现有标记冲突时</span><select id="conflict-policy"><option value="keep_local">保留本地记录（默认）</option><option value="use_import">用此次导入覆盖冲突记录</option></select></label>
+    <p class="small muted">仅合并本清单中的已知结果。选择覆盖后，冲突记录的状态、原因和备注会整体替换。</p>
+    <div class="dialog-actions"><button class="button" id="cancel-import" type="button">取消</button><button class="button primary" id="merge-feedback" type="button">确认合并</button></div>
+  </dialog>
+  <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-header"><p class="eyebrow">手动复制</p><h2 id="share-title">反馈链接已准备好</h2><p class="muted">浏览器未允许自动复制，请复制下面的完整链接。备注会包含在链接中，请只分享给需要查看的人。</p></div><label class="share-field"><span>反馈链接</span><textarea id="share-link-text" readonly rows="5"></textarea></label><div class="dialog-actions"><button class="button primary" id="close-share" type="button">完成</button></div></dialog>
+</body>
+</html>
