@@ -11,7 +11,7 @@
     low_slide_pedestal_reveal: "低机位横移 · 抬升",
     dolly_medium_parallax: "全身推到中景 · 侧移",
     truck_push_threequarter: "斜侧跟随 · 推近" };
-  const ROUNDS = { round3: "新一轮：镜头与人脸对照", geometry3: "新一轮：几何清理对照",
+  const ROUNDS = { dancepilot: "舞蹈实验 · 非最终成片", round3: "新一轮：镜头与人脸对照", geometry3: "新一轮：几何清理对照",
     round2: "上一轮：逐帧可见 RGB", identity: "早期：首帧 RGB＋深度", depth_only: "早期：仅深度" };
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const state = { results: [], byId: new Map(), reviews: new Map(), page: 1, active: null, storageAvailable: true, pending: null, ready: false, defaultRound: "identity" };
@@ -347,7 +347,7 @@
     const footer = el("div", "card-footer"), sourceLink = safeUrl(row.source_url);
     if (row.appearance_condition) footer.append(link("查看逐帧 RGB 条件 ↗", safeUrl(row.appearance_condition)));
     if (row.mask_preview) footer.append(link("查看重绘区域 ↗", safeUrl(row.mask_preview)));
-    if (row.reference_image) footer.append(link("查看真实人物参考图 ↗", safeUrl(row.reference_image)));
+    if (row.reference_image) footer.append(link("查看人物参考图 ↗", safeUrl(row.reference_image)));
     if (row.camera_path) footer.append(link("查看相机路径 ↗", safeUrl(row.camera_path)));
     if (row.depth_comparison) footer.append(link("查看原始／过滤／表面渲染深度对照 ↗", safeUrl(row.depth_comparison)));
     if (row.legacy_geometry_comparison) footer.append(link((row.legacy_geometry_comparison_label || "查看原大角度镜头的几何对照") + " ↗", safeUrl(row.legacy_geometry_comparison)));
@@ -437,7 +437,7 @@
     const payload = encodeCompact({ v: 1, d: DATASET, r: feedback.map(row => [row.id, row.status, row.reasons, row.note]) });
     if (payload.length > SHARE_LIMIT) { notify("反馈内容较长，无法生成便于分享的链接。请点击「导出反馈清单」保存并发送完整清单。", "warning"); $("#export-feedback").focus(); return; }
     const url = new URL(location.href); url.search = "";
-    url.searchParams.set("v", state.results.some(row => ["round3", "geometry3"].includes(row.round)) ? "round3" : "round2");
+    url.searchParams.set("v", state.results.some(row => row.round === "dancepilot") ? "dancepilot" : state.results.some(row => ["round3", "geometry3"].includes(row.round)) ? "round3" : "round2");
     url.hash = `feedback=${payload}`; const text = url.href;
     try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(text); notify(`已复制包含 ${feedback.length} 条反馈的链接。发送链接即可转交；备注包含在链接中。`); return; }
     catch { /* Fall back to a selectable link when clipboard access is unavailable. */ }
