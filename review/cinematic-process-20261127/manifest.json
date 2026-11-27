@@ -53,6 +53,39 @@
       "live_action_noir",
       "anime_ink"
     ],
-    "generated_motion_approved": false
+    "generated_motion_approved": false,
+    "source_pose": 12,
+    "items": [
+      {
+        "id": "live_action_seoul",
+        "case": "freeze_g12_seoul_first",
+        "original": "casting_assets/7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d.png",
+        "sha256": "7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d",
+        "thumbnail": "casting_assets/7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d-full.jpg",
+        "face_thumbnail": "casting_assets/9c84e4cbc03abad2ffabbecf32556d773a6da2e6681cdb088ffb1dc7f5a4031c-portrait.jpg",
+        "source_pose": 12,
+        "role": "generated_image_reference_only"
+      },
+      {
+        "id": "live_action_noir",
+        "case": "freeze_g12_noir_first",
+        "original": "casting_assets/1a77b440b6fd925cb6d3fd2fc9c0ce904ba2f76d3fb34461a95dd42a1b7c3aaf.png",
+        "sha256": "1a77b440b6fd925cb6d3fd2fc9c0ce904ba2f76d3fb34461a95dd42a1b7c3aaf",
+        "thumbnail": "casting_assets/1a77b440b6fd925cb6d3fd2fc9c0ce904ba2f76d3fb34461a95dd42a1b7c3aaf-full.jpg",
+        "face_thumbnail": "casting_assets/dc09329fc598f0f1d62101a35b2bb6732f3b12c0370f71827b4c525dfba940e9-portrait.jpg",
+        "source_pose": 12,
+        "role": "generated_image_reference_only"
+      },
+      {
+        "id": "anime_ink",
+        "case": "freeze_g12_anime_first",
+        "original": "casting_assets/c600698b8193811d63b2aa515277f42c786556d6db6a5c1e9eba33880bb932bd.png",
+        "sha256": "c600698b8193811d63b2aa515277f42c786556d6db6a5c1e9eba33880bb932bd",
+        "thumbnail": "casting_assets/c600698b8193811d63b2aa515277f42c786556d6db6a5c1e9eba33880bb932bd-full.jpg",
+        "face_thumbnail": "casting_assets/2e8e59d88a4d0df0fa0d7299ad6c4dbeefc8b6d929eedcebce215eaecb08119c-portrait.jpg",
+        "source_pose": 12,
+        "role": "generated_image_reference_only"
+      }
+    ]
   }
 }
