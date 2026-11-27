@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>World Tracing · 这次想看哪支舞？</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header><a class="wordmark" href="../../">WORLD TRACING</a><a href="../h3-20261126/">已有实验 ↗</a></header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">新一轮舞蹈选片 · K-POP / POP</p>
+      <h1>这次，想看哪支舞？</h1>
+      <p class="lead">选一段抓人的舞，再用 World Tracing 换主角、换机位。</p>
+      <p class="muted">这里播放真实原片节选。先挑舞蹈和风格，再做新一轮视频。</p>
+    </section>
+    <section class="toolbar" aria-label="筛选与分享">
+      <div class="filters" role="group" aria-label="舞蹈类型">
+        <button data-filter="all" aria-pressed="true">全部 <span id="count-all"></span></button>
+        <button data-filter="kpop" aria-pressed="false">K-pop <span id="count-kpop"></span></button>
+        <button data-filter="western" aria-pressed="false">欧美 <span id="count-western"></span></button>
+      </div>
+      <div class="share-controls"><span id="selection-count">尚未选择</span><button id="share" class="primary">分享选择与备注</button></div>
+    </section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <div id="share-box" hidden><label for="share-url">复制链接，即可分享这一轮的选择与备注。</label><textarea id="share-url" readonly rows="3"></textarea></div>
+    <section id="cards" class="cards" aria-label="舞蹈原片候选"></section>
+    <nav class="pagination" aria-label="候选分页"><button id="prev">← 上一页</button><span id="page-info"></span><button id="next">下一页 →</button></nav>
+    <p class="storage-note">每页4条 · 点击才加载视频 · 保留原画幅<br>选择保存在当前浏览器；备注会随分享链接传递。</p>
+  </main>
+  <footer>WORLD TRACING <span>让动作成为可以重新拍摄的空间</span></footer>
+</body>
+</html>

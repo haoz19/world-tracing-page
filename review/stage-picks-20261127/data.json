@@ -1,0 +1,427 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-stage-picks-20261127-v1",
+  "page_size": 4,
+  "clips": [
+    {
+      "title": "KISS OF LIFE · Sticky · 夏日彩色舞台",
+      "artist": "KISS OF LIFE",
+      "style_zh": "明亮薄荷绿背景、彩色夏日造型；人物分开，风格轻快、亲近。",
+      "clarity_zh": "四人全身完整、相互分开，可挑一位主角；脸、发型和服装清楚可辨。",
+      "wt_idea_zh": "抽出一位舞者，变成几个不同主角同步同台；定格一个拍点，再切到侧向机位。",
+      "id": "kiof_sticky_summer",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=CXN-qdYRCfc",
+      "published_date": "2024-07-10",
+      "heat_evidence": {
+        "label_zh": "本机位官方视频约450万播放",
+        "as_of_label_zh": "2026-11-27 累计播放快照",
+        "url": "https://www.youtube.com/watch?v=CXN-qdYRCfc"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 78,
+        "fps": 24.0,
+        "duration_seconds": 3.25,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 24.80–28.05 秒",
+      "clip_asset": "media/kiof_sticky_summer_preview.mp4",
+      "poster_asset": "media/kiof_sticky_summer_poster.jpg"
+    },
+    {
+      "title": "NAYEON · ABCD · 红白舞台",
+      "artist": "NAYEON",
+      "style_zh": "红色短上衣、黑色短裤与白色长靴，明亮蓝粉棚景，利落运动风。",
+      "clarity_zh": "中央主角头、手、白靴完整，脸部清楚，抬膝与侧步连贯；伴舞分列两侧。快速转头时有自然运动模糊。",
+      "wt_idea_zh": "分离中央舞者，保留抬膝与侧步，把同一段动作交给不同主角，再做平滑侧移镜头。",
+      "id": "nayeon_abcd_choom_1255_12875",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=06IJ4JJ5JbU",
+      "published_date": "2024-06-23",
+      "heat_evidence": {
+        "label_zh": "这条官方 FullFocused 约188万播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照；2024年作品",
+        "url": "https://www.youtube.com/watch?v=06IJ4JJ5JbU"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 78,
+        "fps": 24.0,
+        "duration_seconds": 3.25,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 125.50–128.75 秒",
+      "clip_asset": "media/nayeon_abcd_choom_1255_12875_preview.mp4",
+      "poster_asset": "media/nayeon_abcd_choom_1255_12875_poster.jpg"
+    },
+    {
+      "title": "JENNIE · Mantra · 红白街头",
+      "artist": "JENNIE",
+      "style_zh": "黑色短装、长靴、红白波纹建筑；明亮利落，舞步辨识度高。",
+      "clarity_zh": "头、手、鞋完整，伴舞在后景；脸与表情可辨，快速摆头略有模糊。",
+      "wt_idea_zh": "同一段标志性舞步换三位主角，再做低机位侧向跟拍。",
+      "id": "jennie_mantra_fullbody",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=V5bVtAej1hs",
+      "published_date": "2024-10-25",
+      "heat_evidence": {
+        "label_zh": "官方视频约6518万播放",
+        "as_of_label_zh": "2026-11-27 累计播放快照",
+        "url": "https://www.youtube.com/watch?v=V5bVtAej1hs"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 72,
+        "fps": 24.0,
+        "duration_seconds": 3.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 61.15–64.15 秒",
+      "clip_asset": "media/jennie_mantra_fullbody_preview.mp4",
+      "poster_asset": "media/jennie_mantra_fullbody_poster.jpg"
+    },
+    {
+      "title": "Tate McRae · Revolving door · 白色地板舞",
+      "artist": "Tate McRae",
+      "style_zh": "白色舞台造型与高跟鞋，较大胆；浅色场景突出人物线条。",
+      "clarity_zh": "3 秒连续短窗，头手鞋完整；地板动作有自然自遮挡和停姿。脸部可辨，保留原片胶片颗粒与甩发模糊。",
+      "wt_idea_zh": "保留地板舞，换主角与场景，再做贴地横移接抬升。",
+      "id": "tate_revolving_floor_39p25_42p25",
+      "category": "western",
+      "official_url": "https://www.youtube.com/watch?v=rwlFWWGaZ5Y",
+      "published_date": "2025-02-21",
+      "heat_evidence": {
+        "label_zh": "官方 MV 约 5911 万播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照；2025 年作品",
+        "url": "https://www.youtube.com/watch?v=rwlFWWGaZ5Y"
+      },
+      "source": {
+        "width": 3786,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1894,
+        "height": 1080,
+        "frames": 72,
+        "fps": 24.0,
+        "duration_seconds": 3.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1894,
+        "height": 1080
+      },
+      "source_interval_label": "原片 39.25–42.25 秒",
+      "clip_asset": "media/tate_revolving_floor_39p25_42p25_preview.mp4",
+      "poster_asset": "media/tate_revolving_floor_39p25_42p25_poster.jpg"
+    },
+    {
+      "title": "CHUNG HA · Bicycle · 机车舞台",
+      "artist": "CHUNG HA",
+      "style_zh": "机车上装、流苏、长靴与红橙背景，偏酷、偏大胆。",
+      "clarity_zh": "主角全身完整、脸和服装可辨；伴舞靠近，末尾仰头、甩发有运动模糊。",
+      "wt_idea_zh": "把同一段肩胯动作换成不同角色，再加低机位横移和时间错位分身。",
+      "id": "chungha_bicycle_moto",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=Mwb79hyQISQ",
+      "published_date": "2021-02-25",
+      "heat_evidence": {
+        "label_zh": "本机位官方视频约92万播放",
+        "as_of_label_zh": "2026-11-27 累计播放快照",
+        "url": "https://www.youtube.com/watch?v=Mwb79hyQISQ"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 66,
+        "fps": 24.0,
+        "duration_seconds": 2.75,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 15.60–18.35 秒",
+      "clip_asset": "media/chungha_bicycle_moto_preview.mp4",
+      "poster_asset": "media/chungha_bicycle_moto_poster.jpg"
+    },
+    {
+      "title": "ADÉLA · Nicole Kidman · 银白舞台",
+      "artist": "ADÉLA",
+      "style_zh": "银色上衣、白色短裙与长靴，红幕歌舞剧舞台，偏大胆。",
+      "clarity_zh": "头、手、长靴完整，伴舞在后景；正脸与妆容可辨，麦克风遮嘴，彩光与快动作稍模糊。",
+      "wt_idea_zh": "分离主舞者，保留节奏与腿部动作，换不同主角并做低角度侧移。",
+      "id": "adela_nicole_dance_154_160",
+      "category": "western",
+      "official_url": "https://www.youtube.com/watch?v=DPu5RyE1BKQ",
+      "published_date": "2026-10-23",
+      "heat_evidence": {
+        "label_zh": "官方视频约 904 万播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照",
+        "url": "https://www.youtube.com/watch?v=DPu5RyE1BKQ"
+      },
+      "source": {
+        "width": 1920,
+        "height": 1080
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 144,
+        "fps": 24.0,
+        "duration_seconds": 6.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 154.00–160.00 秒",
+      "clip_asset": "media/adela_nicole_dance_154_160_preview.mp4",
+      "poster_asset": "media/adela_nicole_dance_154_160_poster.jpg"
+    },
+    {
+      "title": "LISA · FUTW · 红色金属舞台",
+      "artist": "LISA",
+      "style_zh": "红色拱门舞台、金属链条与黑色长靴；强舞台感、偏大胆。",
+      "clarity_zh": "主角全身保留，伴舞靠近；红蓝彩光和较远机位让脸细节偏软。",
+      "wt_idea_zh": "保留舞步与姿态，定格一个重拍点，再让相机斜向升高后恢复动作。",
+      "id": "lisa_futw_red_stage",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=gwRqLbWqKlM",
+      "published_date": "2025-03-19",
+      "heat_evidence": {
+        "label_zh": "官方视频约2264万播放",
+        "as_of_label_zh": "2026-11-27 累计播放快照",
+        "url": "https://www.youtube.com/watch?v=gwRqLbWqKlM"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 78,
+        "fps": 24.0,
+        "duration_seconds": 3.25,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 33.10–36.35 秒",
+      "clip_asset": "media/lisa_futw_red_stage_preview.mp4",
+      "poster_asset": "media/lisa_futw_red_stage_poster.jpg"
+    },
+    {
+      "title": "CHUNG HA · STRESS · 粉白甜酷",
+      "artist": "CHUNG HA",
+      "style_zh": "粉色短裙、白色束腰和长靴；更轻快的甜酷路线。",
+      "clarity_zh": "主角全身完整，无持续遮挡；相机前后移动，中段脸较小，手和头发有运动模糊。",
+      "wt_idea_zh": "同一舞步换粉白、金属、机车三种角色造型，在同一个抬手拍点切换。",
+      "id": "chungha_stress_fullbody",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=CRz_omoBjPw",
+      "published_date": "2025-02-19",
+      "heat_evidence": {
+        "label_zh": "本机位官方视频约121万播放",
+        "as_of_label_zh": "2026-11-27 累计播放快照",
+        "url": "https://www.youtube.com/watch?v=CRz_omoBjPw"
+      },
+      "source": {
+        "width": 3840,
+        "height": 2160
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 102,
+        "fps": 24.0,
+        "duration_seconds": 4.25,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 128.75–133.00 秒",
+      "clip_asset": "media/chungha_stress_fullbody_preview.mp4",
+      "poster_asset": "media/chungha_stress_fullbody_poster.jpg"
+    },
+    {
+      "title": "Tate McRae · Housewife · 红金走台",
+      "artist": "Tate McRae",
+      "style_zh": "红色舞台装、暖金灯光，偏大胆；以走台和手势为主。",
+      "clarity_zh": "单人全身完整，以走台和手势为主；柔光下正脸可辨，麦克风遮嘴。",
+      "wt_idea_zh": "同一段走台换主角或服装，再设计低机位推近和侧向追随。",
+      "id": "tate_housewife_vs_walk_147_154",
+      "category": "western",
+      "official_url": "https://www.youtube.com/watch?v=GpVM-FITRv4",
+      "published_date": "2026-10-19",
+      "heat_evidence": {
+        "label_zh": "官方视频约 300 万播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照",
+        "url": "https://www.youtube.com/watch?v=GpVM-FITRv4"
+      },
+      "source": {
+        "width": 1920,
+        "height": 1080
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 168,
+        "fps": 24.0,
+        "duration_seconds": 7.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 147.00–154.00 秒",
+      "clip_asset": "media/tate_housewife_vs_walk_147_154_preview.mp4",
+      "poster_asset": "media/tate_housewife_vs_walk_147_154_poster.jpg"
+    },
+    {
+      "title": "Tyla · PUSH 2 START · 南非暖金舞台",
+      "artist": "Tyla",
+      "style_zh": "镂空舞台装与长靴，暖金日轮背景；小步摆胯与单手动作，性感现场风。",
+      "clarity_zh": "单人全身完整，以小步、摆胯和手势为主；脸较小，麦克风遮嘴，暖色灯雾让细节偏软。",
+      "wt_idea_zh": "保留摆胯节奏，换主角与舞台造型，再做侧向跟拍接推近。",
+      "id": "tyla_sa_2024_fullbody_20p25_28p25",
+      "category": "western",
+      "official_url": "https://www.youtube.com/watch?v=2WU5pK3ZIQI",
+      "published_date": "2024-12-27",
+      "heat_evidence": {
+        "label_zh": "官方视频 2,953,582 次播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照",
+        "url": "https://www.youtube.com/watch?v=2WU5pK3ZIQI"
+      },
+      "source": {
+        "width": 1920,
+        "height": 1080
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 192,
+        "fps": 24.0,
+        "duration_seconds": 8.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 20.25–28.25 秒",
+      "clip_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_preview.mp4",
+      "poster_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_poster.jpg"
+    },
+    {
+      "title": "Tyla · 维密2024 · 羽翼走台",
+      "artist": "Tyla",
+      "style_zh": "银金舞台装与白色大羽翼，性感秀场风；走台交叉步与轻摆胯。",
+      "clarity_zh": "全身可见，鞋接近画面下边；以走台、交叉步和手势为主，逆光与舞台雾让脸偏软。",
+      "wt_idea_zh": "保留羽翼走台动作，换不同主角，再接低机位侧向追随。",
+      "id": "tyla_vs2024_fullbody_284_289",
+      "category": "western",
+      "official_url": "https://www.youtube.com/watch?v=DjvkMIFlOwA",
+      "published_date": "2024-10-18",
+      "heat_evidence": {
+        "label_zh": "官方视频 23,739,405 次播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照",
+        "url": "https://www.youtube.com/watch?v=DjvkMIFlOwA"
+      },
+      "source": {
+        "width": 1920,
+        "height": 1080
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 120,
+        "fps": 24.0,
+        "duration_seconds": 5.0,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 284.00–289.00 秒",
+      "clip_asset": "media/tyla_vs2024_fullbody_284_289_preview.mp4",
+      "poster_asset": "media/tyla_vs2024_fullbody_284_289_poster.jpg"
+    },
+    {
+      "title": "HYOLYN · DALLY · 高跟律动",
+      "artist": "HYOLYN",
+      "style_zh": "短上衣、条纹长裤与高跟靴，双人高跟编舞，成熟利落。",
+      "clarity_zh": "两人头、手、鞋完整，高跟步伐与侧胯连贯；帽檐和蓝光压暗脸，细节不及4K棚拍。",
+      "wt_idea_zh": "分离单个舞者，保留高跟步伐与侧胯节奏，做侧移或低角度绕拍。",
+      "id": "hyolyn_dally_heels_108_1105",
+      "category": "kpop",
+      "official_url": "https://www.youtube.com/watch?v=b75eENj0WCQ",
+      "published_date": "2018-05-03",
+      "heat_evidence": {
+        "label_zh": "官方练舞版约1636万播放",
+        "as_of_label_zh": "2026-11-27 下载元数据快照；2018年经典",
+        "url": "https://www.youtube.com/watch?v=b75eENj0WCQ"
+      },
+      "source": {
+        "width": 1920,
+        "height": 1080
+      },
+      "preview": {
+        "width": 1920,
+        "height": 1080,
+        "frames": 60,
+        "fps": 24.0,
+        "duration_seconds": 2.5,
+        "codec": "h264"
+      },
+      "poster": {
+        "width": 1920,
+        "height": 1080
+      },
+      "source_interval_label": "原片 108.00–110.50 秒",
+      "clip_asset": "media/hyolyn_dally_heels_108_1105_preview.mp4",
+      "poster_asset": "media/hyolyn_dally_heels_108_1105_poster.jpg"
+    }
+  ]
+}
