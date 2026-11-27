@@ -75,7 +75,8 @@
     shell.style.aspectRatio = `${item.width} / ${item.height}`;
     const image = node('img', 'poster');
     image.src = item.poster; image.alt = `${item.title} · 视频封面`;
-    image.loading = 'lazy'; image.decoding = 'async';
+    image.loading = isFilm ? 'eager' : 'lazy'; image.decoding = 'async';
+    if (isFilm) image.fetchPriority = 'high';
     image.width = item.width; image.height = item.height;
     const video = node('video', 'media-video');
     video.preload = 'none'; video.playsInline = true;
