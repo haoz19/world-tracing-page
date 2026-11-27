@@ -1,10 +1,10 @@
 {
   "status": "pass",
-  "visual_approval_hashes_verified": 5,
-  "full_media_decode_count": 5,
+  "visual_approval_hashes_verified": 6,
+  "full_media_decode_count": 6,
   "original_video_bytes_preserved": true,
   "placeholders": false,
-  "source_manifest_sha256": "19d559159bc549cecb24ae86d35e098075975dac8d73b6608372185be40b8b62",
+  "source_manifest_sha256": "176220d81e369403d458c93b544aad691d3f1dd890009be2e6b0439f4c131b86",
   "media": [
     {
       "id": "freeze-reframe-recast",
@@ -40,6 +40,17 @@
       "full_decode": true
     },
     {
+      "id": "seoul-clean",
+      "video_sha256": "5d0b115c26cba311cc3f3fa5cd80dc44436c588a7de5e49bc74935779c55a6e4",
+      "width": 1088,
+      "height": 1920,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
       "id": "rgb_points",
       "video_sha256": "5724733709f4e0b980355ce97209e5c75ad636c2987bd2d6cb128f00aa4188c3",
       "width": 1088,
@@ -62,15 +73,17 @@
       "full_decode": true
     }
   ],
-  "built_utc": "2026-11-27T19:16:13.124645+00:00",
+  "built_utc": "2026-11-27T19:26:54.579663+00:00",
   "public_file_sha256": {
     "fonts/5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314.ttf": "5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314",
     "index.html": "4eddbbd8c5102f3b92652579078f3162a2db20adf24827089a20497472620e6e",
-    "manifest.json": "a9b859ca4ff874315e7eda0832d087230f02e64a80b6dfce8d814a1681397612",
+    "manifest.json": "99d28cc7ad4681ee7aacf0f2b7b54ed19d3f31c316bcc1bab18bd74af1b0e18e",
     "media/1a2ce733a11063b488ce70fdfa953acf48dcc5b5d0aa7fed3e2e1e26fa826f4d.png": "1a2ce733a11063b488ce70fdfa953acf48dcc5b5d0aa7fed3e2e1e26fa826f4d",
     "media/34baa45dd07364049a9b3cc62b121ed92de8471a1e3163f20bfed3aa8b41534b.mp4": "34baa45dd07364049a9b3cc62b121ed92de8471a1e3163f20bfed3aa8b41534b",
     "media/3c8aac18d966af895f38e3bdf72a63a336c7cf9c5afed6d492ca2eca526b6be2.mp4": "3c8aac18d966af895f38e3bdf72a63a336c7cf9c5afed6d492ca2eca526b6be2",
+    "media/4899bc2b1a182610b34e1719dd28fa66f6f391acc29e79f24c0d2c0c05a8b113.png": "4899bc2b1a182610b34e1719dd28fa66f6f391acc29e79f24c0d2c0c05a8b113",
     "media/5724733709f4e0b980355ce97209e5c75ad636c2987bd2d6cb128f00aa4188c3.mp4": "5724733709f4e0b980355ce97209e5c75ad636c2987bd2d6cb128f00aa4188c3",
+    "media/5d0b115c26cba311cc3f3fa5cd80dc44436c588a7de5e49bc74935779c55a6e4.mp4": "5d0b115c26cba311cc3f3fa5cd80dc44436c588a7de5e49bc74935779c55a6e4",
     "media/6c69a9e4a2ea94aec429b11486e416b8752277f6c68ba8330efb7dbbf40cee63.png": "6c69a9e4a2ea94aec429b11486e416b8752277f6c68ba8330efb7dbbf40cee63",
     "media/81e203857015361d62d57b73ff03133384960cc604869b3ff91878509bbee1fd.mp4": "81e203857015361d62d57b73ff03133384960cc604869b3ff91878509bbee1fd",
     "media/8fe39cae5de5ed51998086b34a188a5214abab7e5d7aea751dbc0ad976cb1f27.png": "8fe39cae5de5ed51998086b34a188a5214abab7e5d7aea751dbc0ad976cb1f27",
