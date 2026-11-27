@@ -439,7 +439,7 @@
     if (payload.length > SHARE_LIMIT) { notify("反馈内容较长，无法生成便于分享的链接。请点击「导出反馈清单」保存并发送完整清单。", "warning"); $("#export-feedback").focus(); return; }
     const url = new URL(location.href); url.search = "";
     url.searchParams.set("v", state.results.some(row => row.round === "dancepilot") ? "dancepilot" : state.results.some(row => ["round3", "geometry3"].includes(row.round)) ? "round3" : "round2");
-    if ($("#round-filter").value === "repair") url.searchParams.set("round", "repair");
+    url.searchParams.set("round", $("#round-filter").value);
     url.hash = `feedback=${payload}`; const text = url.href;
     try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(text); notify(`已复制包含 ${feedback.length} 条反馈的链接。发送链接即可转交；备注包含在链接中。`); return; }
     catch { /* Fall back to a selectable link when clipboard access is unavailable. */ }
@@ -496,7 +496,7 @@
       state.defaultRound = select.options[0].value;
       const all = el("option", "", "全部轮次"); all.value = "all"; select.append(all);
       const requested = new URL(location.href).searchParams.get("round");
-      select.value = Object.hasOwn(ROUNDS, requested) && state.results.some(row => row.round === requested) ? requested : state.defaultRound;
+      select.value = requested === "all" || (Object.hasOwn(ROUNDS, requested) && state.results.some(row => row.round === requested)) ? requested : state.defaultRound;
       state.ready = true; populateFilters(); loadLocal(); render(); inspectFragment();
     } catch (error) { $("#review-summary").textContent = "结果清单尚未加载"; notify(`无法读取结果清单：${error.message}。请通过网站地址打开页面；稍后刷新重试。`, "error"); }
   }
