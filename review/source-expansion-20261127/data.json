@@ -184,6 +184,58 @@
       "url": "https://www.youtube.com/watch?v=32si5cfrCNc",
       "status": "待逐帧筛选",
       "actual_frame_review": false
+    },
+    {
+      "id": "aespa_dirtywork_practice",
+      "video": "B8lFNU2Cek4",
+      "category": "女团",
+      "title": "aespa · Dirty Work",
+      "publisher": "aespa",
+      "version": "2025 · Dance Practice",
+      "concept": "保留连续重心变化，试贴地横移接升降镜头。",
+      "check": "已核实官方练习室来源；需要逐帧确认全身、清晰度和队形遮挡，尚未选定连续时间窗。",
+      "url": "https://www.youtube.com/watch?v=B8lFNU2Cek4",
+      "status": "待逐帧筛选",
+      "actual_frame_review": false
+    },
+    {
+      "id": "kiof_igloo_practice",
+      "video": "dCBsFUnyXl0",
+      "category": "女团",
+      "title": "KISS OF LIFE · Igloo",
+      "publisher": "KISS OF LIFE",
+      "version": "2024 · Dance Practice · 热门经典备选",
+      "concept": "副歌舞步接不同角色，同时保持动作节奏和机位连续。",
+      "check": "优先找前排单人完整舞步；已核实官方来源，尚未检查具体连续时间窗。",
+      "url": "https://www.youtube.com/watch?v=dCBsFUnyXl0",
+      "status": "待逐帧筛选",
+      "actual_frame_review": false
+    },
+    {
+      "id": "spiderman_tasm2_chase",
+      "video": "UwVPC3mVxwY",
+      "category": "电影",
+      "title": "蜘蛛侠 · 超凡蜘蛛侠 2 追车",
+      "publisher": "Sony Pictures Entertainment India",
+      "version": "The Amazing Spider-Man 2 · 场景片段",
+      "concept": "挑腾跃或落地动作，定格后从低处升起镜头，再接回原动作。",
+      "check": "已核实索尼发布的追车片段；需检查快速切镜、模糊和人物出画，尚无通过筛选的时间窗。",
+      "url": "https://www.youtube.com/watch?v=UwVPC3mVxwY",
+      "status": "待逐帧筛选",
+      "actual_frame_review": false
+    },
+    {
+      "id": "ironman_monaco_whiplash",
+      "video": "XqzPe--I9OE",
+      "category": "电影",
+      "title": "钢铁侠 · 摩纳哥赛道大战",
+      "publisher": "Marvel Entertainment",
+      "version": "Iron Man 2 · Official Clip · 2026 官方上传",
+      "concept": "寻找战甲完成后的一次完整动作，展示同一姿态的新机位。",
+      "check": "已核实漫威官方场景片段；战斗有多人和鞭索遮挡，需逐镜挑出人物完整的一段。",
+      "url": "https://www.youtube.com/watch?v=XqzPe--I9OE",
+      "status": "待逐帧筛选",
+      "actual_frame_review": false
     }
   ]
 }
