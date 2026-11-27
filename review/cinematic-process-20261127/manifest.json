@@ -1,0 +1,15 @@
+{
+  "status": "process_preview_only",
+  "video": "3371ad52b39a4ea7f9799244374771472b15c7bc6cf60ff00e7830ad7e0bc612.mp4",
+  "poster": "7fde9dfbaf0a162cecd40344b697a0cd4f8f984294a2af006653db81e23591eb.png",
+  "video_sha256": "3371ad52b39a4ea7f9799244374771472b15c7bc6cf60ff00e7830ad7e0bc612",
+  "media": {
+    "width": 1080,
+    "height": 1920,
+    "avg_frame_rate": "24/1",
+    "duration": "11.375000",
+    "nb_read_frames": "273"
+  },
+  "full_decode_pass": true,
+  "contains_generated_h3_video": false
+}
