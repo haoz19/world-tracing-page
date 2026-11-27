@@ -11,7 +11,7 @@
     low_slide_pedestal_reveal: "低机位横移 · 抬升",
     dolly_medium_parallax: "全身推到中景 · 侧移",
     truck_push_threequarter: "斜侧跟随 · 推近" };
-  const ROUNDS = { dancepilot: "舞蹈实验 · 非最终成片", round3: "新一轮：镜头与人脸对照", geometry3: "新一轮：几何清理对照",
+  const ROUNDS = { repair: "修复实验 · 人脸与深度", dancepilot: "舞蹈实验 · 非最终成片", round3: "新一轮：镜头与人脸对照", geometry3: "新一轮：几何清理对照",
     round2: "上一轮：逐帧可见 RGB", identity: "早期：首帧 RGB＋深度", depth_only: "早期：仅深度" };
   const $ = (selector, parent = document) => parent.querySelector(selector);
   const state = { results: [], byId: new Map(), reviews: new Map(), page: 1, active: null, storageAvailable: true, pending: null, ready: false, defaultRound: "identity" };
@@ -349,6 +349,7 @@
     if (row.mask_preview) footer.append(link("查看重绘区域 ↗", safeUrl(row.mask_preview)));
     if (row.reference_image) footer.append(link("查看人物参考图 ↗", safeUrl(row.reference_image)));
     if (row.camera_path) footer.append(link("查看相机路径 ↗", safeUrl(row.camera_path)));
+    if (row.face_comparison) footer.append(link("查看同帧面部五组对照 ↗", safeUrl(row.face_comparison)));
     if (row.depth_comparison) footer.append(link("查看原始／过滤／表面渲染深度对照 ↗", safeUrl(row.depth_comparison)));
     if (row.legacy_geometry_comparison) footer.append(link((row.legacy_geometry_comparison_label || "查看原大角度镜头的几何对照") + " ↗", safeUrl(row.legacy_geometry_comparison)));
     footer.append(el("span", "result-id", row.id)); if (sourceLink) footer.append(link("素材来源 ↗", sourceLink)); card.append(footer);
@@ -438,6 +439,7 @@
     if (payload.length > SHARE_LIMIT) { notify("反馈内容较长，无法生成便于分享的链接。请点击「导出反馈清单」保存并发送完整清单。", "warning"); $("#export-feedback").focus(); return; }
     const url = new URL(location.href); url.search = "";
     url.searchParams.set("v", state.results.some(row => row.round === "dancepilot") ? "dancepilot" : state.results.some(row => ["round3", "geometry3"].includes(row.round)) ? "round3" : "round2");
+    if ($("#round-filter").value === "repair") url.searchParams.set("round", "repair");
     url.hash = `feedback=${payload}`; const text = url.href;
     try { if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable"); await navigator.clipboard.writeText(text); notify(`已复制包含 ${feedback.length} 条反馈的链接。发送链接即可转交；备注包含在链接中。`); return; }
     catch { /* Fall back to a selectable link when clipboard access is unavailable. */ }
@@ -482,7 +484,7 @@
         if (!Object.hasOwn(ROUNDS, row.round) || !Number.isFinite(row.frames) || !Number.isFinite(row.fps) || row.frames < 1 || row.fps <= 0) throw new Error("结果参数无效");
         if (["title", "case", "category", "trajectory", "variant", "variant_label"].some(key => typeof row[key] !== "string")) throw new Error("结果字段缺失");
         if (![row.video, row.source, row.depth].every(safeUrl)) throw new Error("媒体地址无效");
-        if ([row.appearance_condition, row.mask_preview, row.reference_image, row.camera_path, row.depth_comparison, row.legacy_geometry_comparison].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
+        if ([row.appearance_condition, row.mask_preview, row.reference_image, row.camera_path, row.depth_comparison, row.legacy_geometry_comparison, row.face_comparison].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
         if (row.note !== undefined && typeof row.note !== "string") throw new Error("观察记录格式无效");
         if (["baseline_label", "output_label", "depth_label", "source_label", "legacy_geometry_comparison_label"].some(key => row[key] !== undefined && typeof row[key] !== "string")) throw new Error("对照标题格式无效");
         state.byId.set(row.id, row); state.results.push(row);
