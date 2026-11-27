@@ -1,0 +1,83 @@
+{
+  "status": "pass",
+  "visual_approval_hashes_verified": 5,
+  "full_media_decode_count": 5,
+  "original_video_bytes_preserved": true,
+  "placeholders": false,
+  "source_manifest_sha256": "d4b41f174a209afc80365a9d98cdd953395958398fd2cb19e159829ce7ba1815",
+  "media": [
+    {
+      "id": "world-tracing-first-cut",
+      "video_sha256": "89046d6c4ac88971e5e734c19dd99b7e0df1f8f2f0ab8c45b3a550bf6e900bda",
+      "width": 1080,
+      "height": 1920,
+      "frames": 300,
+      "fps": 24.0,
+      "duration_seconds": 12.5,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "ruby",
+      "video_sha256": "f21772710fc737bb893018067530859c7588a60aab92b6e912e4332087f448c7",
+      "width": 1080,
+      "height": 1890,
+      "frames": 29,
+      "fps": 21.6,
+      "duration_seconds": 1.342593,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "cobalt",
+      "video_sha256": "52f9a7f99b21a75101891bfdd56113436642e7b71c046ab39c4a35b2ae39239c",
+      "width": 768,
+      "height": 1344,
+      "frames": 23,
+      "fps": 21.6,
+      "duration_seconds": 1.064815,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "amber",
+      "video_sha256": "88d5009950b08dfcb97340fc156dea9bc8e808a1a1373da54b746b3b8756c873",
+      "width": 768,
+      "height": 1344,
+      "frames": 17,
+      "fps": 21.6,
+      "duration_seconds": 0.787037,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "ruby-freeze",
+      "video_sha256": "dcbe69463934c9cbf6c89a090cd94eff96412616725a1d275187902f74af3f27",
+      "width": 768,
+      "height": 1344,
+      "frames": 70,
+      "fps": 21.6,
+      "duration_seconds": 3.240741,
+      "codec": "h264",
+      "full_decode": true
+    }
+  ],
+  "built_utc": "2026-11-27T00:28:15.394651+00:00",
+  "public_file_sha256": {
+    "fonts/5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314.ttf": "5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314",
+    "index.html": "c79d288cf193885f6b745244adfe99687df01c6fd815a64ade0b6f1f4e7b3407",
+    "manifest.json": "566f1d9558ccb96fa431d8f91038daa51305a00cbc938136ee7df30d77a7d3dc",
+    "media/1768f2314559e6ea462624ae7cd547777656698c6afb2cacc2d122d2e9b0bc7c.jpg": "1768f2314559e6ea462624ae7cd547777656698c6afb2cacc2d122d2e9b0bc7c",
+    "media/2d296d20a9cdcecd49f88c14554b1df12d5735361ef0991d61005af6c97b168d.png": "2d296d20a9cdcecd49f88c14554b1df12d5735361ef0991d61005af6c97b168d",
+    "media/52f9a7f99b21a75101891bfdd56113436642e7b71c046ab39c4a35b2ae39239c.mp4": "52f9a7f99b21a75101891bfdd56113436642e7b71c046ab39c4a35b2ae39239c",
+    "media/7fb48f5aba864e833b8c891e5ba1c2dcebc553b88ed596119fd53d98cc3bcb43.jpg": "7fb48f5aba864e833b8c891e5ba1c2dcebc553b88ed596119fd53d98cc3bcb43",
+    "media/88d5009950b08dfcb97340fc156dea9bc8e808a1a1373da54b746b3b8756c873.mp4": "88d5009950b08dfcb97340fc156dea9bc8e808a1a1373da54b746b3b8756c873",
+    "media/89046d6c4ac88971e5e734c19dd99b7e0df1f8f2f0ab8c45b3a550bf6e900bda.mp4": "89046d6c4ac88971e5e734c19dd99b7e0df1f8f2f0ab8c45b3a550bf6e900bda",
+    "media/c8dd6b9ccc91e4b476f77d7731be943ea82f7b5a90419d3c170d2df63e00ccc4.jpg": "c8dd6b9ccc91e4b476f77d7731be943ea82f7b5a90419d3c170d2df63e00ccc4",
+    "media/d480916428b8cab2655952252ba486bd3c53796c8da2670720945ab201b109ac.jpg": "d480916428b8cab2655952252ba486bd3c53796c8da2670720945ab201b109ac",
+    "media/dcbe69463934c9cbf6c89a090cd94eff96412616725a1d275187902f74af3f27.mp4": "dcbe69463934c9cbf6c89a090cd94eff96412616725a1d275187902f74af3f27",
+    "media/f21772710fc737bb893018067530859c7588a60aab92b6e912e4332087f448c7.mp4": "f21772710fc737bb893018067530859c7588a60aab92b6e912e4332087f448c7",
+    "site.js": "9608001ac33b939aa77dd45cf0c9a83347b8cd085826e798c4d15a687b44167e",
+    "styles.css": "24e344dd5008e345ff29074347d648c40ab7b86607b2f024823fa764893eb25a"
+  }
+}
