@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="World Tracing · 连续动作与真实3D相机轨迹的过程预览。查看原视频到动态点云的转场，并留下反馈。">
+  <title>World Tracing — Keep the motion. Change the camera.</title>
+  <link rel="stylesheet" href="styles.css?v=ebceff78a476f906">
+  <script src="site.js?v=78ef73fb48cc7305" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到内容</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="../../" aria-label="World Tracing 项目主页">World Tracing</a>
+    <a class="quiet-link" href="../cinematic-process-20261127/">历史过程与造型 <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main" class="wrap">
+    <p id="page-status" class="page-status" role="status">正在读取短片信息…</p>
+    <div id="content" hidden>
+      <section class="hero" aria-labelledby="film-heading">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="accent-line" aria-hidden="true"></span> MOTION × CAMERA</p>
+          <h1 id="film-heading"></h1>
+          <p id="film-subtitle" class="lede"></p>
+          <p class="edition">PROCESS PREVIEW · CONTINUOUS ACTION</p>
+          <div id="film-download"></div>
+          <a class="text-link" href="#shots-heading">逐个观看镜头 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div id="film-player" class="hero-player"></div>
+      </section>
+      <section class="shots-section" aria-labelledby="shots-heading">
+        <div class="section-intro">
+          <div><p class="eyebrow">THE INDIVIDUAL TAKES</p><h2 id="shots-heading">动作与运镜，同步查看。</h2></div>
+          <p>分别查看原视频到动态点云的转场，以及人物持续跳舞时的相机路径展示。每页最多加载两项，可评分并下载原始视频。</p>
+        </div>
+        <div id="shot-grid" class="shot-grid"></div>
+        <nav class="pagination" aria-label="镜头分页">
+          <button id="previous-page" class="page-button" type="button">← 上一页</button>
+          <span id="page-label" aria-live="polite"></span>
+          <button id="next-page" class="page-button" type="button">下一页 →</button>
+        </nav>
+      </section>
+      <section class="feedback-callout" aria-label="带走本轮反馈">
+        <div><p class="eyebrow">YOUR NOTES</p><h2>哪里喜欢，哪里还需要改。</h2><p>每支视频下都可以评分。反馈保存在当前浏览器，也可以用链接或 JSON 分享。</p></div>
+        <div class="feedback-actions">
+          <button id="share-feedback" class="outline-button" type="button">复制反馈链接</button>
+          <button id="export-feedback" class="outline-button" type="button">导出 JSON</button>
+          <label class="outline-button import-label" for="import-feedback">导入 JSON</label>
+          <input id="import-feedback" type="file" accept="application/json,.json" class="file-input">
+        </div>
+      </section>
+      <p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
+      <div id="share-result" hidden><label for="feedback-url">反馈分享链接</label><textarea id="feedback-url" readonly rows="3"></textarea></div>
+    </div>
+  </main>
+  <footer class="site-footer wrap"><span class="footer-mark">World Tracing</span><span>连续动作 · 新相机轨迹</span></footer>
+  <noscript><p class="wrap">请启用 JavaScript 观看短片。<a href="manifest.json">查看媒体清单</a></p></noscript>
+</body>
+</html>

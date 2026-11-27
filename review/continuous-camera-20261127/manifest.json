@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-continuous-camera-20261127-v1",
+  "title": "Keep the motion. Change the camera.",
+  "subtitle": "1080p 过程预览：原视频 → 人物分割 → 动态彩色点云 → 深度 → 新相机路径。人物持续跳舞，相机同时移动。生成视频与不同角色的版本尚未通过质量检查，本轮展示聚焦转场与3D呈现。",
+  "film": {
+    "id": "continuous-process-1080",
+    "title": "Continuous motion · Process preview",
+    "description": "8.83秒过程预览，来自原始视频和1088×1920动态3D画面；英文字幕、原片音乐。相机段明确标为同一动作的重放。",
+    "video": "media/af643576eb3e8e4363c286773f84c21409c2986a1a22bd40eeea7facf23e9f5c.mp4",
+    "poster": "media/82a59919961452d59291a385a3eaf04641bdfbaef3cd092995220f5855515a6f.png",
+    "visual_approved": true,
+    "video_sha256": "af643576eb3e8e4363c286773f84c21409c2986a1a22bd40eeea7facf23e9f5c",
+    "poster_sha256": "82a59919961452d59291a385a3eaf04641bdfbaef3cd092995220f5855515a6f",
+    "bytes": 12979489,
+    "width": 1080,
+    "height": 1920,
+    "frames": 212,
+    "fps": 24.0,
+    "duration_seconds": 8.833333
+  },
+  "shots": [
+    {
+      "id": "source-to-3d",
+      "title": "From video to 3D",
+      "description": "原始动作、对应人物mask、真实彩色点云和深度连续过渡。1088×1920原始导出。",
+      "video": "media/5118a5e3f0bae4dc057907861c8f04e3977e4559aaa84ae8773b289bdfd809cc.mp4",
+      "poster": "media/9d76c9487d82ff816505ffeb21871167ff212c58e869e7c98f13401a43915e55.png",
+      "visual_approved": true,
+      "video_sha256": "5118a5e3f0bae4dc057907861c8f04e3977e4559aaa84ae8773b289bdfd809cc",
+      "poster_sha256": "9d76c9487d82ff816505ffeb21871167ff212c58e869e7c98f13401a43915e55",
+      "bytes": 4144051,
+      "width": 1088,
+      "height": 1920,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667
+    },
+    {
+      "id": "camera-motion",
+      "title": "Keep the motion. Change the camera.",
+      "description": "人物持续跳舞；观察视角拉开，展示真实新相机在轨迹上的移动。1088×1920原始导出。",
+      "video": "media/c66cc31afa478aa158979527210decb2e50edf920e6b7d399df45da3d678f6d4.mp4",
+      "poster": "media/c17b74b48a641b2f5cfe651578de7202b72b2d2d8a814d73f882102db65b8061.png",
+      "visual_approved": true,
+      "video_sha256": "c66cc31afa478aa158979527210decb2e50edf920e6b7d399df45da3d678f6d4",
+      "poster_sha256": "c17b74b48a641b2f5cfe651578de7202b72b2d2d8a814d73f882102db65b8061",
+      "bytes": 3959083,
+      "width": 1088,
+      "height": 1920,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667
+    }
+  ]
+}
