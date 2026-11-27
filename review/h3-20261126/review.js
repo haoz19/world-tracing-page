@@ -349,7 +349,7 @@
     if (row.mask_preview) footer.append(link("查看重绘区域 ↗", safeUrl(row.mask_preview)));
     if (row.reference_image) footer.append(link("查看人物参考图 ↗", safeUrl(row.reference_image)));
     if (row.camera_path) footer.append(link("查看相机路径 ↗", safeUrl(row.camera_path)));
-    if (row.face_comparison) footer.append(link("查看同帧面部五组对照 ↗", safeUrl(row.face_comparison)));
+    if (row.face_comparison) footer.append(link((row.face_comparison_label || "查看同帧面部五组对照") + " ↗", safeUrl(row.face_comparison)));
     if (row.depth_comparison) footer.append(link("查看原始／过滤／表面渲染深度对照 ↗", safeUrl(row.depth_comparison)));
     if (row.legacy_geometry_comparison) footer.append(link((row.legacy_geometry_comparison_label || "查看原大角度镜头的几何对照") + " ↗", safeUrl(row.legacy_geometry_comparison)));
     footer.append(el("span", "result-id", row.id)); if (sourceLink) footer.append(link("素材来源 ↗", sourceLink)); card.append(footer);
@@ -486,7 +486,7 @@
         if (![row.video, row.source, row.depth].every(safeUrl)) throw new Error("媒体地址无效");
         if ([row.appearance_condition, row.mask_preview, row.reference_image, row.camera_path, row.depth_comparison, row.legacy_geometry_comparison, row.face_comparison].some(value => value !== undefined && !safeUrl(value))) throw new Error("条件预览地址无效");
         if (row.note !== undefined && typeof row.note !== "string") throw new Error("观察记录格式无效");
-        if (["baseline_label", "output_label", "depth_label", "source_label", "legacy_geometry_comparison_label"].some(key => row[key] !== undefined && typeof row[key] !== "string")) throw new Error("对照标题格式无效");
+        if (["baseline_label", "output_label", "depth_label", "source_label", "legacy_geometry_comparison_label", "face_comparison_label"].some(key => row[key] !== undefined && typeof row[key] !== "string")) throw new Error("对照标题格式无效");
         state.byId.set(row.id, row); state.results.push(row);
       }
       const select = $("#round-filter"); select.replaceChildren();
