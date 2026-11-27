@@ -11,5 +11,15 @@
     "nb_read_frames": "273"
   },
   "full_decode_pass": true,
-  "contains_generated_h3_video": false
+  "contains_generated_h3_video": false,
+  "style_references": {
+    "count": 3,
+    "images_only": true,
+    "ids": [
+      "live_action_seoul",
+      "live_action_noir",
+      "anime_ink"
+    ],
+    "generated_motion_approved": false
+  }
 }
