@@ -12,6 +12,39 @@
   },
   "full_decode_pass": true,
   "contains_generated_h3_video": false,
+  "freeze_study": {
+    "status": "actual_geometry_process_only",
+    "video": "0bc63514c85357e175daa003cd563dd3fea99a141228722e36314ddb9acd6aa0.mp4",
+    "poster": "7f556cbf09b694a1d283dc26316ff2a70dbd90f36495f521f9d05150d410f1c0.png",
+    "media": {
+      "width": 1080,
+      "height": 1920,
+      "avg_frame_rate": "24/1",
+      "duration": "12.333333",
+      "nb_read_frames": "296"
+    },
+    "full_decode_pass": true,
+    "source_sample_after_freeze": 12,
+    "source_pose_frozen": true,
+    "camera_moves": true,
+    "contains_generated_h3_video": false,
+    "image_references": [
+      {
+        "label": "Starting view",
+        "original": "7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d.png",
+        "sha256": "7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d",
+        "thumbnail": "7628fd689bb8f79bc8bcf73cfd6b61778f47cc1a7d4462203c3a81730aa42e5d-preview.jpg",
+        "role": "generated_image_reference_only"
+      },
+      {
+        "label": "Portrait view",
+        "original": "d9b8ca427243abf75cd46803af31b673a436ea4233122cdb3eba4a26b5305b64.png",
+        "sha256": "d9b8ca427243abf75cd46803af31b673a436ea4233122cdb3eba4a26b5305b64",
+        "thumbnail": "d9b8ca427243abf75cd46803af31b673a436ea4233122cdb3eba4a26b5305b64-preview.jpg",
+        "role": "generated_image_reference_only"
+      }
+    ]
+  },
   "style_references": {
     "count": 3,
     "images_only": true,
