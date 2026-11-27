@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-long-readable-20261127-v1",
+  "title": "Keep the motion. Change the camera.",
+  "subtitle": "26 秒加长预览：原视频 → 人物分割 → 动态点云 → 相机轨迹 → 深度 → 新视角对照。各个 3D 环节保留 4 秒，动作与新相机同步变化。",
+  "film": {
+    "id": "readable-process-1080",
+    "title": "World Tracing · Extended process preview",
+    "description": "1080p、26 秒，英文说明与原片音乐。3D 重放剪去约 1 秒的严重遮挡，画面标注 EDITED REPLAY。侧腰、裙边和腿后仍可见局部几何缺口；本版用于检查节奏与呈现。",
+    "video": "media/299bf349d0353a0ea5b227807bac1458b093cad7b13a07fffa797dc3c1741942.mp4",
+    "poster": "media/c0628ecdfae49d1d0cdd50f1a417cddd8b9cd9844cd0101b43cb4c4fcbd73564.png",
+    "visual_approved": true,
+    "video_sha256": "299bf349d0353a0ea5b227807bac1458b093cad7b13a07fffa797dc3c1741942",
+    "poster_sha256": "c0628ecdfae49d1d0cdd50f1a417cddd8b9cd9844cd0101b43cb4c4fcbd73564",
+    "bytes": 24427654,
+    "width": 1080,
+    "height": 1920,
+    "frames": 624,
+    "fps": 24.0,
+    "duration_seconds": 26.0
+  },
+  "shots": [
+    {
+      "id": "dynamic-points-96",
+      "title": "Dynamic points · Moving camera",
+      "description": "4 秒动态彩色点云，人物与新相机同步变化。与成片采用相同的动作剪辑；保留实际重建中的局部缺口。1088×1920 原始导出。",
+      "video": "media/2b05bd67a55a52a3d61b5ab53b12e8f4e560f93133f65e5c1811f640ea392ae6.mp4",
+      "poster": "media/3b41415f3a635122383c19f2fc0fede1b396a186938e238739c7a3b41fb3bc8c.png",
+      "visual_approved": true,
+      "video_sha256": "2b05bd67a55a52a3d61b5ab53b12e8f4e560f93133f65e5c1811f640ea392ae6",
+      "poster_sha256": "3b41415f3a635122383c19f2fc0fede1b396a186938e238739c7a3b41fb3bc8c",
+      "bytes": 2712498,
+      "width": 1088,
+      "height": 1920,
+      "frames": 96,
+      "fps": 24.0,
+      "duration_seconds": 4.0
+    },
+    {
+      "id": "camera-path-96",
+      "title": "Direct the camera",
+      "description": "4 秒相机路径展示：大画幅观看动态点云，下方显示人物、原相机与新相机的真实位置。与点云段采用同一组动作剪辑。1088×1920 原始导出。",
+      "video": "media/96cb368ad6c8e9a72b706c43d40a283244376aa78a26ec6abca8024130b484b7.mp4",
+      "poster": "media/091cce02b3a29e139e33daaa8b2da10a9a13b8f16a6d5f3129fe2588bfe1fa8e.png",
+      "visual_approved": true,
+      "video_sha256": "96cb368ad6c8e9a72b706c43d40a283244376aa78a26ec6abca8024130b484b7",
+      "poster_sha256": "091cce02b3a29e139e33daaa8b2da10a9a13b8f16a6d5f3129fe2588bfe1fa8e",
+      "bytes": 2612223,
+      "width": 1088,
+      "height": 1920,
+      "frames": 96,
+      "fps": 24.0,
+      "duration_seconds": 4.0
+    }
+  ]
+}
