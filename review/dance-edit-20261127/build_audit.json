@@ -1,0 +1,83 @@
+{
+  "status": "pass",
+  "visual_approval_hashes_verified": 5,
+  "full_media_decode_count": 5,
+  "original_video_bytes_preserved": true,
+  "placeholders": false,
+  "source_manifest_sha256": "d601024e45a5e33ed54bc46008567faf36dd2780c390ee9996554351929a97dd",
+  "media": [
+    {
+      "id": "dance-edit-20261127-main",
+      "video_sha256": "60d9f72b4bdb57b7dcb532b36984c554823ed993c07ac79e018d7cb1f009bf9a",
+      "width": 1080,
+      "height": 1920,
+      "frames": 495,
+      "fps": 24.0,
+      "duration_seconds": 20.625,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "nayeon-source-context117",
+      "video_sha256": "6f0bf877fc0e8ed5407f12b0d50e162d15bf6895dfc9d762ada18800c545d52a",
+      "width": 1088,
+      "height": 1920,
+      "frames": 117,
+      "fps": 24.0,
+      "duration_seconds": 4.875,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "nayeon-g032-mesh-camera97",
+      "video_sha256": "0cc541c1398cf74eec428f43480313327a6168b034b74b154f197734b5b843a7",
+      "width": 1088,
+      "height": 1920,
+      "frames": 97,
+      "fps": 24.0,
+      "duration_seconds": 4.041667,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "rhea-native-g032-065",
+      "video_sha256": "7fb6a8098f1e5a482f9596a8d60a5996fe0763e3d0c9ca3b34cc23edd9adc5f6",
+      "width": 1088,
+      "height": 1920,
+      "frames": 34,
+      "fps": 24.0,
+      "duration_seconds": 1.416667,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "sol-native-g012-072",
+      "video_sha256": "d07131f0f268155b7be93bd32e056f7b2d85d8341cf4bef9ba5a8015b6365708",
+      "width": 1088,
+      "height": 1920,
+      "frames": 61,
+      "fps": 24.0,
+      "duration_seconds": 2.541667,
+      "codec": "h264",
+      "full_decode": true
+    }
+  ],
+  "built_utc": "2026-11-27T13:56:01.545942+00:00",
+  "public_file_sha256": {
+    "fonts/5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314.ttf": "5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314",
+    "index.html": "3ac3808f9c3f885263013e755aa11db7d132ddd281feb1bf53c41393af0fac18",
+    "manifest.json": "66036411aa7d01ea713b216a1c6a8431907a4824c1c2a3ff120d56d804ab57b8",
+    "media/0cc541c1398cf74eec428f43480313327a6168b034b74b154f197734b5b843a7.mp4": "0cc541c1398cf74eec428f43480313327a6168b034b74b154f197734b5b843a7",
+    "media/2168b5bde56080378a08c6a6aaa7610110a33261eab36b1069f2fc18139631d5.png": "2168b5bde56080378a08c6a6aaa7610110a33261eab36b1069f2fc18139631d5",
+    "media/400cce72637400bbd370bfdcf775bfe8cb3b1fbd8600c6141326fcfe20a193ea.png": "400cce72637400bbd370bfdcf775bfe8cb3b1fbd8600c6141326fcfe20a193ea",
+    "media/60d9f72b4bdb57b7dcb532b36984c554823ed993c07ac79e018d7cb1f009bf9a.mp4": "60d9f72b4bdb57b7dcb532b36984c554823ed993c07ac79e018d7cb1f009bf9a",
+    "media/615cb8032829a1da2038bf93722f3ee1ddc8f5ca6a94d702a37f3dcaa19ee603.png": "615cb8032829a1da2038bf93722f3ee1ddc8f5ca6a94d702a37f3dcaa19ee603",
+    "media/6f0bf877fc0e8ed5407f12b0d50e162d15bf6895dfc9d762ada18800c545d52a.mp4": "6f0bf877fc0e8ed5407f12b0d50e162d15bf6895dfc9d762ada18800c545d52a",
+    "media/7931928b40e6582553c640e9766e3758439d872e6792c44e8bf2016c8856add3.png": "7931928b40e6582553c640e9766e3758439d872e6792c44e8bf2016c8856add3",
+    "media/7fb6a8098f1e5a482f9596a8d60a5996fe0763e3d0c9ca3b34cc23edd9adc5f6.mp4": "7fb6a8098f1e5a482f9596a8d60a5996fe0763e3d0c9ca3b34cc23edd9adc5f6",
+    "media/d07131f0f268155b7be93bd32e056f7b2d85d8341cf4bef9ba5a8015b6365708.mp4": "d07131f0f268155b7be93bd32e056f7b2d85d8341cf4bef9ba5a8015b6365708",
+    "media/db615dd18b0202b88fb27ef97ecc1ce76d93128c5f89c375128c73eebd41023f.png": "db615dd18b0202b88fb27ef97ecc1ce76d93128c5f89c375128c73eebd41023f",
+    "site.js": "cf64515aa6ad8e300f0ab86c12619a942d81db2ffd7c0370352866c21d7da1b5",
+    "styles.css": "6527b49c323371ae75428eae6da3688198de2254680a9848931153301bbf05bf"
+  }
+}
