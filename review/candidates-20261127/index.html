@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>World Tracing · 下一支想看什么</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="wordmark" href="#" id="home-link">WORLD TRACING <span>创意选择</span></a>
+    <nav aria-label="返回作品"><a id="dance-link">已完成剪辑 ↗</a><a id="review-link">模型实验 ↗</a></nav>
+  </header>
+  <main>
+    <section class="intro">
+      <div class="eyebrow">下一轮 / 候选选择 <span id="stage-badge">候选选择 · 尚未视频测试</span></div>
+      <h1>下一支，想看哪一种？</h1>
+      <p class="lead">先挑动作与创意，再挑主角。用真实三维空间重拍镜头、改变时间与位置。</p>
+      <p class="scope">这里是原片、创意方案和角色外观预览。<strong>还不是这些新案例的模型视频结果。</strong></p>
+    </section>
+    <section class="toolbar" aria-label="选择与分享">
+      <div class="tabs" role="tablist" aria-label="候选类型">
+        <button role="tab" data-tab="sources" id="tab-sources" aria-controls="cards" aria-selected="true">选原片 <span id="count-sources"></span></button>
+        <button role="tab" data-tab="briefs" id="tab-briefs" aria-controls="cards" aria-selected="false">选创意 <span id="count-briefs"></span></button>
+        <button role="tab" data-tab="casting" id="tab-casting" aria-controls="cards" aria-selected="false">选角/服装 <span id="count-casting"></span></button>
+      </div>
+      <div class="feedback-bar"><span id="selection-count">尚未选择</span><button id="share" class="primary">分享选择与备注</button></div>
+    </section>
+    <p id="tab-explainer" class="explainer"></p>
+    <p id="status" role="status" aria-live="polite"></p>
+    <div id="share-box" hidden><label for="share-url">复制这个链接，打开后可恢复选择与备注：</label><textarea id="share-url" readonly rows="3"></textarea></div>
+    <section id="cards" class="cards" role="tabpanel" aria-labelledby="tab-sources"></section>
+    <nav class="pagination" aria-label="候选分页"><button id="prev">← 上一页</button><span id="page-info"></span><button id="next">下一页 →</button></nav>
+    <p class="storage-note">每页4项，视频点击后才加载。选择保存在此浏览器，也可用分享链接恢复。<br>备注会随链接分享。</p>
+  </main>
+  <footer>World Tracing · 让视频成为可编辑的空间</footer>
+</body>
+</html>
