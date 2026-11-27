@@ -2,6 +2,7 @@
   "schema_version": 1,
   "dataset_id": "wt-stage-picks-20261127-v1",
   "page_size": 4,
+  "default_preview": "context",
   "clips": [
     {
       "title": "KISS OF LIFE · Sticky · 夏日彩色舞台",
@@ -25,18 +26,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 78,
-        "fps": 24.0,
-        "duration_seconds": 3.25,
+        "frames": 479,
+        "fps": 29.97002997002997,
+        "duration_seconds": 16.015633,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 24.80–28.05 秒",
-      "clip_asset": "media/kiof_sticky_summer_preview.mp4",
-      "poster_asset": "media/kiof_sticky_summer_poster.jpg"
+      "source_interval_label": "原片 20.00–36.00 秒",
+      "clip_asset": "media/kiof_sticky_summer_context.mp4",
+      "poster_asset": "media/kiof_sticky_summer_poster.jpg",
+      "core": {
+        "clip_asset": "media/kiof_sticky_summer_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 78,
+          "fps": 24.0,
+          "duration_seconds": 3.25,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 24.80–28.05 秒"
+      },
+      "context_note_zh": "侧胯、抬膝到转身换队形，含原片俯拍、侧拍和推拉切镜；后段多人靠近，有短暂遮挡。"
     },
     {
       "title": "NAYEON · ABCD · 红白舞台",
@@ -60,18 +74,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 78,
-        "fps": 24.0,
-        "duration_seconds": 3.25,
+        "frames": 479,
+        "fps": 29.97002997002997,
+        "duration_seconds": 16.015633,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 125.50–128.75 秒",
-      "clip_asset": "media/nayeon_abcd_choom_1255_12875_preview.mp4",
-      "poster_asset": "media/nayeon_abcd_choom_1255_12875_poster.jpg"
+      "source_interval_label": "原片 119.00–135.00 秒",
+      "clip_asset": "media/nayeon_abcd_choom_1255_12875_context.mp4",
+      "poster_asset": "media/nayeon_abcd_choom_1255_12875_poster.jpg",
+      "core": {
+        "clip_asset": "media/nayeon_abcd_choom_1255_12875_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 78,
+          "fps": 24.0,
+          "duration_seconds": 3.25,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 125.50–128.75 秒"
+      },
+      "context_note_zh": "抬膝、肩胯律动与前移走位连成一段，含俯拍转低机位和推近；末尾红色逆光让脸变暗。"
     },
     {
       "title": "JENNIE · Mantra · 红白街头",
@@ -95,18 +122,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 72,
-        "fps": 24.0,
-        "duration_seconds": 3.0,
+        "frames": 384,
+        "fps": 23.976023976023978,
+        "duration_seconds": 16.016,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 61.15–64.15 秒",
-      "clip_asset": "media/jennie_mantra_fullbody_preview.mp4",
-      "poster_asset": "media/jennie_mantra_fullbody_poster.jpg"
+      "source_interval_label": "原片 55.00–71.00 秒",
+      "clip_asset": "media/jennie_mantra_fullbody_context.mp4",
+      "poster_asset": "media/jennie_mantra_fullbody_poster.jpg",
+      "core": {
+        "clip_asset": "media/jennie_mantra_fullbody_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 72,
+          "fps": 24.0,
+          "duration_seconds": 3.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 61.15–64.15 秒"
+      },
+      "context_note_zh": "抬臂、侧步与转身有完整节奏，含俯拍切正面、推近及街景换装切镜；近景会截腿。"
     },
     {
       "title": "Tate McRae · Revolving door · 白色地板舞",
@@ -130,18 +170,31 @@
       "preview": {
         "width": 1894,
         "height": 1080,
-        "frames": 72,
+        "frames": 384,
         "fps": 24.0,
-        "duration_seconds": 3.0,
+        "duration_seconds": 16.0,
         "codec": "h264"
       },
       "poster": {
         "width": 1894,
         "height": 1080
       },
-      "source_interval_label": "原片 39.25–42.25 秒",
-      "clip_asset": "media/tate_revolving_floor_39p25_42p25_preview.mp4",
-      "poster_asset": "media/tate_revolving_floor_39p25_42p25_poster.jpg"
+      "source_interval_label": "原片 34.00–50.00 秒",
+      "clip_asset": "media/tate_revolving_floor_39p25_42p25_context.mp4",
+      "poster_asset": "media/tate_revolving_floor_39p25_42p25_poster.jpg",
+      "core": {
+        "clip_asset": "media/tate_revolving_floor_39p25_42p25_preview.mp4",
+        "preview": {
+          "width": 1894,
+          "height": 1080,
+          "frames": 72,
+          "fps": 24.0,
+          "duration_seconds": 3.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 39.25–42.25 秒"
+      },
+      "context_note_zh": "从站立转入地板动作，再起身；全身与脸部近景交替，保留原MV切镜和甩发模糊。"
     },
     {
       "title": "CHUNG HA · Bicycle · 机车舞台",
@@ -165,18 +218,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 66,
-        "fps": 24.0,
-        "duration_seconds": 2.75,
+        "frames": 959,
+        "fps": 59.94005994005994,
+        "duration_seconds": 16.015317,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 15.60–18.35 秒",
-      "clip_asset": "media/chungha_bicycle_moto_preview.mp4",
-      "poster_asset": "media/chungha_bicycle_moto_poster.jpg"
+      "source_interval_label": "原片 10.00–26.00 秒",
+      "clip_asset": "media/chungha_bicycle_moto_context.mp4",
+      "poster_asset": "media/chungha_bicycle_moto_poster.jpg",
+      "core": {
+        "clip_asset": "media/chungha_bicycle_moto_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 66,
+          "fps": 24.0,
+          "duration_seconds": 2.75,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 15.60–18.35 秒"
+      },
+      "context_note_zh": "从双人托举、换队形接到红橙舞台的骑行手势、屈膝和前移；镜头由全景推近，开场有伴舞遮挡。"
     },
     {
       "title": "ADÉLA · Nicole Kidman · 银白舞台",
@@ -200,18 +266,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 144,
-        "fps": 24.0,
-        "duration_seconds": 6.0,
+        "frames": 480,
+        "fps": 29.971698113207548,
+        "duration_seconds": 16.015109,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 154.00–160.00 秒",
-      "clip_asset": "media/adela_nicole_dance_154_160_preview.mp4",
-      "poster_asset": "media/adela_nicole_dance_154_160_poster.jpg"
+      "source_interval_label": "原片 150.00–166.00 秒",
+      "clip_asset": "media/adela_nicole_dance_154_160_context.mp4",
+      "poster_asset": "media/adela_nicole_dance_154_160_poster.jpg",
+      "core": {
+        "clip_asset": "media/adela_nicole_dance_154_160_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 144,
+          "fps": 24.0,
+          "duration_seconds": 6.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 154.00–160.00 秒"
+      },
+      "context_note_zh": "红幕舞台上踢步、抬臂与扭胯连贯，镜头先拉远再推近；末段伴舞穿过前景，话筒遮嘴。"
     },
     {
       "title": "LISA · FUTW · 红色金属舞台",
@@ -235,18 +314,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 78,
-        "fps": 24.0,
-        "duration_seconds": 3.25,
+        "frames": 383,
+        "fps": 23.976023976023978,
+        "duration_seconds": 16.015292,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 33.10–36.35 秒",
-      "clip_asset": "media/lisa_futw_red_stage_preview.mp4",
-      "poster_asset": "media/lisa_futw_red_stage_poster.jpg"
+      "source_interval_label": "原片 27.00–43.00 秒",
+      "clip_asset": "media/lisa_futw_red_stage_context.mp4",
+      "poster_asset": "media/lisa_futw_red_stage_poster.jpg",
+      "core": {
+        "clip_asset": "media/lisa_futw_red_stage_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 78,
+          "fps": 24.0,
+          "duration_seconds": 3.25,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 33.10–36.35 秒"
+      },
+      "context_note_zh": "伸臂、侧胯、甩发和换队形连贯，原片在舞台全景与移动近景之间切换；近景截腿、末尾脚部有遮挡。"
     },
     {
       "title": "CHUNG HA · STRESS · 粉白甜酷",
@@ -270,18 +362,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 102,
-        "fps": 24.0,
-        "duration_seconds": 4.25,
+        "frames": 960,
+        "fps": 59.94005994005994,
+        "duration_seconds": 16.016,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 128.75–133.00 秒",
-      "clip_asset": "media/chungha_stress_fullbody_preview.mp4",
-      "poster_asset": "media/chungha_stress_fullbody_poster.jpg"
+      "source_interval_label": "原片 123.00–139.00 秒",
+      "clip_asset": "media/chungha_stress_fullbody_context.mp4",
+      "poster_asset": "media/chungha_stress_fullbody_poster.jpg",
+      "core": {
+        "clip_asset": "media/chungha_stress_fullbody_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 102,
+          "fps": 24.0,
+          "duration_seconds": 4.25,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 128.75–133.00 秒"
+      },
+      "context_note_zh": "连续抬膝、转身、抱肩、前后走位接小跳，镜头多次推近拉远；部分近镜裁脚。"
     },
     {
       "title": "Tate McRae · Housewife · 红金走台",
@@ -305,18 +410,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 168,
-        "fps": 24.0,
-        "duration_seconds": 7.0,
+        "frames": 480,
+        "fps": 29.971698113207548,
+        "duration_seconds": 16.015109,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 147.00–154.00 秒",
-      "clip_asset": "media/tate_housewife_vs_walk_147_154_preview.mp4",
-      "poster_asset": "media/tate_housewife_vs_walk_147_154_poster.jpg"
+      "source_interval_label": "原片 143.00–159.00 秒",
+      "clip_asset": "media/tate_housewife_vs_walk_147_154_context.mp4",
+      "poster_asset": "media/tate_housewife_vs_walk_147_154_poster.jpg",
+      "core": {
+        "clip_asset": "media/tate_housewife_vs_walk_147_154_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 168,
+          "fps": 24.0,
+          "duration_seconds": 7.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 147.00–154.00 秒"
+      },
+      "context_note_zh": "穿过伴舞队列走向镜头，远景逐渐变中景；以走台和轻摆胯为主，后段会截腿，话筒遮嘴。"
     },
     {
       "title": "Tyla · PUSH 2 START · 南非暖金舞台",
@@ -340,18 +458,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 192,
-        "fps": 24.0,
-        "duration_seconds": 8.0,
+        "frames": 800,
+        "fps": 50.0,
+        "duration_seconds": 16.0,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 20.25–28.25 秒",
-      "clip_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_preview.mp4",
-      "poster_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_poster.jpg"
+      "source_interval_label": "原片 16.00–32.00 秒",
+      "clip_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_context.mp4",
+      "poster_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_poster.jpg",
+      "core": {
+        "clip_asset": "media/tyla_sa_2024_fullbody_20p25_28p25_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 192,
+          "fps": 24.0,
+          "duration_seconds": 8.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 20.25–28.25 秒"
+      },
+      "context_note_zh": "背身上台阶、转正后小步摆胯与手势；强蓝白灯转暖色再变暗，末尾切近景，话筒遮嘴。"
     },
     {
       "title": "Tyla · 维密2024 · 羽翼走台",
@@ -375,18 +506,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 120,
-        "fps": 24.0,
-        "duration_seconds": 5.0,
+        "frames": 480,
+        "fps": 29.971854304635762,
+        "duration_seconds": 16.015025,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 284.00–289.00 秒",
-      "clip_asset": "media/tyla_vs2024_fullbody_284_289_preview.mp4",
-      "poster_asset": "media/tyla_vs2024_fullbody_284_289_poster.jpg"
+      "source_interval_label": "原片 279.00–295.00 秒",
+      "clip_asset": "media/tyla_vs2024_fullbody_284_289_context.mp4",
+      "poster_asset": "media/tyla_vs2024_fullbody_284_289_poster.jpg",
+      "core": {
+        "clip_asset": "media/tyla_vs2024_fullbody_284_289_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 120,
+          "fps": 24.0,
+          "duration_seconds": 5.0,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 284.00–289.00 秒"
+      },
+      "context_note_zh": "羽翼造型向前走台、轻摆胯后转身，跟拍推近再切侧面；逆光与转身羽翼遮脸，近处脚贴边。"
     },
     {
       "title": "HYOLYN · DALLY · 高跟律动",
@@ -410,18 +554,31 @@
       "preview": {
         "width": 1920,
         "height": 1080,
-        "frames": 60,
-        "fps": 24.0,
-        "duration_seconds": 2.5,
+        "frames": 384,
+        "fps": 23.976023976023978,
+        "duration_seconds": 16.016,
         "codec": "h264"
       },
       "poster": {
         "width": 1920,
         "height": 1080
       },
-      "source_interval_label": "原片 108.00–110.50 秒",
-      "clip_asset": "media/hyolyn_dally_heels_108_1105_preview.mp4",
-      "poster_asset": "media/hyolyn_dally_heels_108_1105_poster.jpg"
+      "source_interval_label": "原片 103.00–119.00 秒",
+      "clip_asset": "media/hyolyn_dally_heels_108_1105_context.mp4",
+      "poster_asset": "media/hyolyn_dally_heels_108_1105_poster.jpg",
+      "core": {
+        "clip_asset": "media/hyolyn_dally_heels_108_1105_preview.mp4",
+        "preview": {
+          "width": 1920,
+          "height": 1080,
+          "frames": 60,
+          "fps": 24.0,
+          "duration_seconds": 2.5,
+          "codec": "h264"
+        },
+        "source_interval_label": "原片 108.00–110.50 秒"
+      },
+      "context_note_zh": "高跟侧步、转身、抬膝接前弯甩发，镜头跟随并推近拉远；近镜及末尾裁脚，帽檐与头发会挡脸。"
     }
   ]
 }
