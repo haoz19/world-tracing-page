@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="World Tracing 点云材质对照：冷白荧光与蓝色荧光，真实动态相机预览。">
+  <title>World Tracing · Point cloud light study</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <a class="brand" href="../../">WORLD TRACING</a>
+    <p class="eyebrow">POINT CLOUD · LIGHT STUDY</p>
+    <h1>A softer glow.</h1>
+    <p class="intro">正面保留人物颜色，背面改成冷白荧光。切换颜色可比较相同动作、相同相机下的效果。</p>
+    <div class="switch" role="group" aria-label="点云材质">
+      <button data-variant="white" aria-pressed="true">冷白荧光 <span>新版</span></button>
+      <button data-variant="blue" aria-pressed="false">蓝色荧光 <span>对照</span></button>
+    </div>
+    <div class="player">
+      <video id="preview" src="white.mp4" poster="white-poster.jpg" controls playsinline loop muted preload="metadata" aria-label="冷白荧光点云动态预览"></video>
+    </div>
+    <div class="actions">
+      <a id="download" href="white.mp4" download="world-tracing-white-glow-1080x1920.mp4">下载当前原文件 ↓</a>
+      <span>1080 × 1920 · 24 fps</span>
+    </div>
+    <p class="note">这是 2.21 秒的材质测试片段，人物动作和相机同时变化，可循环比较。完整宣传片仍在制作中。</p>
+    <details>
+      <summary>查看蓝色／两档白色的静态对照</summary>
+      <a href="comparison.jpg" target="_blank" rel="noopener"><img src="comparison.jpg" alt="同一帧蓝色、柔和冷白、加强白色辉光的三列对照" loading="lazy" width="1080" height="2016"></a>
+    </details>
+    <p class="note">本页只比较显示材质。白色标示模型推断的不可见表面；原始重建仍有局部边界问题，辉光不代表几何已修复。</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
