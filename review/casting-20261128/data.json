@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-casting-20261128-v1",
+  "images": [
+    {
+      "id": "black_minimal_cast_v1",
+      "title": "黑色极简 · 现代舞装",
+      "kind": "photo",
+      "image": "assets/black_minimal_cast_v1.png",
+      "image_sha256": "9896acb01487136bae4890888e5ddc92923654a0a323186a2dcb5a9a729a145a",
+      "width": 1024,
+      "height": 1536,
+      "description": "此前你认可的写实方向。角色图；动作视频待测试。",
+      "bytes": 1770855
+    },
+    {
+      "id": "color_editorial_cast_v1",
+      "title": "橙粉薄荷 · 配色时装",
+      "kind": "photo",
+      "image": "assets/color_editorial_cast_v1.png",
+      "image_sha256": "f2eecda9d4989b635e984e873341bc500b5f6bdf4f574007bbbfb22575c248c7",
+      "width": 1024,
+      "height": 1536,
+      "description": "此前你认可的写实方向。角色图；动作视频待测试。",
+      "bytes": 1757209
+    },
+    {
+      "id": "lemon_resort",
+      "title": "柠檬碎花 · 度假写真",
+      "kind": "photo",
+      "image": "assets/lemon_resort.png",
+      "image_sha256": "1808bfe9337ccb91da768cf9ed1ca0162682ea389bb8fced357952e80a0b4c41",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1768129
+    },
+    {
+      "id": "slate_sculpted",
+      "title": "雾灰修身 · 都市时装",
+      "kind": "photo",
+      "image": "assets/slate_sculpted.png",
+      "image_sha256": "5f4962b04fdd9dd6bc05a70b854a3c66488c7486a3b75048f88b9926f3b9a71f",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1855632
+    },
+    {
+      "id": "ivory_stage",
+      "title": "白色制服 · 舞台造型",
+      "kind": "photo",
+      "image": "assets/ivory_stage.png",
+      "image_sha256": "a155323dc8e400c9ec216dfe7436aff95f29e5620ab927c05a088b3766b42f1d",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1772359
+    },
+    {
+      "id": "pearl_drape",
+      "title": "珍珠白褶裥 · 礼服造型",
+      "kind": "photo",
+      "image": "assets/pearl_drape.png",
+      "image_sha256": "0211befdba88af24c3e14cc0245b3531a2ad13380029740bbe0432e47be92a18",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1834276
+    },
+    {
+      "id": "anime_cyber_cel",
+      "title": "赛博青蓝 · 精细赛璐璐",
+      "kind": "anime",
+      "image": "assets/anime_cyber_cel.png",
+      "image_sha256": "09821e327d2aece9b19628acb699e0eafb4be5c54438e908b0649a35aa953594",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1378579
+    },
+    {
+      "id": "anime_pastel_shoujo",
+      "title": "蜜桃薄荷 · 柔光少女漫画",
+      "kind": "anime",
+      "image": "assets/anime_pastel_shoujo.png",
+      "image_sha256": "cd1b570a2025248d323a3b2bf08d84055b7f2af6070c7cda5c18613fbe4c1a05",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1668980
+    },
+    {
+      "id": "anime_ink_manga",
+      "title": "黑白时装 · 精细漫画",
+      "kind": "anime",
+      "image": "assets/anime_ink_manga.png",
+      "image_sha256": "c4e43a16a1f7e51f78f573fbcfb647a1d55a4e3b71ddc402a72124c2e4dc1482",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1714910
+    },
+    {
+      "id": "anime_painterly_fantasy",
+      "title": "月银礼装 · 三维动画",
+      "kind": "anime",
+      "image": "assets/anime_painterly_fantasy.png",
+      "image_sha256": "3b628c867286b9733bb9358e7dc2b11c46286a33fe236f0a78b6773f70e43d43",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 1812817
+    },
+    {
+      "id": "anime_watercolor_muse",
+      "title": "鸢尾水彩 · 艺术动画",
+      "kind": "anime",
+      "image": "assets/anime_watercolor_muse.png",
+      "image_sha256": "506b6515ab88aff5468dfc9a2a8d794ec061bbb2c4dfa37251d095e802999269",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 2259043
+    },
+    {
+      "id": "anime_retro_pop",
+      "title": "珊瑚撞色 · 复古赛璐璐",
+      "kind": "anime",
+      "image": "assets/anime_retro_pop.png",
+      "image_sha256": "b3668cac57d27243d3599d9ece9c165d53c42d4443b12f517f75c456b77e5a68",
+      "width": 1024,
+      "height": 1536,
+      "description": "新增造型候选。角色图；动作视频待测试。",
+      "bytes": 2313761
+    }
+  ]
+}

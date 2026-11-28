@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="World Tracing 角色选角：比较写实与动漫角色原图，下载并反馈。角色图；动作视频待测试。">
+<title>World Tracing — Choose the cast</title>
+<link rel="stylesheet" href="styles.css">
+<script src="logic.js" defer></script>
+<script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#gallery-heading">跳到角色</a>
+<header class="wrap site-header">
+<a class="wordmark" href="../../">World Tracing</a>
+<span class="edition">CASTING / 2026.11</span>
+</header>
+<main class="wrap">
+<section class="intro">
+<p class="eyebrow">CHOOSE THE CAST</p>
+<h1>先选喜欢的角色。</h1>
+<p class="lede">写实与动漫，逐张比较脸、身材、服装和风格。每页两张，可下载原图并留下修改意见。</p>
+<p class="stage-note"><span aria-hidden="true">○</span> 角色图；动作视频待测试</p>
+</section>
+<p id="page-status" role="status">正在读取角色图片…</p>
+<div id="content" hidden>
+<section aria-labelledby="gallery-heading">
+<div class="gallery-toolbar">
+<h2 id="gallery-heading" tabindex="-1">角色候选</h2>
+<div id="filters" class="filter-group" role="group" aria-label="风格筛选">
+<button type="button" data-filter="all" aria-pressed="true">全部 <span data-count="all"></span></button>
+<button type="button" data-filter="photo" aria-pressed="false">写实 <span data-count="photo"></span></button>
+<button type="button" data-filter="anime" aria-pressed="false">动漫 <span data-count="anime"></span></button>
+</div>
+</div>
+<p id="selection-summary" class="selection-summary" aria-live="polite"></p>
+<div id="cast-grid" class="cast-grid" aria-live="polite" aria-busy="false"></div>
+<nav class="pagination" aria-label="角色分页">
+<button type="button" id="previous-page">← 上一页</button>
+<span id="page-label" aria-live="polite"></span>
+<button type="button" id="next-page">下一页 →</button>
+</nav>
+</section>
+<section class="share-section" aria-labelledby="share-heading">
+<div><p class="eyebrow">YOUR SELECTION</p><h2 id="share-heading">把选择发回来。</h2>
+<p>反馈保存在当前浏览器。复制链接或导出 JSON，就能带上所有页的选择和备注。</p></div>
+<div class="share-actions">
+<button type="button" id="share-feedback">复制反馈链接</button>
+<button type="button" id="export-feedback">导出 JSON</button>
+<button type="button" id="choose-import">导入 JSON</button>
+<input id="import-feedback" type="file" accept=".json,application/json" hidden>
+</div>
+</section>
+<p id="feedback-status" class="feedback-status" role="status" aria-live="polite"></p>
+<div id="share-result" hidden><label for="feedback-url">反馈分享链接</label><textarea id="feedback-url" rows="3" readonly spellcheck="false"></textarea></div>
+</div>
+</main>
+<footer class="wrap site-footer"><span class="wordmark">World Tracing</span><span>角色图；动作视频待测试</span></footer>
+<noscript><p class="wrap">请启用 JavaScript 查看分页角色图片。<a href="data.json">下载图片清单</a></p></noscript>
+</body>
+</html>
