@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-workflow-refined-20261128-v2",
+  "title": "World Tracing · 完整演示精修版",
+  "subtitle": "动态重建、新镜头与外观编辑。下方保留原始实验，方便逐项比较。",
+  "film": {
+    "id": "workflow_refined_v2",
+    "title": "World Tracing · 精修完整版",
+    "description": "重新编排开场与工作流程，放大完整人物及细节，更新点云材质和音乐音效。1920 × 1080剪辑输出；H3素材原生704 × 1248。界面为演示编排；生成的身份、动作和相机跟随仍存在偏差。",
+    "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_refined_landscape_web_009a2096129d6bd2.mp4",
+    "poster": "media/f978ef8e408aefc4fc2aea1930b8978f47ba542135c6aaa1c3584541169af0d4.jpg",
+    "visual_approved": true,
+    "video_sha256": "009a2096129d6bd25955cb5fe3409b3f76cf6cb2adfecbc72e15889afa574679",
+    "poster_sha256": "f978ef8e408aefc4fc2aea1930b8978f47ba542135c6aaa1c3584541169af0d4",
+    "bytes": 92211930,
+    "width": 1920,
+    "height": 1080,
+    "frames": 2140,
+    "fps": 24.0,
+    "duration_seconds": 89.166667,
+    "chapters": [
+      [
+        0,
+        "Overview"
+      ],
+      [
+        108,
+        "Input video"
+      ],
+      [
+        283,
+        "Select → Reconstruct"
+      ],
+      [
+        458,
+        "Author the camera"
+      ],
+      [
+        633,
+        "Original / New camera"
+      ],
+      [
+        808,
+        "Render depth"
+      ],
+      [
+        881,
+        "Original look · New view"
+      ],
+      [
+        954,
+        "Geometry → Generated view"
+      ],
+      [
+        1027,
+        "Recast · Color"
+      ],
+      [
+        1088,
+        "Recast · Black"
+      ],
+      [
+        1125,
+        "Recast · Violet"
+      ],
+      [
+        1198,
+        "Recast · Azure"
+      ],
+      [
+        1266,
+        "Recast · Cyber"
+      ],
+      [
+        1306,
+        "Duplicate in 3D"
+      ],
+      [
+        1481,
+        "Compare · Photographic"
+      ],
+      [
+        1517,
+        "Compare · Animated"
+      ],
+      [
+        1552,
+        "Relight"
+      ],
+      [
+        1592,
+        "Change the setting"
+      ],
+      [
+        1656,
+        "Spider-Man"
+      ],
+      [
+        1776,
+        "Iron Man"
+      ],
+      [
+        1920,
+        "Possibilities"
+      ],
+      [
+        2020,
+        "World Tracing"
+      ],
+      [
+        2092,
+        "Explore the project"
+      ]
+    ]
+  },
+  "shots": [
+    {
+      "id": "portrait_full_film",
+      "title": "竖屏精修完整版",
+      "description": "1080 × 1920完整成片，专门为手机重新排版；与横屏采用同一真实时间轴。包含音乐与操作音效。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_refined_portrait_master_0b6ec714981ce128.mp4",
+      "poster": "media/c6f8dfaf76214bfe1b275be305a7e851c599fe98c3716b3932b164ae541fdcb3.jpg",
+      "visual_approved": true,
+      "video_sha256": "0b6ec714981ce12863d9d1fb60f152de2ac026d4d36f38915c93da902b96b6d4",
+      "poster_sha256": "c6f8dfaf76214bfe1b275be305a7e851c599fe98c3716b3932b164ae541fdcb3",
+      "bytes": 110792646,
+      "width": 1080,
+      "height": 1920,
+      "frames": 2140,
+      "fps": 24.0,
+      "duration_seconds": 89.166667,
+      "case_id": "workflow_mix",
+      "chapters": []
+    },
+    {
+      "id": "original_look",
+      "title": "原外观 · 新视角生成",
+      "description": "使用原人物的外观参考与新视角深度生成。俯视变化可见；五官、衣服细节仍有重绘，侧向角度与目标轨迹存在偏差。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_original_look_93a2c0b05bb93d99.mp4",
+      "poster": "media/d01d1570b2af370a368aeff6cdf4cece778cc85dbb78eeec8481147b00ea580e.jpg",
+      "visual_approved": true,
+      "video_sha256": "93a2c0b05bb93d99b214c4599e22d03e343b50b80aaef4c1043133223b39ade2",
+      "poster_sha256": "d01d1570b2af370a368aeff6cdf4cece778cc85dbb78eeec8481147b00ea580e",
+      "bytes": 3885124,
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "camera_scene",
+      "title": "设计新镜头 · 场景与实时视角",
+      "description": "旧版独立段落，保留作比较。新版点云材质和排版请看上方完整影片。完整动态点云、真实3D相机路径和同步的新视角。人物动作与镜头同时推进。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_camera_scene_f17865d05935b965.mp4",
+      "poster": "media/1804d1fe680b16859c361211df4696e1b36a4e0bc39a8b98a3bb1e9a96d3deb7.jpg",
+      "visual_approved": true,
+      "video_sha256": "f17865d05935b96546d121d7b98c2423042c11a8725c717b4b6af0543df9a2fe",
+      "poster_sha256": "1804d1fe680b16859c361211df4696e1b36a4e0bc39a8b98a3bb1e9a96d3deb7",
+      "bytes": 6054160,
+      "width": 1920,
+      "height": 1080,
+      "frames": 175,
+      "fps": 24.0,
+      "duration_seconds": 7.291667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "color",
+      "title": "Color · 写实角色",
+      "description": "写实彩色时装造型；快速转头偏软，侧视角跟随不完全。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_color_24aff79b91fb0f25.mp4",
+      "poster": "media/a85ac7f9fff9a3376403f0346a294cf16b923cba9fe81fe1ab918a3305a79a00.jpg",
+      "visual_approved": true,
+      "video_sha256": "24aff79b91fb0f258a471d910f18e2b9f08d2cf86b45f9b7d2fd885f3b4465fb",
+      "poster_sha256": "a85ac7f9fff9a3376403f0346a294cf16b923cba9fe81fe1ab918a3305a79a00",
+      "bytes": 2105027,
+      "width": 704,
+      "height": 1248,
+      "frames": 61,
+      "fps": 24.0,
+      "duration_seconds": 2.541667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "black",
+      "title": "对照实验 · Black 写实角色",
+      "description": "保留旧版连续生成供比较，部分中段存在面部重影；精修主片只采用重新逐帧筛选后的较短片段。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_black_978cc1a04d90fdac.mp4",
+      "poster": "media/4cbb0729f1d7809a8b32221ca0341c0ce3a5c35f1dc5bdcd85931f4ceba18b90.jpg",
+      "visual_approved": true,
+      "video_sha256": "978cc1a04d90fdac63da14f085211ee4c03dd28e9945c34d90ab49d9513245ec",
+      "poster_sha256": "4cbb0729f1d7809a8b32221ca0341c0ce3a5c35f1dc5bdcd85931f4ceba18b90",
+      "bytes": 2172753,
+      "width": 704,
+      "height": 1248,
+      "frames": 60,
+      "fps": 24.0,
+      "duration_seconds": 2.5,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "violet",
+      "title": "Violet · 保留的动漫角色",
+      "description": "保留之前认可的银灰短发动漫角色和原始生成动作。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_violet_878d9b8d6aca371f.mp4",
+      "poster": "media/1b9015d389432509d9c439c08864037088989e3e617de927fbe92e190a279f68.jpg",
+      "visual_approved": true,
+      "video_sha256": "878d9b8d6aca371fd6f7fe197d140b9f2557c163efbee564508fa6ea0142bb02",
+      "poster_sha256": "1b9015d389432509d9c439c08864037088989e3e617de927fbe92e190a279f68",
+      "bytes": 2894210,
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "scarlet",
+      "title": "对照实验 · Scarlet",
+      "description": "保留旧生成结果供比较。部分帧出现手部与身体融合，已从新版主片移除。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_scarlet_02adbabdd6d22ce9.mp4",
+      "poster": "media/e222c76a500c2bb9acdc107f74ca54319600b10d967fe3637d4dde3ba71067ea.jpg",
+      "visual_approved": true,
+      "video_sha256": "02adbabdd6d22ce9e7483414c600593d00d1ad57a44a244a97f2cc9fbb153bcd",
+      "poster_sha256": "e222c76a500c2bb9acdc107f74ca54319600b10d967fe3637d4dde3ba71067ea",
+      "bytes": 1418513,
+      "width": 704,
+      "height": 1248,
+      "frames": 36,
+      "fps": 24.0,
+      "duration_seconds": 1.5,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "cyber",
+      "title": "对照实验 · Cyber 动漫角色",
+      "description": "保留旧版连续生成供比较，部分帧存在手部与衣袖重影；精修主片剔除问题段，并以明确的两镜头剪辑展示。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_cyber_d01059ba3dfa1308.mp4",
+      "poster": "media/c789992445f5d8f2fc696ce0dc9904900dc61cb04d3f831482cd8591f09da1cf.jpg",
+      "visual_approved": true,
+      "video_sha256": "d01059ba3dfa1308d3c78e41679b3949d600ef9075a0ec1ced234dfa8521a56b",
+      "poster_sha256": "c789992445f5d8f2fc696ce0dc9904900dc61cb04d3f831482cd8591f09da1cf",
+      "bytes": 2388910,
+      "width": 704,
+      "height": 1248,
+      "frames": 62,
+      "fps": 24.0,
+      "duration_seconds": 2.583333,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "duo",
+      "title": "对照实验 · 双人外观",
+      "description": "保留旧生成结果供比较。部分帧存在前臂和手部变形，已从新版主片移除；新版仍展示真实3D点云复制。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_duo_008c42eb3d1030aa.mp4",
+      "poster": "media/eb0cd4e4ad308672c960dd63db85761d60e0d592f10f7d1a4f3eec1ebf289158.jpg",
+      "visual_approved": true,
+      "video_sha256": "008c42eb3d1030aac87a3246330300107a9290848424aa965550fb277fb86e3e",
+      "poster_sha256": "eb0cd4e4ad308672c960dd63db85761d60e0d592f10f7d1a4f3eec1ebf289158",
+      "bytes": 1545509,
+      "width": 704,
+      "height": 1248,
+      "frames": 40,
+      "fps": 24.0,
+      "duration_seconds": 1.666667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "relight",
+      "title": "改换灯光",
+      "description": "展示暖色主光与冷色轮廓光的生成变化。动作也会发生变化，并非仅改灯光的像素级对照。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_relight_d2840b9d89bee8e0.mp4",
+      "poster": "media/daaa8a2ae6aa177bc4b1decafcabc692d1904510957cff12fffc8138bfa4cc11.jpg",
+      "visual_approved": true,
+      "video_sha256": "d2840b9d89bee8e0e72c5c11f2ba053c15cf2bd439c0ea28e1693bade87c1058",
+      "poster_sha256": "daaa8a2ae6aa177bc4b1decafcabc692d1904510957cff12fffc8138bfa4cc11",
+      "bytes": 1339625,
+      "width": 704,
+      "height": 1248,
+      "frames": 40,
+      "fps": 24.0,
+      "duration_seconds": 1.666667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "courtyard",
+      "title": "改换场景",
+      "description": "黑色写实角色与暖色石材庭院，保留筛选后的连续动作。场景为生成效果，动作与相机跟随仍有偏差。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_courtyard_627693ac5ef7e5ee.mp4",
+      "poster": "media/436a2145d8051165ca97f538575a3481228dc8a8a1efea934b33faab10c4d5e1.jpg",
+      "visual_approved": true,
+      "video_sha256": "627693ac5ef7e5ee79d4e0746e5dd1f28de53e116dfe20054db1f091b5f45827",
+      "poster_sha256": "436a2145d8051165ca97f538575a3481228dc8a8a1efea934b33faab10c4d5e1",
+      "bytes": 4611113,
+      "width": 704,
+      "height": 1248,
+      "frames": 64,
+      "fps": 24.0,
+      "duration_seconds": 2.666667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "copy_geometry",
+      "title": "在3D中复制人物",
+      "description": "旧版独立段落，保留作比较。新版点云材质和排版请看上方完整影片。两个实例共享同一段动态几何，在同一3D场景内移动与遮挡。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_copy_geometry_a86c6b872da3dd63.mp4",
+      "poster": "media/a3e76f810d3699dd50067f1393b2b88f87bdc8d2ff2e361fc02a56bde9c3f4d4.jpg",
+      "visual_approved": true,
+      "video_sha256": "a86c6b872da3dd638b7747bf9f91235f5b4f9fee71e7e6287aa8359efdb315cc",
+      "poster_sha256": "a3e76f810d3699dd50067f1393b2b88f87bdc8d2ff2e361fc02a56bde9c3f4d4",
+      "bytes": 10452193,
+      "width": 1920,
+      "height": 1080,
+      "frames": 175,
+      "fps": 24.0,
+      "duration_seconds": 7.291667,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    },
+    {
+      "id": "spiderman",
+      "title": "Spider-Man · 动态重建",
+      "description": "电影输入与对应动态点云的新视角重看。人物动作与相机同时变化。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_spiderman_bcc5ea427ce34adb.mp4",
+      "poster": "media/43f85f722a317a5c0eb5c069025ebf04b6a95d4aae4e5703452cc9ddf670301d.jpg",
+      "visual_approved": true,
+      "video_sha256": "bcc5ea427ce34adb072e8bfca416dcf93460047df746aa70b005bfeaa1b6c1fe",
+      "poster_sha256": "43f85f722a317a5c0eb5c069025ebf04b6a95d4aae4e5703452cc9ddf670301d",
+      "bytes": 5129775,
+      "width": 1920,
+      "height": 1080,
+      "frames": 120,
+      "fps": 24.0,
+      "duration_seconds": 5.0,
+      "case_id": "spiderman",
+      "chapters": []
+    },
+    {
+      "id": "ironman",
+      "title": "Iron Man · 动态重建",
+      "description": "起飞准备动作与对应动态点云的新视角重看。该片段不包含完整飞行。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_software_ironman_9153d86ec7f8f6b5.mp4",
+      "poster": "media/91252b1d1caa9407fdbc55e9040c1b60f9f943d1d8b401b3393bd95262c69d9f.jpg",
+      "visual_approved": true,
+      "video_sha256": "9153d86ec7f8f6b5b4be2f4bd8048adc95b95917248f161a75d7547b77962e81",
+      "poster_sha256": "91252b1d1caa9407fdbc55e9040c1b60f9f943d1d8b401b3393bd95262c69d9f",
+      "bytes": 3429008,
+      "width": 1920,
+      "height": 1080,
+      "frames": 144,
+      "fps": 24.0,
+      "duration_seconds": 6.0,
+      "case_id": "ironman",
+      "chapters": []
+    },
+    {
+      "id": "azure_two_shot",
+      "title": "Azure · 新增动漫造型",
+      "description": "最终主片采用的两镜头剪辑：全身与外观参考切换为人物细节，保留完整身体小窗。共68帧，剔除原始第33帧及末尾69–72帧；这是明确剪辑，不是连续73帧生成或局部AI修复。部分手指细节与面部仍有变化。",
+      "video": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_refined_azure_two_shot_29a8124b412b5b3e.mp4",
+      "poster": "media/3f0b400c45b477177d889803acf3cf62c9f3b65e468fb21de25a47b4f752ca46.jpg",
+      "visual_approved": true,
+      "video_sha256": "29a8124b412b5b3e19cadd6496bc811013590e9d5676fee48b6d9c0ecbc3621c",
+      "poster_sha256": "3f0b400c45b477177d889803acf3cf62c9f3b65e468fb21de25a47b4f752ca46",
+      "bytes": 2181077,
+      "width": 1080,
+      "height": 1920,
+      "frames": 68,
+      "fps": 24.0,
+      "duration_seconds": 2.833333,
+      "case_id": "nayeon_abcd",
+      "chapters": []
+    }
+  ],
+  "master": {
+    "url": "https://github.com/haoz19/world-tracing-page/releases/download/v1/world_tracing_refined_landscape_master_009a2096129d6bd2.mp4",
+    "sha256": "009a2096129d6bd25955cb5fe3409b3f76cf6cb2adfecbc72e15889afa574679",
+    "bytes": 92211930,
+    "width": 1920,
+    "height": 1080,
+    "frames": 2140,
+    "fps": 24.0
+  }
+}
