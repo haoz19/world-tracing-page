@@ -1,0 +1,96 @@
+{
+  "status": "pass",
+  "visual_approval_hashes_verified": 6,
+  "full_media_decode_count": 6,
+  "original_video_bytes_preserved": true,
+  "placeholders": false,
+  "source_manifest_sha256": "ee539725993e34cccbdb200dc62e50764d64fdd7c98f2d2218bc048254203eb1",
+  "media": [
+    {
+      "id": "multicase-film",
+      "video_sha256": "6513fba8b640166918a9fc26d2b7e7738513623fdde13b7e162e76eb7877e51d",
+      "width": 1080,
+      "height": 1920,
+      "frames": 668,
+      "fps": 24.0,
+      "duration_seconds": 27.833333,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "joker-arc65",
+      "video_sha256": "2ec2ea864730aa95ad39ea42851ab7418e99a0a6caa9390fc6ff221d740c92ee",
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.346585617772059,
+      "duration_seconds": 2.567783,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "gordon-crane",
+      "video_sha256": "f1935b839fe6dc0e53e71af3707da9f3704d8c8e8d932e7e7fa716b14d17da49",
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.315009315009315,
+      "duration_seconds": 2.576487,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "retro-truck",
+      "video_sha256": "4eb797bd446ed8f15f504dd3629232f8b1b44be3d37fc54eddad1208c52a9943",
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.324324324324325,
+      "duration_seconds": 2.573913,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "ivory-recast",
+      "video_sha256": "5289f32986e9d34694975e82c449892353473b7b8435ddc131a7a3e475ef3c8a",
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "codec": "h264",
+      "full_decode": true
+    },
+    {
+      "id": "violet-recast",
+      "video_sha256": "1a870c9cd9ea5eff3e3ada6e10b282f4fcd4d776565710a55662fd934ab691c9",
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "codec": "h264",
+      "full_decode": true
+    }
+  ],
+  "built_utc": "2026-11-28T01:32:05.486951+00:00",
+  "public_file_sha256": {
+    "fonts/5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314.ttf": "5f14f504f9480a1b781226612775741e4a30e7c93d271243d9ed8511915ae314",
+    "index.html": "9018c9b389e8be10c18e2b42a480287ab3ce25efe83abd7cfceb79424c84c7c9",
+    "manifest.json": "206b816927e4d2a30a1a849ed3c81782e84b0dc6a1976aadd6ac4f9dbdae2c12",
+    "media/0b4535ed9d43f5ea315570f7fc1c3a0bcbc07ab1240604c3dc4170ef0c956c75.jpg": "0b4535ed9d43f5ea315570f7fc1c3a0bcbc07ab1240604c3dc4170ef0c956c75",
+    "media/16494bc827df76cdc6b97f455bdc86c2b4412e7e67673970410e23e6526dab8f.jpg": "16494bc827df76cdc6b97f455bdc86c2b4412e7e67673970410e23e6526dab8f",
+    "media/1a870c9cd9ea5eff3e3ada6e10b282f4fcd4d776565710a55662fd934ab691c9.mp4": "1a870c9cd9ea5eff3e3ada6e10b282f4fcd4d776565710a55662fd934ab691c9",
+    "media/2ec2ea864730aa95ad39ea42851ab7418e99a0a6caa9390fc6ff221d740c92ee.mp4": "2ec2ea864730aa95ad39ea42851ab7418e99a0a6caa9390fc6ff221d740c92ee",
+    "media/3d9ddc0a96c700db56eae70e07f70489e9827d3c8db11c373cc80d7c9d44068b.jpg": "3d9ddc0a96c700db56eae70e07f70489e9827d3c8db11c373cc80d7c9d44068b",
+    "media/3fd34d98b4ca400db8aac446f312cfdf08e30f0c14dd9e8d457f926e179cbb8e.jpg": "3fd34d98b4ca400db8aac446f312cfdf08e30f0c14dd9e8d457f926e179cbb8e",
+    "media/4eb797bd446ed8f15f504dd3629232f8b1b44be3d37fc54eddad1208c52a9943.mp4": "4eb797bd446ed8f15f504dd3629232f8b1b44be3d37fc54eddad1208c52a9943",
+    "media/5289f32986e9d34694975e82c449892353473b7b8435ddc131a7a3e475ef3c8a.mp4": "5289f32986e9d34694975e82c449892353473b7b8435ddc131a7a3e475ef3c8a",
+    "media/6513fba8b640166918a9fc26d2b7e7738513623fdde13b7e162e76eb7877e51d.mp4": "6513fba8b640166918a9fc26d2b7e7738513623fdde13b7e162e76eb7877e51d",
+    "media/83ff978d5da89a11911da4ae5415057ac67a750a95b37e430e4fde48eb4f7fb7.jpg": "83ff978d5da89a11911da4ae5415057ac67a750a95b37e430e4fde48eb4f7fb7",
+    "media/b3f35486e52d34411e8a389bca7cf8523ca657b78dc532286260654e99f9253c.jpg": "b3f35486e52d34411e8a389bca7cf8523ca657b78dc532286260654e99f9253c",
+    "media/f1935b839fe6dc0e53e71af3707da9f3704d8c8e8d932e7e7fa716b14d17da49.mp4": "f1935b839fe6dc0e53e71af3707da9f3704d8c8e8d932e7e7fa716b14d17da49",
+    "site.js": "31dc5dc00a79752b804b315cdbee88adc0bef45781a92b3ef72c6a9ad474800c",
+    "styles.css": "fd02386c80db4c59fa98ac90cd7f67935de1ed96614b3b3bedcbe433ec999e24"
+  }
+}

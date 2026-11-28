@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "dataset_id": "wt-multicase-20261128-v1",
+  "title": "Reframe the action.",
+  "subtitle": "四个案例：Nayeon 舞蹈、Gordon 扣篮、Joker 阶梯舞和复古舞蹈。看动态点云、自定义运镜，以及写实与动画换角；下方可逐个观看、下载和反馈。",
+  "film": {
+    "id": "multicase-film",
+    "title": "World Tracing — Reframe the action.",
+    "description": "四个案例的动态点云、相机设计与角色编辑合集。1080×1920 / 24fps；生成角色的原生分辨率为704×1248。",
+    "video": "media/6513fba8b640166918a9fc26d2b7e7738513623fdde13b7e162e76eb7877e51d.mp4",
+    "poster": "media/b3f35486e52d34411e8a389bca7cf8523ca657b78dc532286260654e99f9253c.jpg",
+    "visual_approved": true,
+    "video_sha256": "6513fba8b640166918a9fc26d2b7e7738513623fdde13b7e162e76eb7877e51d",
+    "poster_sha256": "b3f35486e52d34411e8a389bca7cf8523ca657b78dc532286260654e99f9253c",
+    "bytes": 28191315,
+    "width": 1080,
+    "height": 1920,
+    "frames": 668,
+    "fps": 24.0,
+    "duration_seconds": 27.833333,
+    "chapters": [
+      [
+        0,
+        "换角效果"
+      ],
+      [
+        73,
+        "视频变成3D"
+      ],
+      [
+        144,
+        "设计相机"
+      ],
+      [
+        213,
+        "深度引导"
+      ],
+      [
+        245,
+        "原片与结果"
+      ],
+      [
+        318,
+        "多案例运镜"
+      ],
+      [
+        504,
+        "写实换角"
+      ],
+      [
+        577,
+        "动画换角"
+      ]
+    ]
+  },
+  "shots": [
+    {
+      "id": "joker-arc65",
+      "title": "Joker · 65° 跟随弧线",
+      "description": "同一段阶梯舞，在动作持续推进时改变观察方向。动态点云过程展示。",
+      "video": "media/2ec2ea864730aa95ad39ea42851ab7418e99a0a6caa9390fc6ff221d740c92ee.mp4",
+      "poster": "media/3fd34d98b4ca400db8aac446f312cfdf08e30f0c14dd9e8d457f926e179cbb8e.jpg",
+      "visual_approved": true,
+      "video_sha256": "2ec2ea864730aa95ad39ea42851ab7418e99a0a6caa9390fc6ff221d740c92ee",
+      "poster_sha256": "3fd34d98b4ca400db8aac446f312cfdf08e30f0c14dd9e8d457f926e179cbb8e",
+      "bytes": 2229759,
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.346585617772059,
+      "duration_seconds": 2.567783,
+      "case_id": "mov_joker",
+      "chapters": []
+    },
+    {
+      "id": "gordon-crane",
+      "title": "Aaron Gordon · 升降运镜与拉远",
+      "description": "扣篮动作的动态点云：60° 横向转角，低机位升至俯视，并拉远构图。原片中的闪光仍保留。",
+      "video": "media/f1935b839fe6dc0e53e71af3707da9f3704d8c8e8d932e7e7fa716b14d17da49.mp4",
+      "poster": "media/3d9ddc0a96c700db56eae70e07f70489e9827d3c8db11c373cc80d7c9d44068b.jpg",
+      "visual_approved": true,
+      "video_sha256": "f1935b839fe6dc0e53e71af3707da9f3704d8c8e8d932e7e7fa716b14d17da49",
+      "poster_sha256": "3d9ddc0a96c700db56eae70e07f70489e9827d3c8db11c373cc80d7c9d44068b",
+      "bytes": 1958814,
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.315009315009315,
+      "duration_seconds": 2.576487,
+      "case_id": "gordon_dunk",
+      "chapters": []
+    },
+    {
+      "id": "retro-truck",
+      "title": "复古舞蹈 · 横移与推近",
+      "description": "65° 方向变化叠加横移、推近，展示另一种动态运镜。",
+      "video": "media/4eb797bd446ed8f15f504dd3629232f8b1b44be3d37fc54eddad1208c52a9943.mp4",
+      "poster": "media/16494bc827df76cdc6b97f455bdc86c2b4412e7e67673970410e23e6526dab8f.jpg",
+      "visual_approved": true,
+      "video_sha256": "4eb797bd446ed8f15f504dd3629232f8b1b44be3d37fc54eddad1208c52a9943",
+      "poster_sha256": "16494bc827df76cdc6b97f455bdc86c2b4412e7e67673970410e23e6526dab8f",
+      "bytes": 2333442,
+      "width": 1080,
+      "height": 1920,
+      "frames": 24,
+      "fps": 9.324324324324325,
+      "duration_seconds": 2.573913,
+      "case_id": "cn_tang_retro",
+      "chapters": []
+    },
+    {
+      "id": "ivory-recast",
+      "title": "舞蹈换角 · 写实风格",
+      "description": "白金服装的写实角色，以新视角深度引导生成。有两处很短的动作停顿，快速手势略有模糊；合集提供原片对照。",
+      "video": "media/5289f32986e9d34694975e82c449892353473b7b8435ddc131a7a3e475ef3c8a.mp4",
+      "poster": "media/0b4535ed9d43f5ea315570f7fc1c3a0bcbc07ab1240604c3dc4170ef0c956c75.jpg",
+      "visual_approved": true,
+      "video_sha256": "5289f32986e9d34694975e82c449892353473b7b8435ddc131a7a3e475ef3c8a",
+      "poster_sha256": "0b4535ed9d43f5ea315570f7fc1c3a0bcbc07ab1240604c3dc4170ef0c956c75",
+      "bytes": 1706353,
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "case_id": "nayeon_abcd_dynamic73",
+      "chapters": []
+    },
+    {
+      "id": "violet-recast",
+      "title": "舞蹈换角 · 动画风格",
+      "description": "以新视角的深度引导生成紫衣银发角色。局部手指仍有轻微拖影，动作细节有偏差。",
+      "video": "media/1a870c9cd9ea5eff3e3ada6e10b282f4fcd4d776565710a55662fd934ab691c9.mp4",
+      "poster": "media/83ff978d5da89a11911da4ae5415057ac67a750a95b37e430e4fde48eb4f7fb7.jpg",
+      "visual_approved": true,
+      "video_sha256": "1a870c9cd9ea5eff3e3ada6e10b282f4fcd4d776565710a55662fd934ab691c9",
+      "poster_sha256": "83ff978d5da89a11911da4ae5415057ac67a750a95b37e430e4fde48eb4f7fb7",
+      "bytes": 1674202,
+      "width": 704,
+      "height": 1248,
+      "frames": 73,
+      "fps": 24.0,
+      "duration_seconds": 3.041667,
+      "case_id": "nayeon_abcd_dynamic73",
+      "chapters": []
+    }
+  ]
+}
